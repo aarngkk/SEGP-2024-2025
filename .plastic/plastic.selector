@@ -1,4 +1,0 @@
-repository "SEGP 2024-2025@SEGP2024@cloud"
-  path "/"
-    br "/main"
-    co "/main"
