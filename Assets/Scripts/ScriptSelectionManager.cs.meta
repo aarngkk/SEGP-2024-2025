@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: d7d5316e8195942289c5aeffebd5c3ef
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - scriptPanel: {instanceID: 0}
+  - scriptDetailText: {instanceID: 0}
+  - nextButton: {instanceID: 0}
+  - prevButton: {instanceID: 0}
+  - selectButton: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
