@@ -1,1 +1,34 @@
-999
+SCRIPT 5
+ACT 3 SCENE 5
+LINES 158-175b
+Juliet
+Good father, I beseech you on my knees,
+Hear me with patience but to speak a word.
+Capulet
+Hang thee, young baggage. Disobedient wretch!          
+I tell thee what. Get thee to church a Thursday,
+Or never after look me in the face.
+Speak not, reply not, do not answer me.
+My fingers itch. Wife, we scarce thought us blessed
+That God had lent us but this only child;
+But now I see this one is one too much,
+And that we have a curse in having her.
+Out on her, hilding!
+Nurse
+                                  God in heaven bless her!
+You are to blame, my lord, to rate her so.
+Capulet
+And why, my lady wisdom? Hold your tongue,            
+Good Prudence, smatter with your gossips, go.
+Nurse
+I speak no treason.
+Capulet
+                               O, God ye good e'en.
+Nurse
+May not one speak?
+Capulet
+                                  Peace, you mumbling fool!
+Utter your gravity o'er a gossip's bowl,
+For here we need it not.
+Lady Capulet
+                                         You are too hot.

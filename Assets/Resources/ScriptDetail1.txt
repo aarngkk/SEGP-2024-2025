@@ -1,15 +1,16 @@
-Benvolio
-I pray thee, good Mercutio, let's retire.
-The day is hot, the Capulets abroad,
-And if we meet we shall not scape a brawl,
-For now, these hot days, is the mad blood stirring.
-Mercutio
-Thou art like one of those fellows that, when he
-enters the confines of a tavern, claps me his sword
-upon the table and says, 'God send me no need of
-thee!'; and by the operation of the second cup draws
-him on the drawer, when indeed there is no need.
-Benvolio
-Am I like such a fellow?                                                
-Mercutio
-Come, come, thou art as hot a jack in thy mood as
+SCRIPT 1
+ACT 3 SCENE 5
+LINES 103 - 111
+Lady Capulet
+Find thou the means, and I'll find such a man.
+But now I'll tell thee joyful tidings, girl.
+Juliet
+And joy comes well in such a needy time.
+What are they, beseech your ladyship?
+Lady Capulet
+Well, well, thou hast a careful father, child;
+One who, to put thee from thy heaviness,
+Hath sorted out a sudden day of joy,
+That thou expects not, nor I looked not for.
+Juliet
+Madam, in happy time. What day is that?

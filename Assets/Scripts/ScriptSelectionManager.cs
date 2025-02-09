@@ -11,6 +11,7 @@ public class ScriptSelectionManager : MonoBehaviour
     public Button nextButton;         // Button to go to the next script
     public Button prevButton;         // Button to go to the previous script
     public Button selectButton;       // Button to select the current script
+    public Button backButton;
 
     // List to store the full text details loaded from files
     private List<string> scripts = new List<string>();
@@ -24,6 +25,7 @@ public class ScriptSelectionManager : MonoBehaviour
         LoadScripts();                 // Load the text details from the Resources folder
         UpdateScriptDetail();          // Show the first script detail
         scriptPanel.SetActive(false);  // Hide the panel initially
+        backButton.onClick.AddListener(CloseScriptSelection);
     }
 
     // Loads script details from text files in the Resources folder
@@ -109,4 +111,11 @@ public class ScriptSelectionManager : MonoBehaviour
             scriptDetailText.text = "No script details loaded.";
         }
     }
+    private void Update()
+{
+    if (Input.GetKeyDown(KeyCode.Escape) && scriptPanel.activeSelf)
+    {
+        CloseScriptSelection();
+    }
+}
 }
