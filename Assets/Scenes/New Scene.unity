@@ -1312,6 +1312,64 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
+--- !u!1001 &365610909
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 407e2b0e361fead4c87db78df76c0112, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -16.3
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 407e2b0e361fead4c87db78df76c0112, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.53
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 407e2b0e361fead4c87db78df76c0112, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 407e2b0e361fead4c87db78df76c0112, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9999239
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 407e2b0e361fead4c87db78df76c0112, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 407e2b0e361fead4c87db78df76c0112, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.01233932
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 407e2b0e361fead4c87db78df76c0112, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 407e2b0e361fead4c87db78df76c0112, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 407e2b0e361fead4c87db78df76c0112, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 1.414
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 407e2b0e361fead4c87db78df76c0112, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 407e2b0e361fead4c87db78df76c0112, type: 3}
+      propertyPath: m_Name
+      value: theatre (4)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: -6659688719119020099, guid: 407e2b0e361fead4c87db78df76c0112, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 407e2b0e361fead4c87db78df76c0112, type: 3}
 --- !u!1 &375282955
 GameObject:
   m_ObjectHideFlags: 0
@@ -2724,6 +2782,7 @@ MonoBehaviour:
   nextButton: {fileID: 24674357}
   prevButton: {fileID: 1458863433}
   selectButton: {fileID: 986999728}
+  backButton: {fileID: 0}
 --- !u!4 &953928682
 Transform:
   m_ObjectHideFlags: 0
@@ -4410,7 +4469,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1176155310}
   m_HandleRect: {fileID: 1176155309}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4463,3 +4522,4 @@ SceneRoots:
   - {fileID: 1777260662}
   - {fileID: 1542260019}
   - {fileID: 953928682}
+  - {fileID: 365610909}
