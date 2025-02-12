@@ -12,6 +12,9 @@ public class ScriptSelectionManager : MonoBehaviour
     public Button prevButton;         // Button to go to the previous script
     public Button selectButton;       // Button to select the current script
     public Button backButton;
+    public List<Button> otherButtons; // drag all the other buttons here in the Inspector
+
+    public ScrollRect scrollRect;
 
     // List to store the full text details loaded from files
     private List<string> scripts = new List<string>();
@@ -24,7 +27,8 @@ public class ScriptSelectionManager : MonoBehaviour
     {
         LoadScripts();                 // Load the text details from the Resources folder
         UpdateScriptDetail();          // Show the first script detail
-        scriptPanel.SetActive(false);  // Hide the panel initially
+        OpenScriptSelection();  // Immediately open the script selection
+        // scriptPanel.SetActive(false);  // Hide the panel initially
         backButton.onClick.AddListener(CloseScriptSelection);
     }
 
@@ -32,7 +36,7 @@ public class ScriptSelectionManager : MonoBehaviour
     private void LoadScripts()
     {
         // Assume we have 6 script files. Adjust the loop count if needed.
-        for (int i = 1; i <= 6; i++)
+        for (int i = 1; i <= 8; i++)
         {
             // Build the file name (without extension)
             string fileName = "ScriptDetail" + i;
@@ -57,12 +61,22 @@ public class ScriptSelectionManager : MonoBehaviour
     public void OpenScriptSelection()
     {
         scriptPanel.SetActive(true);
+        // Disable all other buttons
+    foreach (Button btn in otherButtons)
+    {
+        btn.interactable = false;
+    }
     }
 
     // Closes the pop-up panel
     public void CloseScriptSelection()
     {
-        scriptPanel.SetActive(false);
+    scriptPanel.SetActive(false);
+    // Re-enable the other buttons
+    foreach (Button btn in otherButtons)
+    {
+        btn.interactable = true;
+    }
     }
 
     // Moves to the next script in the list
@@ -105,6 +119,12 @@ public class ScriptSelectionManager : MonoBehaviour
         if (scripts.Count > 0)
         {
             scriptDetailText.text = scripts[currentIndex];
+            // 2) Reset the scroll to the top
+        if (scrollRect != null)
+        {
+            // The top is typically verticalNormalizedPosition = 1
+            scrollRect.verticalNormalizedPosition = 1f;
+        }
         }
         else
         {
