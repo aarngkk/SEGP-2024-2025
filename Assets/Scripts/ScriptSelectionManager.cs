@@ -15,6 +15,7 @@ public class ScriptSelectionManager : MonoBehaviour
     public List<Button> otherButtons; // drag all the other buttons here in the Inspector
 
     public ScrollRect scrollRect;
+    public TextMeshProUGUI selectedScriptTitleText;
 
     // List to store the full text details loaded from files
     private List<string> scripts = new List<string>();
@@ -77,6 +78,13 @@ public class ScriptSelectionManager : MonoBehaviour
     {
         btn.interactable = true;
     }
+    // Update the title display if a script was selected
+        if (!string.IsNullOrEmpty(SelectedScript) && selectedScriptTitleText != null)
+        {
+            // Assume the title is the first line of the script.
+            string[] lines = SelectedScript.Split('\n');
+            selectedScriptTitleText.text = lines.Length > 0 ? lines[0] : "Selected Script";
+        }
     }
 
     // Moves to the next script in the list
