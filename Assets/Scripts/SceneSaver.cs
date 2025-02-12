@@ -1,6 +1,14 @@
 using System.IO;
 using UnityEngine;
 
+[System.Serializable]
+public class SceneData
+{
+    public string sceneName;
+    public string selectedScript;
+    // Optionally, add additional data such as placeholder positions, etc.
+}
+
 public class SceneSaver : MonoBehaviour
 {
     // Path to save files (adjust as necessary)
@@ -15,10 +23,18 @@ public class SceneSaver : MonoBehaviour
 
     public void SaveScene(string sceneName)
     {
-        SceneData data = new SceneData { sceneName = sceneName };
+        // Create a SceneData object and fill it with data
+        SceneData data = new SceneData 
+        { 
+            sceneName = sceneName,
+            // For example, if you have a script selection manager,
+            // you could assign its SelectedScript here:
+            // selectedScript = YourScriptSelectionManager.Instance.SelectedScript;
+        };
+
         string json = JsonUtility.ToJson(data, true);
 
-        // Create a unique file name or simply use the scene name
+        // Use the scene name to create a unique file name
         string filePath = SavePath + sceneName + ".json";
         File.WriteAllText(filePath, json);
 
@@ -41,7 +57,7 @@ public class SceneSaver : MonoBehaviour
         }
     }
 
-    // You could also add a method to list all saved scenes:
+    // Optional: List all saved scenes
     public string[] GetAllSavedScenes()
     {
         if (!Directory.Exists(SavePath))
@@ -50,7 +66,7 @@ public class SceneSaver : MonoBehaviour
         string[] files = Directory.GetFiles(SavePath, "*.json");
         for (int i = 0; i < files.Length; i++)
         {
-            // Extract the file name without the path and extension
+            // Extract file name without path or extension
             files[i] = Path.GetFileNameWithoutExtension(files[i]);
         }
         return files;

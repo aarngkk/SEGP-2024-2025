@@ -13,7 +13,6 @@ public class ScriptSelectionManager : MonoBehaviour
     public Button selectButton;       // Button to select the current script
     public Button backButton;
     public List<Button> otherButtons; // drag all the other buttons here in the Inspector
-
     public ScrollRect scrollRect;
     public TextMeshProUGUI selectedScriptTitleText;
 
