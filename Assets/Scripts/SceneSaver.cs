@@ -21,15 +21,13 @@ public class SceneSaver : MonoBehaviour
             Directory.CreateDirectory(SavePath);
     }
 
-    public void SaveScene(string sceneName)
+public void SaveScene(string sceneName, string selectedScript)
     {
         // Create a SceneData object and fill it with data
         SceneData data = new SceneData 
-        { 
+        {
             sceneName = sceneName,
-            // For example, if you have a script selection manager,
-            // you could assign its SelectedScript here:
-            // selectedScript = YourScriptSelectionManager.Instance.SelectedScript;
+            selectedScript = selectedScript
         };
 
         string json = JsonUtility.ToJson(data, true);

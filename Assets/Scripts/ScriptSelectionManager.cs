@@ -145,4 +145,17 @@ public class ScriptSelectionManager : MonoBehaviour
         CloseScriptSelection();
     }
 }
+/// <summary>
+    /// Clears the current script selection.
+    /// Call this method when the user clicks the "Discard All" button.
+    /// </summary>
+    public void ClearSelection()
+    {
+        SelectedScript = "";
+        if (selectedScriptTitleText != null)
+        {
+            selectedScriptTitleText.text = "";
+        }
+        Debug.Log("Script selection cleared.");
+    }
 }
