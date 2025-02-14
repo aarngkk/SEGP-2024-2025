@@ -27,6 +27,9 @@ public class SceneSaverUI : MonoBehaviour
     // Flag to track if the scene has been saved
     public bool sceneIsSaved = false;
 
+    public Button saveButton;
+
+
     /// <summary>
     /// Called when the main Save button is pressed: opens the save pop-up panel.
     /// </summary>
@@ -129,6 +132,10 @@ public class SceneSaverUI : MonoBehaviour
                 if (savePanel != null && !savePanel.activeSelf)
                 {
                     OpenSavePanel();
+                    if (errorMessageText != null)
+                    {
+                        errorMessageText.text = "Please enter a scene name before exit.";
+                    }
                 }
                 return; // Prevent navigating away until the scene is saved
             }
@@ -174,6 +181,11 @@ public class SceneSaverUI : MonoBehaviour
         if (savePanel != null && savePanel.activeSelf)
         {
             CloseSavePanel();
+        }
+
+        if (saveButton != null)
+        {
+            saveButton.interactable = false;
         }
     }
 }

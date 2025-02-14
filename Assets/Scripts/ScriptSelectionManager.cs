@@ -6,36 +6,45 @@ using TMPro;  // Add this at the top
 public class ScriptSelectionManager : MonoBehaviour
 {
     // UI Elements assigned via the Inspector:
-    public GameObject scriptPanel;    // The pop-up panel to show/hide
-    public TextMeshProUGUI scriptDetailText;     // Reference to the Text component (make sure this is UnityEngine.UI.Text)
-    public Button nextButton;         // Button to go to the next script
-    public Button prevButton;         // Button to go to the previous script
-    public Button selectButton;       // Button to select the current script
-    public Button backButton;
-    public List<Button> otherButtons; // drag all the other buttons here in the Inspector
-    public ScrollRect scrollRect;
-    public TextMeshProUGUI selectedScriptTitleText;
+    public GameObject scriptPanel;                  // The pop-up panel to show/hide
+    public TextMeshProUGUI scriptDetailText;          // Displays the current script detail
+    public Button nextButton;                         // Button to go to the next script
+    public Button prevButton;                         // Button to go to the previous script
+    public Button selectButton;                       // Button to select the current script
+    public Button backButton;                         // Button to close the panel
+    public List<Button> otherButtons;                 // Other buttons to disable/enable
+    public ScrollRect scrollRect;                     // Scroll area for the script text
+    public TextMeshProUGUI selectedScriptTitleText;   // Displays the selected script's title
+
+    // Reference to the Save button (to enable/disable based on selection)
+    public Button saveButton;
 
     // List to store the full text details loaded from files
     private List<string> scripts = new List<string>();
 
     private int currentIndex = 0;
 
+    // The currently selected script (read-only property)
     public string SelectedScript { get; private set; }
 
     private void Start()
     {
-        LoadScripts();                 // Load the text details from the Resources folder
-        UpdateScriptDetail();          // Show the first script detail
-        OpenScriptSelection();  // Immediately open the script selection
-        // scriptPanel.SetActive(false);  // Hide the panel initially
+        LoadScripts();                // Load the script texts from Resources
+        UpdateScriptDetail();         // Display the first script detail
+        OpenScriptSelection();        // Open the script selection panel immediately
         backButton.onClick.AddListener(CloseScriptSelection);
+
+        // Initially, if no script is selected, disable the save button.
+        if (saveButton != null)
+        {
+            saveButton.interactable = false;
+        }
     }
 
     // Loads script details from text files in the Resources folder
     private void LoadScripts()
     {
-        // Assume we have 6 script files. Adjust the loop count if needed.
+        // Assume we have 8 script files. Adjust the count if needed.
         for (int i = 1; i <= 8; i++)
         {
             // Build the file name (without extension)
@@ -53,40 +62,41 @@ public class ScriptSelectionManager : MonoBehaviour
             }
         }
 
-        // Optional: Log how many scripts were loaded.
         Debug.Log("Loaded " + scripts.Count + " script details.");
     }
 
-    // Opens the pop-up panel
+    // Opens the pop-up panel and disables all other buttons
     public void OpenScriptSelection()
     {
         scriptPanel.SetActive(true);
-        // Disable all other buttons
-    foreach (Button btn in otherButtons)
-    {
-        btn.interactable = false;
-    }
-    }
-
-    // Closes the pop-up panel
-    public void CloseScriptSelection()
-    {
-    scriptPanel.SetActive(false);
-    // Re-enable the other buttons
-    foreach (Button btn in otherButtons)
-    {
-        btn.interactable = true;
-    }
-    // Update the title display if a script was selected
-        if (!string.IsNullOrEmpty(SelectedScript) && selectedScriptTitleText != null)
+        foreach (Button btn in otherButtons)
         {
-            // Assume the title is the first line of the script.
-            string[] lines = SelectedScript.Split('\n');
-            selectedScriptTitleText.text = lines.Length > 0 ? lines[0] : "Selected Script";
+            btn.interactable = false;
         }
     }
 
-    // Moves to the next script in the list
+    // Closes the pop-up panel, re-enables other buttons, and updates the title display
+    public void CloseScriptSelection()
+    {
+        scriptPanel.SetActive(false);
+        foreach (Button btn in otherButtons)
+        {
+            btn.interactable = true;
+        }
+        // Update the title display if a script was selected
+        if (!string.IsNullOrEmpty(SelectedScript) && selectedScriptTitleText != null)
+        {
+            string[] lines = SelectedScript.Split('\n');
+            selectedScriptTitleText.text = lines.Length > 0 ? lines[0] : "Selected Script";
+        }
+        if (saveButton != null)
+        {
+            saveButton.interactable = false;
+        }
+
+    }
+
+    // Advances to the next script in the list
     public void ShowNextScript()
     {
         if (scripts.Count == 0) return;
@@ -112,9 +122,15 @@ public class ScriptSelectionManager : MonoBehaviour
         SelectedScript = scripts[currentIndex];
         Debug.Log("Selected Script: " + SelectedScript);
         CloseScriptSelection();
+
+        // If a script is now selected, enable the save button.
+        if (saveButton != null)
+        {
+            saveButton.interactable = true;
+        }
     }
 
-    // Updates the text element with the current script detail
+    // Updates the text element with the current script detail and resets the scroll position
     private void UpdateScriptDetail()
     {
         if (scriptDetailText == null)
@@ -126,26 +142,26 @@ public class ScriptSelectionManager : MonoBehaviour
         if (scripts.Count > 0)
         {
             scriptDetailText.text = scripts[currentIndex];
-            // 2) Reset the scroll to the top
-        if (scrollRect != null)
-        {
-            // The top is typically verticalNormalizedPosition = 1
-            scrollRect.verticalNormalizedPosition = 1f;
-        }
+            if (scrollRect != null)
+            {
+                scrollRect.verticalNormalizedPosition = 1f;
+            }
         }
         else
         {
             scriptDetailText.text = "No script details loaded.";
         }
     }
+
     private void Update()
-{
-    if (Input.GetKeyDown(KeyCode.Escape) && scriptPanel.activeSelf)
     {
-        CloseScriptSelection();
+        if (Input.GetKeyDown(KeyCode.Escape) && scriptPanel.activeSelf)
+        {
+            CloseScriptSelection();
+        }
     }
-}
-/// <summary>
+
+    /// <summary>
     /// Clears the current script selection.
     /// Call this method when the user clicks the "Discard All" button.
     /// </summary>
@@ -157,5 +173,11 @@ public class ScriptSelectionManager : MonoBehaviour
             selectedScriptTitleText.text = "";
         }
         Debug.Log("Script selection cleared.");
+
+        // Disable the save button since no script is selected now.
+        if (saveButton != null)
+        {
+            saveButton.interactable = false;
+        }
     }
 }
