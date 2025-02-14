@@ -1,6 +1,7 @@
 SCRIPT 4
 ACT 3 SCENE 5
 LINES 146-157b
+08:32.00 - 09:17.84
 Juliet
 Not proud you have, but thankful that you have.
 Proud can I never be of what I hate;

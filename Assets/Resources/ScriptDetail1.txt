@@ -1,6 +1,7 @@
 SCRIPT 1
 ACT 3 SCENE 5
 LINES 103 - 111
+05:45:00 - 06:21:60
 Lady Capulet
 Find thou the means, and I'll find such a man.
 But now I'll tell thee joyful tidings, girl.

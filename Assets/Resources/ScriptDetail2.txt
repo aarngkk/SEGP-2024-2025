@@ -1,6 +1,7 @@
 SCRIPT 2
 ACT 3 SCENE 5
 LINES 112 - 125
+06:21.60 - 07:11.94
 Lady Capulet
 Marry, my child, early next Thursday morn
 The gallant, young, and noble gentleman,
