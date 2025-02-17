@@ -109,4 +109,5 @@ namespace TMPro.Examples
                 cameraTransform.rotation = desiredRotation;
         }
     }
+
 }
