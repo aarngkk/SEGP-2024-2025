@@ -1976,7 +1976,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 661158887}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2089510275}
+        m_TargetAssemblyTypeName: UndoRedoManager, Assembly-CSharp
+        m_MethodName: Redo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &661158887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2778,6 +2790,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08abd3e1a0aac574d9a0f4ef2d952597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  undoRedoManager: {fileID: 0}
 --- !u!136 &903808238
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3448,6 +3461,7 @@ MonoBehaviour:
   - {fileID: 661158886}
   saveButton: {fileID: 1641303131}
   sceneIsSaved: 0
+  undoRedoManager: {fileID: 0}
 --- !u!4 &1049344573
 Transform:
   m_ObjectHideFlags: 0
@@ -4357,7 +4371,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1348987075}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2089510275}
+        m_TargetAssemblyTypeName: UndoRedoManager, Assembly-CSharp
+        m_MethodName: Undo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1348987075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6882,6 +6908,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2078125927}
   m_CullTransparentMesh: 1
+--- !u!1 &2089510274
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2089510276}
+  - component: {fileID: 2089510275}
+  m_Layer: 0
+  m_Name: UndoRedoManagerGO
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2089510275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089510274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcd336ae7edc24465904c5e5f4ed488d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoButton: {fileID: 1348987074}
+  redoButton: {fileID: 661158886}
+--- !u!4 &2089510276
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089510274}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 299.18927, y: 1026.4747, z: 92.779816}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -6895,3 +6967,4 @@ SceneRoots:
   - {fileID: 1049344573}
   - {fileID: 1994102390}
   - {fileID: 1036150112}
+  - {fileID: 2089510276}
