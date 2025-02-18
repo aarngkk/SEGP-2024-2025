@@ -6,6 +6,7 @@ public class SceneData
 {
     public string sceneName;
     public string selectedScript;
+    public Vector3 modelPosition;
     // Optionally, add additional data such as placeholder positions, etc.
 }
 
@@ -21,15 +22,16 @@ public class SceneSaver : MonoBehaviour
             Directory.CreateDirectory(SavePath);
     }
 
-    public void SaveScene(string sceneName)
+    public void SaveScene(string sceneName, Vector3 modelPosition)
     {
         // Create a SceneData object and fill it with data
         SceneData data = new SceneData 
         { 
             sceneName = sceneName,
+            modelPosition = modelPosition,
             // For example, if you have a script selection manager,
             // you could assign its SelectedScript here:
-            // selectedScript = YourScriptSelectionManager.Instance.SelectedScript;
+            //selectedScript = ScriptSelectionManagerGO.Instance.SelectedScript
         };
 
         string json = JsonUtility.ToJson(data, true);

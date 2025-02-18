@@ -50,4 +50,18 @@ public class DragCharacter : MonoBehaviour
         worldPosition = Vector3.zero;
         return false;
     }
+
+    public void SaveScene(string sceneName)
+    {
+        FindObjectOfType<SceneSaver>().SaveScene(sceneName, transform.position);
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        SceneData data = FindObjectOfType<SceneSaver>().LoadScene(sceneName);
+        if (data != null)
+        {
+            rb.MovePosition(data.modelPosition);
+        }
+    }
 }

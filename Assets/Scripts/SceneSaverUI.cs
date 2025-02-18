@@ -82,12 +82,13 @@ public class SceneSaverUI : MonoBehaviour
             }
             return;
         }
+        FindObjectOfType<DragCharacter>().SaveScene(sceneName);
 
         // If you have a ScriptSelectionManager, you could get the selected script:
         // string selectedScript = yourScriptSelectionManager.SelectedScript;
 
         // Save the scene
-        sceneSaver.SaveScene(sceneName);
+        //sceneSaver.SaveScene(sceneName);
 
         // Optionally close the panel
         CloseSavePanel();
