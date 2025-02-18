@@ -18,6 +18,8 @@ public class DragCharacter : MonoBehaviour
     public float highlightIntensity = 2.5f; // Emission intensity for selection glow
     private Vector3 originalPosition; // Store the original position
 
+    private Bounds stageBounds; // Stores the stage area
+
     void Start()
     {
         cam = Camera.main;
@@ -40,6 +42,25 @@ public class DragCharacter : MonoBehaviour
             {
                 originalEmission = characterMaterial.GetColor("_EmissionColor"); // Store original emission color
             }
+        }
+
+        // Find the stage and get its bounds
+        GameObject stage = GameObject.FindWithTag("Stage"); // Ensure the stage has the "Stage" tag
+        if (stage != null)
+        {
+            BoxCollider stageCollider = stage.GetComponent<BoxCollider>();
+            if (stageCollider != null)
+            {
+                stageBounds = stageCollider.bounds;
+            }
+            else
+            {
+                Debug.LogError("Stage does not have a BoxCollider!");
+            }
+        }
+        else
+        {
+            Debug.LogError("No GameObject with the 'Stage' tag found!");
         }
     }
 
@@ -86,7 +107,12 @@ public class DragCharacter : MonoBehaviour
         if (isDragging && selectedCharacter == this && GetMouseWorldPosition(out Vector3 worldPosition))
         {
             Vector3 targetPosition = worldPosition + offset;
-            targetPosition.y = transform.position.y;
+            targetPosition.y = transform.position.y; // Keep original Y position
+
+            // Clamp position within stage bounds
+            targetPosition.x = Mathf.Clamp(targetPosition.x, stageBounds.min.x, stageBounds.max.x);
+            targetPosition.z = Mathf.Clamp(targetPosition.z, stageBounds.min.z, stageBounds.max.z);
+
             rb.MovePosition(targetPosition);
         }
     }
