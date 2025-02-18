@@ -29,7 +29,7 @@ public class SceneSaverUI : MonoBehaviour
 
     // Flag to track if the scene has been saved
     public bool sceneIsSaved = false;
-
+    public UndoRedoManager undoRedoManager;
     /// <summary>
     /// Called when the main Save button is pressed: opens the save pop-up panel.
     /// </summary>
@@ -105,6 +105,12 @@ public class SceneSaverUI : MonoBehaviour
         else
         {
             Debug.LogWarning("ScriptSelectionManager is not assigned.");
+        }
+
+        // Clear Undo/Redo after saving
+        if (undoRedoManager != null)
+        {
+            undoRedoManager.ClearHistory();
         }
 
         // Save the scene with both the scene name, the selected script, and the positions of draggable characters.

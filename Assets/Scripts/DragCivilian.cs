@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class DragCharacter : MonoBehaviour
 {
+    public UndoRedoManager undoRedoManager; // Assign via Inspector or use a singleton pattern
+    private Vector3 startPosition;
+    private Quaternion startRotation;
     private Vector3 offset;
     private Camera cam;
     private Rigidbody rb;
@@ -94,6 +97,10 @@ public class DragCharacter : MonoBehaviour
         if (Input.GetMouseButton(0)) // Left click to select
         {
             SelectCharacter();
+            // Store the transform data when dragging starts
+            startPosition = transform.position;
+            startRotation = transform.rotation;
+
             if (GetMouseWorldPosition(out Vector3 worldPosition))
             {
                 offset = transform.position - worldPosition;
@@ -120,6 +127,15 @@ public class DragCharacter : MonoBehaviour
     void OnMouseUp()
     {
         isDragging = false;
+         // If we have an UndoRedoManager assigned, record the move
+        if (undoRedoManager != null)
+        {
+            Vector3 endPosition = transform.position;
+            Quaternion endRotation = transform.rotation;
+
+            // Pass the old/new data to the manager
+            undoRedoManager.RecordMove(this, startPosition, startRotation, endPosition, endRotation);
+        }
     }
 
     private bool GetMouseWorldPosition(out Vector3 worldPosition)
