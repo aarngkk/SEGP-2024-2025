@@ -14,11 +14,13 @@ public class ScriptSelectionManager : MonoBehaviour
     public Button backButton;                         // Button to close the panel
     public List<Button> otherButtons;                 // Other buttons to disable/enable
     public ScrollRect scrollRect;                     // Scroll area for the script text
-    public TextMeshProUGUI selectedScriptTitleText;   // Displays the selected script's title
+    // public TextMeshProUGUI selectedScriptTitleText;   // Displays the selected script's title
 
     // Reference to the Save button (to enable/disable based on selection)
     public Button saveButton;
-
+    // This button's label will update to "Script" if nothing is selected,
+    // or to the selected script's title when a script is selected.
+    public Button scriptButton;
     // List to store the full text details loaded from files
     private List<string> scripts = new List<string>();
 
@@ -39,6 +41,7 @@ public class ScriptSelectionManager : MonoBehaviour
         {
             saveButton.interactable = false;
         }
+        UpdateScriptButtonLabel();
     }
 
     // Loads script details from text files in the Resources folder
@@ -84,11 +87,11 @@ public class ScriptSelectionManager : MonoBehaviour
             btn.interactable = true;
         }
         // Update the title display if a script was selected
-        if (!string.IsNullOrEmpty(SelectedScript) && selectedScriptTitleText != null)
-        {
-            string[] lines = SelectedScript.Split('\n');
-            selectedScriptTitleText.text = lines.Length > 0 ? lines[0] : "Selected Script";
-        }
+        // if (!string.IsNullOrEmpty(SelectedScript) && selectedScriptTitleText != null)
+        // {
+        //     string[] lines = SelectedScript.Split('\n');
+        //     selectedScriptTitleText.text = lines.Length > 0 ? lines[0] : "Selected Script";
+        // }
         if (saveButton != null)
         {
             saveButton.interactable = false;
@@ -128,6 +131,8 @@ public class ScriptSelectionManager : MonoBehaviour
         {
             saveButton.interactable = true;
         }
+        
+        UpdateScriptButtonLabel();
     }
 
     // Updates the text element with the current script detail and resets the scroll position
@@ -168,16 +173,57 @@ public class ScriptSelectionManager : MonoBehaviour
     public void ClearSelection()
     {
         SelectedScript = "";
-        if (selectedScriptTitleText != null)
-        {
-            selectedScriptTitleText.text = "";
-        }
-        Debug.Log("Script selection cleared.");
+        // if (selectedScriptTitleText != null)
+        // {
+        //     selectedScriptTitleText.text = "";
+        // }
+        // Debug.Log("Script selection cleared.");
 
         // Disable the save button since no script is selected now.
         if (saveButton != null)
         {
             saveButton.interactable = false;
         }
+        UpdateScriptButtonLabel();
+        Debug.Log("Script selection cleared.");
     }
+    /// <summary>
+    /// Updates the text on the script selection button.
+    /// If no script is selected, it shows the default text ("Script").
+    /// Otherwise, it displays the first line of the selected script.
+    /// </summary>
+    private void UpdateScriptButtonLabel()
+{
+    if (scriptButton != null)
+    {
+        TextMeshProUGUI buttonText = scriptButton.GetComponentInChildren<TextMeshProUGUI>();
+        if (buttonText != null)
+        {
+            if (string.IsNullOrEmpty(SelectedScript))
+            {
+                buttonText.text = "SCRIPT";
+            }
+            else
+            {
+                // Split the selected script into lines
+                string[] lines = SelectedScript.Split('\n');
+
+                // Find the first non-empty, trimmed line
+                string firstLine = "";
+                foreach (string line in lines)
+                {
+                    if (!string.IsNullOrEmpty(line.Trim()))
+                    {
+                        firstLine = line.Trim();
+                        break;
+                    }
+                }
+
+                // Update button text with the first non-empty line or fallback text
+                buttonText.text = !string.IsNullOrEmpty(firstLine) ? firstLine : "Script";
+            }
+        }
+    }
+}
+
 }

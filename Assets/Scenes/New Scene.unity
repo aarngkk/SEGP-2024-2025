@@ -358,7 +358,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Script
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 78e93e408d42f98419e3e9ccdc3ea219, type: 2}
   m_sharedMaterial: {fileID: 3161075823911177183, guid: 78e93e408d42f98419e3e9ccdc3ea219, type: 2}
@@ -2779,6 +2779,7 @@ MonoBehaviour:
   scrollRect: {fileID: 265588657}
   selectedScriptTitleText: {fileID: 1640359930}
   saveButton: {fileID: 1641303131}
+  scriptButton: {fileID: 463187562}
 --- !u!4 &953928682
 Transform:
   m_ObjectHideFlags: 0
@@ -3277,8 +3278,8 @@ MonoBehaviour:
   - {fileID: 463187562}
   - {fileID: 1641303131}
   - {fileID: 1593682037}
-  sceneIsSaved: 0
   saveButton: {fileID: 1641303131}
+  sceneIsSaved: 0
 --- !u!4 &1049344573
 Transform:
   m_ObjectHideFlags: 0
@@ -4406,7 +4407,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 0.4528302, g: 0.43360627, b: 0.43360627, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -6236,7 +6237,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1176155310}
   m_HandleRect: {fileID: 1176155309}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
