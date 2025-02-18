@@ -385,8 +385,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45
-  m_fontSizeBase: 45
+  m_fontSize: 38
+  m_fontSizeBase: 38
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1363,8 +1363,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -850, y: 480}
-  m_SizeDelta: {x: 165.0769, y: 65.1466}
+  m_AnchoredPosition: {x: -799.69385, y: 461.78992}
+  m_SizeDelta: {x: 270.8678, y: 103.4414}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &463187562
 MonoBehaviour:
@@ -2788,7 +2788,6 @@ MonoBehaviour:
   - {fileID: 1593682037}
   - {fileID: 463187562}
   scrollRect: {fileID: 265588657}
-  selectedScriptTitleText: {fileID: 1640359930}
   saveButton: {fileID: 1641303131}
   scriptButton: {fileID: 463187562}
 --- !u!4 &953928682
