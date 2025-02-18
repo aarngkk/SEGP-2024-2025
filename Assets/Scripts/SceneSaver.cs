@@ -1,13 +1,21 @@
 using System.IO;
+using System.Collections.Generic;
 using UnityEngine;
+
+[System.Serializable]
+public class CharacterData
+{
+    public string characterName;  // Use the GameObject's name or a unique ID
+    public Vector3 position;
+    public Quaternion rotation;
+}
 
 [System.Serializable]
 public class SceneData
 {
     public string sceneName;
     public string selectedScript;
-    public Vector3 modelPosition;
-    // Optionally, add additional data such as placeholder positions, etc.
+    public List<CharacterData> characters;  // List of character positions/rotations
 }
 
 public class SceneSaver : MonoBehaviour
@@ -22,18 +30,32 @@ public class SceneSaver : MonoBehaviour
             Directory.CreateDirectory(SavePath);
     }
 
-    public void SaveScene(string sceneName, Vector3 modelPosition)
+    public void SaveScene(string sceneName, string selectedScript)
     {
-        // Create a SceneData object and fill it with data
-        SceneData data = new SceneData 
-        { 
+        // Create a SceneData object and fill it with basic data
+        SceneData data = new SceneData
+        {
             sceneName = sceneName,
-            modelPosition = modelPosition,
-            // For example, if you have a script selection manager,
-            // you could assign its SelectedScript here:
-            //selectedScript = ScriptSelectionManagerGO.Instance.SelectedScript
+            selectedScript = selectedScript,
+            characters = new List<CharacterData>()
         };
 
+        // Find all draggable characters in the scene
+        DragCharacter[] draggableCharacters = FindObjectsOfType<DragCharacter>();
+        foreach (DragCharacter character in draggableCharacters)
+        {
+            CharacterData charData = new CharacterData
+            {
+                // Using the GameObject's name as an identifier
+                characterName = character.gameObject.name,
+                position = character.transform.position,
+                rotation = character.transform.rotation
+            };
+
+            data.characters.Add(charData);
+        }
+
+        // Convert the scene data to JSON
         string json = JsonUtility.ToJson(data, true);
 
         // Use the scene name to create a unique file name
