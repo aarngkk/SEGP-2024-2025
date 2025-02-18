@@ -2,6 +2,7 @@ SCRIPT 7
 ACT 3 SCENE 5
 LINES 197-226
 11:49.00 - 13:43.71
+
 Juliet
 Is there no pity sitting in the clouds
 That sees into the bottom of my grief?
@@ -13,6 +14,7 @@ Lady Capulet
 Talk not to me, for I'll not speak a word.
 Do as thou wilt, for I have done with thee.
 [Exit]
+
 Juliet
 O God! O nurse, how shall this be prevented?
 My husband is on earth, my faith in heaven.
@@ -23,14 +25,14 @@ Alack, alack, that heaven should practice stratagems
 Upon so soft a subject as myself!                                  
 What say'st thou? Hast thou not a word of joy?
 Some comfort, nurse.
+
 Nurse
-                                    Faith, here it is.
+Faith, here it is.
 Romeo is banishèd; and all the world to nothing
 That he dares ne'er come back to challenge you;
 Or if he do, it needs must be by stealth.
 Then, since the case so stands as now it doth,
 I think it best you married with the County.
-
 
 O, he's a lovely gentleman!
 Romeo's a dish-clout to him. An eagle, madam,

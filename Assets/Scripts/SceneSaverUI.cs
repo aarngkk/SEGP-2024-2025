@@ -24,11 +24,11 @@ public class SceneSaverUI : MonoBehaviour
     // List of main screen buttons to disable when the pop-up appears
     public List<Button> mainScreenButtons;
 
-    // Flag to track if the scene has been saved
-    public bool sceneIsSaved = false;
-
+    // Reference to the Save button (if using for enabling/disabling)
     public Button saveButton;
 
+    // Flag to track if the scene has been saved
+    public bool sceneIsSaved = false;
 
     /// <summary>
     /// Called when the main Save button is pressed: opens the save pop-up panel.
@@ -78,6 +78,7 @@ public class SceneSaverUI : MonoBehaviour
     /// <summary>
     /// Called when the Save button in the pop-up panel is clicked.
     /// Checks sceneName input, retrieves the selected script, and calls SaveScene.
+    /// Also, it will save the current positions of all draggable characters.
     /// </summary>
     public void OnSaveButtonClicked()
     {
@@ -88,7 +89,6 @@ public class SceneSaverUI : MonoBehaviour
         if (string.IsNullOrEmpty(sceneName))
         {
             Debug.LogWarning("Scene name is empty. Please enter a scene name.");
-            // Display warning in the errorMessageText
             if (errorMessageText != null)
             {
                 errorMessageText.text = "Please enter a scene name before saving.";
@@ -107,11 +107,9 @@ public class SceneSaverUI : MonoBehaviour
             Debug.LogWarning("ScriptSelectionManager is not assigned.");
         }
 
-        // Save the scene with both the scene name and the selected script
+        // Save the scene with both the scene name, the selected script, and the positions of draggable characters.
         sceneSaver.SaveScene(sceneName, selectedScript);
-        // Mark that the scene has been saved
-        sceneIsSaved = true;
-        // Optionally close the panel after saving
+        sceneIsSaved = true;  // Mark that the scene has been saved
         CloseSavePanel();
         SceneManager.LoadScene("Main Menu");
     }
@@ -123,10 +121,8 @@ public class SceneSaverUI : MonoBehaviour
     /// </summary>
     public void OnBackButtonPressed()
     {
-        // If a script is selected...
         if (scriptSelectionManager != null && !string.IsNullOrEmpty(scriptSelectionManager.SelectedScript))
         {
-            // ...and either the scene name is empty or the scene hasn't been saved...
             if (string.IsNullOrEmpty(sceneNameInputField.text) || !sceneIsSaved)
             {
                 if (savePanel != null && !savePanel.activeSelf)
@@ -141,8 +137,7 @@ public class SceneSaverUI : MonoBehaviour
             }
         }
         
-        Debug.Log("Conditions met. Loading MainMenu scene.");
-        // Otherwise, allow navigating back to the main menu
+        Debug.Log("Conditions met. Loading Main Menu scene.");
         SceneManager.LoadScene("Main Menu");
     }
 
@@ -157,7 +152,8 @@ public class SceneSaverUI : MonoBehaviour
 
     /// <summary>
     /// Called when the Discard All button is clicked.
-    /// This will clear the selected script and reset the scene save state.
+    /// This will clear the selected script, reset the scene save state,
+    /// and move all draggable characters back to their original positions.
     /// </summary>
     public void OnDiscardAllButtonClicked()
     {
@@ -171,10 +167,17 @@ public class SceneSaverUI : MonoBehaviour
         sceneNameInputField.text = "";
         sceneIsSaved = false;
 
-        // Optionally, also clear any error messages
+        // Optionally, clear any error messages
         if (errorMessageText != null)
         {
             errorMessageText.text = "All selections have been discarded.";
+        }
+
+        // Reset all draggable characters to their original positions
+        DragCharacter[] draggableCharacters = FindObjectsOfType<DragCharacter>();
+        foreach (DragCharacter character in draggableCharacters)
+        {
+            character.ResetPosition();
         }
 
         // Optionally, close the save panel if it's open

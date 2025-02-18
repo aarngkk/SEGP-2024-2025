@@ -16,12 +16,16 @@ public class DragCharacter : MonoBehaviour
 
     public Color highlightColor = Color.yellow; // Highlight color
     public float highlightIntensity = 2.5f; // Emission intensity for selection glow
+    private Vector3 originalPosition; // Store the original position
 
     void Start()
     {
         cam = Camera.main;
         rb = GetComponent<Rigidbody>();
         groundPlane = new Plane(Vector3.up, Vector3.zero); // Define a flat plane at y=0
+
+        // Store the original position at the start
+        originalPosition = transform.position;
 
         // Try to find the SkinnedMeshRenderer in child objects
         characterRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
@@ -149,5 +153,15 @@ public class DragCharacter : MonoBehaviour
 
             selectedCharacter = null;
         }
+    }
+
+    /// <summary>
+    /// Resets the character's position to its original position.
+    /// </summary>
+    public void ResetPosition()
+    {
+        transform.position = originalPosition;
+        // Optionally, reset rotation too:
+        // transform.rotation = Quaternion.identity;
     }
 }

@@ -2,31 +2,36 @@ SCRIPT 8
 ACT 3 SCENE 5
 LINES 227
 13:44.80 - 14:43.00
+
 Juliet
 Speakest thou from thy heart?
+
 Nurse
 And from my soul too, else beshrew them both.
+
 Juliet
 Amen!
+
 Nurse
 What?
+
 Juliet
-Well, thou hast comforted me marvelous much.           
+Well, thou hast comforted me marvelous much.
 Go in. And tell my lady I am gone,
 Having displeased my father, to Laurence' cell
 To make confession and to be absolved.
+
 Nurse
 Marry, I will, and this is wisely done.
 [Exit]
+
 Juliet
 Ancient damnation! O most wicked fiend!
 Is it more sin to wish me thus forsworn,
-
-
 Or to dispraise my lord with that same tongue
 Which she hath praised him with above compare
 So many thousand times? Go, counselor;
-Thou and my bosom henceforth shall be twain. 
+Thou and my bosom henceforth shall be twain.
 I'll to the friar, to know his remedy.
 If all else fail, myself have power to die.
 [Exit]
