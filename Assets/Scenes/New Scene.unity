@@ -2790,7 +2790,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08abd3e1a0aac574d9a0f4ef2d952597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  undoRedoManager: {fileID: 0}
+  undoRedoManager: {fileID: 2089510275}
 --- !u!136 &903808238
 CapsuleCollider:
   m_ObjectHideFlags: 0
