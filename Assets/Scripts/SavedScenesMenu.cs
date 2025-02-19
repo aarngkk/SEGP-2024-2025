@@ -39,7 +39,7 @@ public class SavedScenesMenu : MonoBehaviour
         {
             GameObject newButton = Instantiate(sceneButtonPrefab, contentParent);
             newButton.GetComponentInChildren<TextMeshProUGUI>().text = sceneName;
-           RectTransform buttonRect = newButton.GetComponent<RectTransform>();
+           //RectTransform buttonRect = newButton.GetComponent<RectTransform>();
             //buttonRect.sizeDelta = new Vector2(100, 30); // Set button size
 
         // Set spacing between buttons
@@ -49,11 +49,12 @@ public class SavedScenesMenu : MonoBehaviour
                 layoutGroup.spacing = 15; // Adjust spacing dynamically
             }*/
             // Add a click event to load the scene
-            newButton.GetComponent<Button>().onClick.AddListener(() => sceneSaver.LoadScene(sceneName));
+            newButton.GetComponent<Button>().onClick.AddListener(() => OnSceneButtonClicked(sceneName));
         }
          LayoutRebuilder.ForceRebuildLayoutImmediate(contentParent.GetComponent<RectTransform>());
    
     }
+    
     public void LoadSceneAndRestore(string sceneName)
     {
         // Store the selected scene name before switching scenes
@@ -61,6 +62,26 @@ public class SavedScenesMenu : MonoBehaviour
         PlayerPrefs.Save();
 
         // Load the scene where the model will be displayed
-        SceneManager.LoadScene("DisplayScene"); // Change to your actual scene name
+        SceneManager.LoadScene("Load Scene"); // Change to your actual scene name
+        Debug.Log("Loading load scene 1");
+    }
+    private void OnSceneButtonClicked(string sceneName)
+    {
+        // Load the saved scene data
+        SceneData sceneData = sceneSaver.LoadScene(sceneName);
+
+        if (sceneData != null)
+        {
+            // Pass the scene data to the next scene
+            SceneDataTransfer.Instance.SetSceneData(sceneData);
+
+            // Load the new scene
+            SceneManager.LoadScene("Load Scene"); // Replace "EditScene" with your target scene name
+            Debug.Log("Loading load scene 1");
+        }
+        else
+        {
+            Debug.LogError("Failed to load scene data for: " + sceneName);
+        }
     }
 }
