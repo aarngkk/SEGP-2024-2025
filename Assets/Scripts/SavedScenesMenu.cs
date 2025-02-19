@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class SavedScenesMenu : MonoBehaviour
@@ -52,5 +53,14 @@ public class SavedScenesMenu : MonoBehaviour
         }
          LayoutRebuilder.ForceRebuildLayoutImmediate(contentParent.GetComponent<RectTransform>());
    
+    }
+    public void LoadSceneAndRestore(string sceneName)
+    {
+        // Store the selected scene name before switching scenes
+        PlayerPrefs.SetString("LastLoadedScene", sceneName);
+        PlayerPrefs.Save();
+
+        // Load the scene where the model will be displayed
+        SceneManager.LoadScene("DisplayScene"); // Change to your actual scene name
     }
 }
