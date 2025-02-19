@@ -23,11 +23,50 @@ public class SceneSaver : MonoBehaviour
     // Path to save files (adjust as necessary)
     private string SavePath => Application.persistentDataPath + "/SavedScenes/";
 
+    public GameObject[] characterPrefabs;
     private void Start()
     {
         // Ensure the directory exists
         if (!Directory.Exists(SavePath))
             Directory.CreateDirectory(SavePath);
+        if (PlayerPrefs.HasKey("LastLoadedScene"))
+        {
+            string sceneName = PlayerPrefs.GetString("LastLoadedScene");
+            PlayerPrefs.DeleteKey("LastLoadedScene"); // Remove after loading
+            RestoreSavedScene(sceneName);
+        }
+    }
+    public void RestoreSavedScene(string sceneName)
+    {
+        SceneData data = LoadScene(sceneName);
+        if (data == null) return;
+
+        foreach (CharacterData charData in data.characters)
+        {
+            // Find the corresponding prefab
+            GameObject prefab = FindPrefabByName(charData.characterName);
+            if (prefab != null)
+            {
+                // Spawn character at saved position and rotation
+                GameObject newCharacter = Instantiate(prefab, charData.position, charData.rotation);
+                newCharacter.name = charData.characterName; // Keep the original name
+            }
+            else
+            {
+                Debug.LogError("Prefab not found for: " + charData.characterName);
+            }
+        }
+    }
+     public GameObject FindPrefabByName(string characterName)
+    {
+        foreach (GameObject prefab in characterPrefabs)
+        {
+            if (prefab.name == characterName)
+            {
+                return prefab;
+            }
+        }
+        return null;
     }
 
     public void SaveScene(string sceneName, string selectedScript)
