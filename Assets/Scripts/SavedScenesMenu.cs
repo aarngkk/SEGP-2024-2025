@@ -67,11 +67,13 @@ public class SavedScenesMenu : MonoBehaviour
     }
     private void OnSceneButtonClicked(string sceneName)
     {
+        Debug.Log("button clicked for scene: " + sceneName);
         // Load the saved scene data
         SceneData sceneData = sceneSaver.LoadScene(sceneName);
 
         if (sceneData != null)
         {
+            Debug.Log("Scene data loaded successfully: " + sceneData.sceneName);
             // Pass the scene data to the next scene
             SceneDataTransfer.Instance.SetSceneData(sceneData);
 
