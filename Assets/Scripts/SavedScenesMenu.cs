@@ -11,6 +11,13 @@ public class SavedScenesMenu : MonoBehaviour
     public Transform contentParent; // Assign the Scroll View Content in Inspector
     private VerticalLayoutGroup layoutGroup;
 
+    public GameObject sceneOptionsPanel; // The pop-up panel (assign in Inspector)
+    public TMP_Text sceneNameText; // Displays selected scene name (assign in Inspector)
+    public Button playButton, editButton, backButton; // Assign in Inspector
+    private string selectedSceneName; 
+
+    private List<Button> allSceneButtons = new List<Button>(); 
+
     void Start()
     {
         if (sceneSaver == null)
@@ -19,6 +26,8 @@ public class SavedScenesMenu : MonoBehaviour
         }
         layoutGroup = contentParent.GetComponent<VerticalLayoutGroup>(); // Get layout group
         PopulateSavedScenes();
+
+        sceneOptionsPanel.SetActive(false);
     }
 
     public void PopulateSavedScenes()
@@ -34,27 +43,43 @@ public class SavedScenesMenu : MonoBehaviour
         {
             layoutGroup.spacing = 80f; // Change this value to increase spacing
         }
+        allSceneButtons.Clear();
 
         foreach (string sceneName in savedScenes)
         {
             GameObject newButton = Instantiate(sceneButtonPrefab, contentParent);
             newButton.GetComponentInChildren<TextMeshProUGUI>().text = sceneName;
-           //RectTransform buttonRect = newButton.GetComponent<RectTransform>();
-            //buttonRect.sizeDelta = new Vector2(100, 30); // Set button size
-
-        // Set spacing between buttons
-            /*VerticalLayoutGroup layoutGroup = contentParent.GetComponent<VerticalLayoutGroup>();
-            if (layoutGroup != null)
-            {
-                layoutGroup.spacing = 15; // Adjust spacing dynamically
-            }*/
+           
+            Button buttonComponent = newButton.GetComponent<Button>();
+            allSceneButtons.Add(buttonComponent);
             // Add a click event to load the scene
-            newButton.GetComponent<Button>().onClick.AddListener(() => OnSceneButtonClicked(sceneName));
+            newButton.GetComponent<Button>().onClick.AddListener(() => ShowSceneOptions(sceneName));
         }
          LayoutRebuilder.ForceRebuildLayoutImmediate(contentParent.GetComponent<RectTransform>());
    
     }
-    
+
+    public void ShowSceneOptions(string sceneName) {
+        selectedSceneName = sceneName;
+        sceneNameText.text = "Would you like to edit or play " + sceneName;
+        
+        Debug.Log("Opening pop-up for: " + sceneName);
+
+        sceneOptionsPanel.SetActive(true);
+        
+        SetSceneButtonsInteractable(false);
+        
+        // Assign button functions dynamically
+        playButton.onClick.RemoveAllListeners();
+        editButton.onClick.RemoveAllListeners();
+        backButton.onClick.RemoveAllListeners();
+
+        playButton.onClick.AddListener(() => PlayScene(sceneName));
+        editButton.onClick.AddListener(() => EditScene(sceneName));
+        backButton.onClick.AddListener(() => CloseSceneOptions());
+
+    }
+    /*
     public void LoadSceneAndRestore(string sceneName)
     {
         // Store the selected scene name before switching scenes
@@ -64,8 +89,8 @@ public class SavedScenesMenu : MonoBehaviour
         // Load the scene where the model will be displayed
         SceneManager.LoadScene("Load Scene"); // Change to your actual scene name
         Debug.Log("Loading load scene 1");
-    }
-    private void OnSceneButtonClicked(string sceneName)
+    }*/
+    private void EditScene(string sceneName)
     {
         Debug.Log("button clicked for scene: " + sceneName);
         // Load the saved scene data
@@ -78,12 +103,45 @@ public class SavedScenesMenu : MonoBehaviour
             SceneDataTransfer.Instance.SetSceneData(sceneData);
 
             // Load the new scene
-            SceneManager.LoadScene("Load Scene"); // Replace "EditScene" with your target scene name
-            Debug.Log("Loading load scene 1");
+            SceneManager.LoadScene("Edit Scene"); // Replace "EditScene" with your target scene name
+            Debug.Log("Editing scene: "+ sceneName);
         }
         else
         {
             Debug.LogError("Failed to load scene data for: " + sceneName);
+        }
+    }
+    private void PlayScene(string sceneName)
+    {
+        Debug.Log("button clicked for scene: " + sceneName);
+        // Load the saved scene data
+        SceneData sceneData = sceneSaver.LoadScene(sceneName);
+
+        if (sceneData != null)
+        {
+            Debug.Log("Scene data loaded successfully: " + sceneData.sceneName);
+            // Pass the scene data to the next scene
+            SceneDataTransfer.Instance.SetSceneData(sceneData);
+
+            // Load the new scene
+            SceneManager.LoadScene("Play Scene"); // Replace "EditScene" with your target scene name
+            Debug.Log("Playing scene: " + sceneName);
+        }
+        else
+        {
+            Debug.LogError("Failed to load scene data for: " + sceneName);
+        }
+    }
+    public void CloseSceneOptions()
+    {
+        sceneOptionsPanel.SetActive(false);
+        SetSceneButtonsInteractable(true);
+    }
+    private void SetSceneButtonsInteractable(bool interactable)
+    {
+        foreach (Button btn in allSceneButtons)
+        {
+            btn.interactable = interactable;
         }
     }
 }
