@@ -24,6 +24,10 @@ public class UndoRedoManager : MonoBehaviour
     {
         UpdateButtonInteractable();  // At the start, likely both are empty
     }
+    private void Update()
+    {
+        UpdateButtonInteractable();
+    }
 
     /// <summary>
     /// Call this when a character finishes moving.
@@ -58,6 +62,8 @@ public class UndoRedoManager : MonoBehaviour
     /// </summary>
     public void Undo()
     {
+        UpdateButtonInteractable();
+
         if (undoStack.Count > 0)
         {
             MovementAction action = undoStack.Pop();
@@ -78,6 +84,8 @@ public class UndoRedoManager : MonoBehaviour
     /// </summary>
     public void Redo()
     {
+        UpdateButtonInteractable();
+
         if (redoStack.Count > 0)
         {
             MovementAction action = redoStack.Pop();
@@ -104,11 +112,26 @@ public class UndoRedoManager : MonoBehaviour
     }
 
     private void UpdateButtonInteractable()
+{
+    if (undoButton != null)
     {
-        if (undoButton != null)
-            undoButton.interactable = (undoStack.Count > 0);
-
-        if (redoButton != null)
-            redoButton.interactable = (redoStack.Count > 0);
+        bool canUndo = (undoStack.Count > 0);
+        if (undoButton.interactable != canUndo)
+        {
+            Debug.Log("Setting Undo button interactable to: " + canUndo);
+        }
+        undoButton.interactable = canUndo;
     }
+
+    if (redoButton != null)
+    {
+        bool canRedo = (redoStack.Count > 0);
+        if (redoButton.interactable != canRedo)
+        {
+            Debug.Log("Setting Redo button interactable to: " + canRedo);
+        }
+        redoButton.interactable = canRedo;
+    }
+}
+
 }
