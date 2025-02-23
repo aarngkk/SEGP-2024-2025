@@ -1192,6 +1192,92 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1550503792}
   m_SourcePrefab: {fileID: 100100000, guid: 407e2b0e361fead4c87db78df76c0112, type: 3}
+--- !u!1 &430160898 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 469985160b4dd5943ac2021cedeae9e4, type: 3}
+  m_PrefabInstance: {fileID: 1220555266}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &430160901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430160898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!54 &430160902
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430160898}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
+--- !u!136 &430160903
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430160898}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.61601007
+  m_Height: 2.9352012
+  m_Direction: 1
+  m_Center: {x: 0.0038637943, y: 1.426436, z: 0.099245645}
+--- !u!114 &430160904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430160898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08abd3e1a0aac574d9a0f4ef2d952597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoRedoManager: {fileID: 0}
 --- !u!1 &441692082
 GameObject:
   m_ObjectHideFlags: 0
@@ -2778,19 +2864,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &903808237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 903808234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08abd3e1a0aac574d9a0f4ef2d952597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  undoRedoManager: {fileID: 2089510275}
 --- !u!136 &903808238
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2841,7 +2914,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!114 &903808241
+--- !u!114 &903808243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 903808234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08abd3e1a0aac574d9a0f4ef2d952597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoRedoManager: {fileID: 0}
+--- !u!114 &903808244
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3822,7 +3908,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!136 &1122108410
 CapsuleCollider:
@@ -4133,10 +4219,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Juliet
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 469985160b4dd5943ac2021cedeae9e4, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 5217a9d7003a6ce449a2ef357f8689fa, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 469985160b4dd5943ac2021cedeae9e4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 430160904}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 469985160b4dd5943ac2021cedeae9e4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 430160903}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 469985160b4dd5943ac2021cedeae9e4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 430160902}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 469985160b4dd5943ac2021cedeae9e4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 430160901}
   m_SourcePrefab: {fileID: 100100000, guid: 469985160b4dd5943ac2021cedeae9e4, type: 3}
 --- !u!1 &1253078723
 GameObject:
@@ -9873,7 +9975,7 @@ PrefabInstance:
       addedObject: {fileID: 903808235}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5f16f00e2f07bf943b3c7307bb4b3526, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 903808237}
+      addedObject: {fileID: 903808243}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5f16f00e2f07bf943b3c7307bb4b3526, type: 3}
       insertIndex: -1
       addedObject: {fileID: 903808238}
@@ -9882,7 +9984,7 @@ PrefabInstance:
       addedObject: {fileID: 903808239}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5f16f00e2f07bf943b3c7307bb4b3526, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 903808241}
+      addedObject: {fileID: 903808244}
   m_SourcePrefab: {fileID: 100100000, guid: 5f16f00e2f07bf943b3c7307bb4b3526, type: 3}
 --- !u!1 &2078125927
 GameObject:
