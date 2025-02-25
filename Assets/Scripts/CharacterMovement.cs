@@ -10,6 +10,7 @@ public class DragCharacter : MonoBehaviour
     private Rigidbody rb;
     private bool isDragging = false;
     private static DragCharacter selectedCharacter = null;
+    public static DragCharacter SelectedCharacter => selectedCharacter; // Allows CameraController to check selection
     private Plane groundPlane;
 
     private Outline outline; // Reference to Quick Outline component

@@ -62,7 +62,7 @@ namespace TMPro.Examples
 
         void HandleMouseRotation()
         {
-            if (Input.GetMouseButton(1)) // 右键拖拽
+            if (Input.GetMouseButton(1) && DragCharacter.SelectedCharacter == null) // 右键拖拽
             {
                 float deltaX = Input.GetAxis("Mouse X") * MouseSensitivity;
                 float deltaY = Input.GetAxis("Mouse Y") * MouseSensitivity;
