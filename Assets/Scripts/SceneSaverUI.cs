@@ -33,6 +33,7 @@ public class SceneSaverUI : MonoBehaviour
     /// <summary>
     /// Called when the main Save button is pressed: opens the save pop-up panel.
     /// </summary>
+
     public void OpenSavePanel()
     {
         // Disable all main screen buttons
@@ -106,7 +107,23 @@ public class SceneSaverUI : MonoBehaviour
         {
             Debug.LogWarning("ScriptSelectionManager is not assigned.");
         }
+        
+        // Build the full path
+        string filePath = System.IO.Path.Combine(Application.persistentDataPath + "/SavedScenes/", sceneName + ".json");
 
+        // Check if file already exists and we haven't confirmed overwriting
+        if (System.IO.File.Exists(filePath))
+        {
+            // Warn the user: same scene name already exists
+            if (errorMessageText != null)
+            {
+                errorMessageText.text = "A scene with this name already exists.\n"
+                + "Please enter a different name.";
+            }
+            Debug.Log("Save aborted: file already exists. User must rename.");
+
+            return; // Stop here; user must press Save again to confirm
+        }
         // Clear Undo/Redo after saving
         if (undoRedoManager != null)
         {
