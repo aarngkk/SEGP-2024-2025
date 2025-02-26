@@ -33,7 +33,7 @@ public class ScriptSelectionManager : MonoBehaviour
     {
         LoadScripts();                // Load the script texts from Resources
         UpdateScriptDetail();         // Display the first script detail
-        OpenScriptSelection();        // Open the script selection panel immediately
+        //OpenScriptSelection();        // Open the script selection panel immediately
         backButton.onClick.AddListener(CloseScriptSelection);
 
         // Initially, if no script is selected, disable the save button.

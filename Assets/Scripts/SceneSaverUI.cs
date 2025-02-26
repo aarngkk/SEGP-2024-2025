@@ -83,6 +83,14 @@ public class SceneSaverUI : MonoBehaviour
     /// </summary>
     public void OnSaveButtonClicked()
     {
+        // Prevent saving if the tutorial is active.
+        if (TutorialManager.tutorialActive)
+        {
+            if (errorMessageText != null)
+                errorMessageText.text = "Finish the tutorial before saving!";
+            return;
+        }
+
         // Retrieve the scene name from the input field
         string sceneName = sceneNameInputField.text;
 
