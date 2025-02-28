@@ -15,6 +15,9 @@ public class ScriptSelectionManager : MonoBehaviour
     public List<Button> otherButtons;                 // Other buttons to disable/enable
     public ScrollRect scrollRect;                     // Scroll area for the script text
     // public TextMeshProUGUI selectedScriptTitleText;   // Displays the selected script's title
+    // public GameObject backgroundBlocker;
+    // public MonoBehaviour cameraZoomController;
+
 
     // Reference to the Save button (to enable/disable based on selection)
     public Button saveButton;
@@ -28,6 +31,7 @@ public class ScriptSelectionManager : MonoBehaviour
 
     // The currently selected script (read-only property)
     public string SelectedScript { get; private set; }
+    public static bool IsPanelOpen { get; private set; }
 
     private void Start()
     {
@@ -72,6 +76,8 @@ public class ScriptSelectionManager : MonoBehaviour
     public void OpenScriptSelection()
     {
         scriptPanel.SetActive(true);
+        IsPanelOpen = true; // Mark the panel as open
+
         foreach (Button btn in otherButtons)
         {
             btn.interactable = false;
@@ -82,21 +88,16 @@ public class ScriptSelectionManager : MonoBehaviour
     public void CloseScriptSelection()
     {
         scriptPanel.SetActive(false);
+            IsPanelOpen = false; // Mark the panel as closed
+
         foreach (Button btn in otherButtons)
         {
             btn.interactable = true;
         }
-        // Update the title display if a script was selected
-        // if (!string.IsNullOrEmpty(SelectedScript) && selectedScriptTitleText != null)
-        // {
-        //     string[] lines = SelectedScript.Split('\n');
-        //     selectedScriptTitleText.text = lines.Length > 0 ? lines[0] : "Selected Script";
-        // }
         if (saveButton != null)
         {
             saveButton.interactable = false;
         }
-
     }
 
     // Advances to the next script in the list

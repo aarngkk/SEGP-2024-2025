@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems; // <-- Add this line
 
 namespace TMPro.Examples
 {
@@ -31,6 +32,7 @@ namespace TMPro.Examples
         public float MoveSensitivity = 2.0f;
         public float MouseSensitivity = 2.0f;  // 鼠标灵敏度
         public float ScrollSensitivity = 5.0f; // 滚轮缩放速度
+        public static bool IsPanelOpen { get; private set; } // notify when script panel is open
 
         private Vector3 currentVelocity = Vector3.zero;
         private Vector3 desiredPosition;
@@ -75,6 +77,13 @@ namespace TMPro.Examples
 
         void HandleMouseZoom()
         {
+            //If the pointer is over UI, or if the ScriptSelectionManager's panel is open, ignore zoom input.
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+                return;
+
+            if (ScriptSelectionManager.IsPanelOpen)
+                return;
+
             float scrollInput = Input.GetAxis("Mouse ScrollWheel"); // 获取滚轮输入
             if (scrollInput != 0)
             {
