@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DragCharacter : MonoBehaviour
 {
-    public UndoRedoManager undoRedoManager; // Assign via Inspector or use a singleton pattern
+    public UndoRedoManager undoRedoManager;
     private Vector3 startPosition;
     private Quaternion startRotation;
     private Vector3 offset;
@@ -10,12 +10,15 @@ public class DragCharacter : MonoBehaviour
     private Rigidbody rb;
     private bool isDragging = false;
     private static DragCharacter selectedCharacter = null;
-    public static DragCharacter SelectedCharacter => selectedCharacter; // Allows CameraController to check selection
+    public static DragCharacter SelectedCharacter => selectedCharacter;
     private Plane groundPlane;
 
-    private Outline outline; // Reference to Quick Outline component
+    private Outline outline;
     private Vector3 originalPosition;
     private Bounds stageBounds;
+    private Transform parentObject;
+
+    private Transform snapTarget = null; // New: Holds the closest snap point
 
     void Start()
     {
@@ -24,14 +27,12 @@ public class DragCharacter : MonoBehaviour
         groundPlane = new Plane(Vector3.up, Vector3.zero);
         originalPosition = transform.position;
 
-        // Get the Outline component and disable it by default
         outline = GetComponent<Outline>();
         if (outline != null)
         {
             outline.enabled = false;
         }
 
-        // Get stage bounds
         GameObject stage = GameObject.FindWithTag("Stage");
         if (stage != null)
         {
@@ -49,23 +50,23 @@ public class DragCharacter : MonoBehaviour
         {
             Debug.LogError("No GameObject with the 'Stage' tag found!");
         }
+
+        parentObject = transform.parent != null ? transform.parent : transform;
     }
 
     void Update()
     {
-        // Rotate character to face the mouse when right-click is held
         if (Input.GetMouseButton(1) && selectedCharacter == this && GetMouseWorldPosition(out Vector3 mouseWorldPos))
         {
-            Vector3 direction = mouseWorldPos - transform.position;
+            Vector3 direction = mouseWorldPos - parentObject.position;
             direction.y = 0;
             if (direction.magnitude > 0.1f)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+                parentObject.rotation = Quaternion.Slerp(parentObject.rotation, targetRotation, Time.deltaTime * 10f);
             }
         }
 
-        // Deselect if the player clicks elsewhere
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -81,13 +82,12 @@ public class DragCharacter : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             SelectCharacter();
-            // Store the transform data when dragging starts
-            startPosition = transform.position;
-            startRotation = transform.rotation;
+            startPosition = parentObject.position;
+            startRotation = parentObject.rotation;
 
             if (GetMouseWorldPosition(out Vector3 worldPosition))
             {
-                offset = transform.position - worldPosition;
+                offset = parentObject.position - worldPosition;
                 isDragging = true;
             }
         }
@@ -98,9 +98,8 @@ public class DragCharacter : MonoBehaviour
         if (isDragging && selectedCharacter == this && GetMouseWorldPosition(out Vector3 worldPosition))
         {
             Vector3 targetPosition = worldPosition + offset;
-            targetPosition.y = transform.position.y;
+            targetPosition.y = parentObject.position.y;
 
-            // Clamp position within stage bounds
             targetPosition.x = Mathf.Clamp(targetPosition.x, stageBounds.min.x, stageBounds.max.x);
             targetPosition.z = Mathf.Clamp(targetPosition.z, stageBounds.min.z, stageBounds.max.z);
 
@@ -111,13 +110,25 @@ public class DragCharacter : MonoBehaviour
     void OnMouseUp()
     {
         isDragging = false;
-         // If we have an UndoRedoManager assigned, record the move
+
+        if (snapTarget != null)
+        {
+            parentObject.position = snapTarget.position;
+            parentObject.rotation = snapTarget.rotation;
+
+            // Find a SnapPointHighlightController in the snap target's parent
+            SnapPointHighlightController snapHighlight = snapTarget.GetComponentInParent<SnapPointHighlightController>();
+            if (snapHighlight != null)
+            {
+                snapHighlight.SetCharacterSnapped(true);
+            }
+        }
+
         if (undoRedoManager != null)
         {
-            Vector3 endPosition = transform.position;
-            Quaternion endRotation = transform.rotation;
+            Vector3 endPosition = parentObject.position;
+            Quaternion endRotation = parentObject.rotation;
 
-            // Pass the old/new data to the manager
             undoRedoManager.RecordMove(this, startPosition, startRotation, endPosition, endRotation);
         }
     }
@@ -136,7 +147,6 @@ public class DragCharacter : MonoBehaviour
 
     private void SelectCharacter()
     {
-        // Deselect previous character
         if (selectedCharacter != null)
         {
             selectedCharacter.DeselectCharacter();
@@ -144,7 +154,6 @@ public class DragCharacter : MonoBehaviour
 
         selectedCharacter = this;
 
-        // Enable the outline effect
         if (outline != null)
         {
             outline.enabled = true;
@@ -155,7 +164,6 @@ public class DragCharacter : MonoBehaviour
     {
         if (selectedCharacter == this)
         {
-            // Disable the outline effect
             if (outline != null)
             {
                 outline.enabled = false;
@@ -165,11 +173,30 @@ public class DragCharacter : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Resets the character's position to its original position.
-    /// </summary>
     public void ResetPosition()
     {
-        transform.position = originalPosition;
+        parentObject.position = originalPosition;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("SnapPoint"))
+        {
+            snapTarget = other.transform;
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("SnapPoint"))
+        {
+            snapTarget = null;
+
+            // Notify the SnapPointHighlightController that the character is leaving
+            SnapPointHighlightController snapHighlight = other.GetComponentInParent<SnapPointHighlightController>();
+            if (snapHighlight != null)
+            {
+                snapHighlight.SetCharacterSnapped(false);
+            }
+        }
     }
 }
