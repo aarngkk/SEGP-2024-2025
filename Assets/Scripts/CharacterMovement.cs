@@ -192,14 +192,13 @@ public class DragCharacter : MonoBehaviour
                 snapHighlight.SetCharacterSnapped(true);
             }
 
-            // Notify SnapManager that a character has snapped
+            // Notify SnapManager of the specific snap point
             if (snapManager != null)
             {
-                snapManager.SetCharacterSnapped(true);
+                snapManager.SetCharacterSnapped(true, other.gameObject.name); // Pass snap point name
             }
         }
     }
-
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("SnapPoint") && other.transform == snapTarget)
@@ -215,7 +214,7 @@ public class DragCharacter : MonoBehaviour
             // Notify SnapManager that no character is snapped
             if (snapManager != null)
             {
-                snapManager.SetCharacterSnapped(false);
+                snapManager.SetCharacterSnapped(false, "");
             }
         }
     }

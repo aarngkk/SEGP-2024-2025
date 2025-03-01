@@ -3,12 +3,29 @@ using UnityEngine.UI;
 
 public class SnapManager : MonoBehaviour
 {
-    public Button playSceneButton; // Assign in Inspector
-    private bool isCharacterSnapped = false;
+    public Button playSceneButton;
+    public PlaySceneButton playSceneButtonScript; // Assign in Inspector
+    private string currentSnapPoint = "";
 
-    public void SetCharacterSnapped(bool snapped)
+    void Start()
     {
-        isCharacterSnapped = snapped;
-        playSceneButton.interactable = snapped; // Enable/Disable the button
+        playSceneButton.interactable = false;
+    }
+
+    public void SetCharacterSnapped(bool snapped, string snapPointName)
+    {
+        Debug.Log($"SetCharacterSnapped called. Snapped: {snapped}, SnapPoint: {snapPointName}");
+
+        playSceneButton.interactable = snapped;
+
+        if (snapped)
+        {
+            currentSnapPoint = snapPointName;
+            playSceneButtonScript.SetCurrentSnapPoint(snapPointName); // Inform PlayButton script
+        }
+        else
+        {
+            currentSnapPoint = "";
+        }
     }
 }
