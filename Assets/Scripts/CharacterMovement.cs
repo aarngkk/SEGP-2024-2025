@@ -19,6 +19,7 @@ public class DragCharacter : MonoBehaviour
     private Transform parentObject;
 
     private Transform snapTarget = null; // New: Holds the closest snap point
+    private SnapManager snapManager;
 
     void Start()
     {
@@ -26,6 +27,7 @@ public class DragCharacter : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         groundPlane = new Plane(Vector3.up, Vector3.zero);
         originalPosition = transform.position;
+        snapManager = FindObjectOfType<SnapManager>();
 
         outline = GetComponent<Outline>();
         if (outline != null)
@@ -183,19 +185,37 @@ public class DragCharacter : MonoBehaviour
         if (other.CompareTag("SnapPoint"))
         {
             snapTarget = other.transform;
+
+            SnapPointHighlightController snapHighlight = other.GetComponentInParent<SnapPointHighlightController>();
+            if (snapHighlight != null)
+            {
+                snapHighlight.SetCharacterSnapped(true);
+            }
+
+            // Notify SnapManager that a character has snapped
+            if (snapManager != null)
+            {
+                snapManager.SetCharacterSnapped(true);
+            }
         }
     }
+
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("SnapPoint"))
+        if (other.CompareTag("SnapPoint") && other.transform == snapTarget)
         {
             snapTarget = null;
 
-            // Notify the SnapPointHighlightController that the character is leaving
             SnapPointHighlightController snapHighlight = other.GetComponentInParent<SnapPointHighlightController>();
             if (snapHighlight != null)
             {
                 snapHighlight.SetCharacterSnapped(false);
+            }
+
+            // Notify SnapManager that no character is snapped
+            if (snapManager != null)
+            {
+                snapManager.SetCharacterSnapped(false);
             }
         }
     }
