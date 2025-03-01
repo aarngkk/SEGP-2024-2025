@@ -100,7 +100,7 @@ public class SavedScenesMenu : MonoBehaviour
         {
             Debug.Log("Scene data loaded successfully: " + sceneData.sceneName);
             // Pass the scene data to the next scene
-            SceneDataTransfer.Instance.SetSceneData(sceneData);
+            SceneDataTransfer.Instance.SetSceneData(sceneData, sceneName);
 
             // Load the new scene
             SceneManager.LoadScene("Edit Scene"); // Replace "EditScene" with your target scene name
@@ -121,7 +121,7 @@ public class SavedScenesMenu : MonoBehaviour
         {
             Debug.Log("Scene data loaded successfully: " + sceneData.sceneName);
             // Pass the scene data to the next scene
-            SceneDataTransfer.Instance.SetSceneData(sceneData);
+            SceneDataTransfer.Instance.SetSceneData(sceneData, sceneName);
 
             // Load the new scene
             SceneManager.LoadScene("Play Scene"); // Replace "EditScene" with your target scene name

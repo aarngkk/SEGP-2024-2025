@@ -34,6 +34,7 @@ public class SceneSaverUI : MonoBehaviour
     /// Called when the main Save button is pressed: opens the save pop-up panel.
     /// </summary>
 
+
     public void OpenSavePanel()
     {
         // Disable all main screen buttons
@@ -143,6 +144,21 @@ public class SceneSaverUI : MonoBehaviour
         sceneIsSaved = true;  // Mark that the scene has been saved
         CloseSavePanel();
         SceneManager.LoadScene("Main Menu");
+    }
+
+    public void OnEditSceneSaveButtonClicked()
+    {
+        string selectedScript = scriptSelectionManager != null ? scriptSelectionManager.SelectedScript : "";
+
+        if (!string.IsNullOrEmpty(SceneDataTransfer.Instance.SceneName))
+        {
+            sceneSaver.SaveScene(SceneDataTransfer.Instance.SceneName, selectedScript);
+            Debug.Log("Edited scene saved as: " + SceneDataTransfer.Instance.SceneName);
+        }
+        else
+        {
+            Debug.LogError("No scene is currently loaded. Please provide a scene name.");
+        }
     }
 
     /// <summary>

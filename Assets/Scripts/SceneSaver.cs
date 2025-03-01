@@ -71,6 +71,10 @@ public class SceneSaver : MonoBehaviour
 
     public void SaveScene(string sceneName, string selectedScript)
     {
+        if (!string.IsNullOrEmpty(SceneDataTransfer.Instance.SceneName))
+        {
+            sceneName = SceneDataTransfer.Instance.SceneName; // Use the loaded scene name
+        }
         // Create a SceneData object and fill it with basic data
         SceneData data = new SceneData
         {

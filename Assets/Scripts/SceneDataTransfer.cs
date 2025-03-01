@@ -5,6 +5,7 @@ public class SceneDataTransfer : MonoBehaviour
     public static SceneDataTransfer Instance { get; private set; }
 
     public SceneData SceneData { get; private set; }
+    public string SceneName { get; private set; } // Track scene name
 
     private void Awake()
     {
@@ -19,8 +20,9 @@ public class SceneDataTransfer : MonoBehaviour
         }
     }
 
-    public void SetSceneData(SceneData sceneData)
+    public void SetSceneData(SceneData sceneData,string sceneName)
     {
         SceneData = sceneData;
+        SceneName = sceneName;
     }
 }
