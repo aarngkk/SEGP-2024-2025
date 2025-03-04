@@ -10,8 +10,6 @@ TagManager:
   - DresserZone
   - Juliet
   - LadyCapulet
-  - JulietCutscene
-  - LadyCapuletCutscene
   layers:
   - Default
   - TransparentFX

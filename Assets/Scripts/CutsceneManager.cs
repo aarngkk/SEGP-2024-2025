@@ -31,46 +31,11 @@ public class CutsceneManager : MonoBehaviour
             return;
         }
 
-        // Find characters in the scene
-        GameObject juliet = GameObject.FindWithTag("Juliet");
-        GameObject ladyCapulet = GameObject.FindWithTag("LadyCapulet");
+        Debug.Log($"Playing {cutsceneType} cutscene: {currentCutscene.name}");
 
-        if (juliet != null && ladyCapulet != null)
-        {
-            // Store original positions
-            julietOriginalPos = juliet.transform.position;
-            ladyCapuletOriginalPos = ladyCapulet.transform.position;
-            julietOriginalRot = juliet.transform.rotation;
-            ladyCapuletOriginalRot = ladyCapulet.transform.rotation;
-
-            // Move characters to preset positions
-            MoveToCutscenePosition(juliet, "JulietCutscene");
-            MoveToCutscenePosition(ladyCapulet, "LadyCapuletCutscene");
-        }
-        else
-        {
-            Debug.LogWarning("Juliet or Lady Capulet not found in scene!");
-        }
-
-        // Play cutscene
         currentCutscene.Play();
 
-        // Wait for cutscene to end, then reset positions
         StartCoroutine(WaitForCutscene(currentCutscene, onCutsceneEnd));
-    }
-
-    private void MoveToCutscenePosition(GameObject character, string cutscenePositionTag)
-    {
-        GameObject cutscenePosition = GameObject.FindWithTag(cutscenePositionTag);
-        if (cutscenePosition != null)
-        {
-            character.transform.position = cutscenePosition.transform.position;
-            character.transform.rotation = cutscenePosition.transform.rotation;
-        }
-        else
-        {
-            Debug.LogWarning($"Cutscene position {cutscenePositionTag} not found!");
-        }
     }
 
     private IEnumerator WaitForCutscene(PlayableDirector director, System.Action onCutsceneEnd)

@@ -120,21 +120,31 @@ public class DragCharacter : MonoBehaviour
 
         CheckSnapPoint();
     }
-
     void CheckSnapPoint()
     {
         Collider[] colliders = Physics.OverlapSphere(parentObject.position, 0.5f);
+
         foreach (Collider col in colliders)
         {
             if (col.CompareTag("BedZone"))
             {
                 Debug.Log("Snapped to Bed");
+
+                // Set group to preset Bed position
+                parentObject.position = new Vector3(-4.0f, -1.5f, -4.1f); // Example coordinates
+                parentObject.rotation = Quaternion.Euler(0, 0, 0); // Example rotation
+
                 FindObjectOfType<PlaySceneButton>().SetCurrentSnapPoint("Bed");
                 return;
             }
             else if (col.CompareTag("DresserZone"))
             {
                 Debug.Log("Snapped to Dresser");
+
+                // Set group to preset Dresser position
+                parentObject.position = new Vector3(4.7f, -1.5f, -3.85f); // Example coordinates
+                parentObject.rotation = Quaternion.Euler(0, 0, 0); // Example rotation
+
                 FindObjectOfType<PlaySceneButton>().SetCurrentSnapPoint("Dresser");
                 return;
             }

@@ -1643,7 +1643,7 @@ MonoBehaviour:
   m_InfiniteClipApplyFootIK: 1
   mInfiniteClipLoop: 0
   m_MatchTargetFields: 63
-  m_Position: {x: -4.1075506, y: 1.6865144, z: 2.6602561}
+  m_Position: {x: -4.5715995, y: 1.6865144, z: 4.376582}
   m_EulerAngles: {x: 0, y: 0, z: 0}
   m_AvatarMask: {fileID: 0}
   m_ApplyAvatarMask: 1
@@ -2064,7 +2064,7 @@ MonoBehaviour:
   m_InfiniteClipApplyFootIK: 1
   mInfiniteClipLoop: 0
   m_MatchTargetFields: 63
-  m_Position: {x: -4.485781, y: 1.4766335, z: 2.2814202}
+  m_Position: {x: -4.9687705, y: 1.5531046, z: 3.8026962}
   m_EulerAngles: {x: 0, y: 0, z: 0}
   m_AvatarMask: {fileID: 0}
   m_ApplyAvatarMask: 1
