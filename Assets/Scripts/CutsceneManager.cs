@@ -1,57 +1,98 @@
 using UnityEngine;
 using UnityEngine.Playables;
+using System.Collections;
 
 public class CutsceneManager : MonoBehaviour
 {
-    public static CutsceneManager Instance { get; private set; } // Singleton reference
+    public PlayableDirector bedCutscene;     // Assign in Inspector
+    public PlayableDirector dresserCutscene; // Assign in Inspector
 
-    public PlayableDirector bedCutscene;
-    public PlayableDirector dresserCutscene;
+    private PlayableDirector currentCutscene;
 
-    private System.Action onCutsceneEnd; // Callback for when cutscene ends
+    private Vector3 julietOriginalPos, ladyCapuletOriginalPos;
+    private Quaternion julietOriginalRot, ladyCapuletOriginalRot;
 
-    private void Awake()
+    public void PlayCutscene(string cutsceneType, System.Action onCutsceneEnd)
     {
-        if (Instance == null)
+        Debug.Log($"Attempting to play cutscene: {cutsceneType}");
+
+        if (cutsceneType == "Bed" && bedCutscene != null)
         {
-            Instance = this;
+            currentCutscene = bedCutscene;
+        }
+        else if (cutsceneType == "Dresser" && dresserCutscene != null)
+        {
+            currentCutscene = dresserCutscene;
         }
         else
         {
-            Destroy(gameObject);
+            Debug.LogWarning("Invalid cutscene type or cutscene not assigned!");
+            onCutsceneEnd?.Invoke();
+            return;
         }
-    }
 
-    public void PlayCutscene(string snapPoint, System.Action onComplete = null)
-    {
-        Debug.Log($"Playing cutscene for: {snapPoint}");
+        // Find characters in the scene
+        GameObject juliet = GameObject.FindWithTag("Juliet");
+        GameObject ladyCapulet = GameObject.FindWithTag("LadyCapulet");
 
-        PlayableDirector director = null;
-
-        if (snapPoint == "BedSnapPoint")
-            director = bedCutscene;
-        else if (snapPoint == "DresserSnapPoint")
-            director = dresserCutscene;
-
-        if (director != null)
+        if (juliet != null && ladyCapulet != null)
         {
-            onCutsceneEnd = onComplete; // Store callback for when cutscene ends
-            director.stopped -= CutsceneFinished; // Ensure event isn't added multiple times
-            director.stopped += CutsceneFinished; // Subscribe to event
-            director.Play(); // Play the cutscene
-            Debug.Log($"Cutscene {snapPoint} started.");
+            // Store original positions
+            julietOriginalPos = juliet.transform.position;
+            ladyCapuletOriginalPos = ladyCapulet.transform.position;
+            julietOriginalRot = juliet.transform.rotation;
+            ladyCapuletOriginalRot = ladyCapulet.transform.rotation;
+
+            // Move characters to preset positions
+            MoveToCutscenePosition(juliet, "JulietCutscene");
+            MoveToCutscenePosition(ladyCapulet, "LadyCapuletCutscene");
         }
         else
         {
-            Debug.LogError("Cutscene not found!");
+            Debug.LogWarning("Juliet or Lady Capulet not found in scene!");
+        }
+
+        // Play cutscene
+        currentCutscene.Play();
+
+        // Wait for cutscene to end, then reset positions
+        StartCoroutine(WaitForCutscene(currentCutscene, onCutsceneEnd));
+    }
+
+    private void MoveToCutscenePosition(GameObject character, string cutscenePositionTag)
+    {
+        GameObject cutscenePosition = GameObject.FindWithTag(cutscenePositionTag);
+        if (cutscenePosition != null)
+        {
+            character.transform.position = cutscenePosition.transform.position;
+            character.transform.rotation = cutscenePosition.transform.rotation;
+        }
+        else
+        {
+            Debug.LogWarning($"Cutscene position {cutscenePositionTag} not found!");
         }
     }
 
-    private void CutsceneFinished(PlayableDirector director)
+    private IEnumerator WaitForCutscene(PlayableDirector director, System.Action onCutsceneEnd)
     {
-        Debug.Log("Cutscene finished.");
-        director.stopped -= CutsceneFinished; // Unsubscribe to prevent memory leaks
+        while (director.state == PlayState.Playing)
+        {
+            yield return null;
+        }
 
-        onCutsceneEnd?.Invoke(); // Call scene transition
+        // Restore original positions
+        GameObject juliet = GameObject.FindWithTag("Juliet");
+        GameObject ladyCapulet = GameObject.FindWithTag("LadyCapulet");
+
+        if (juliet != null && ladyCapulet != null)
+        {
+            juliet.transform.position = julietOriginalPos;
+            ladyCapulet.transform.position = ladyCapuletOriginalPos;
+            juliet.transform.rotation = julietOriginalRot;
+            ladyCapulet.transform.rotation = ladyCapuletOriginalRot;
+        }
+
+        // Call next action after cutscene
+        onCutsceneEnd?.Invoke();
     }
 }

@@ -6,7 +6,12 @@ TagManager:
   tags:
   - Character
   - Stage
-  - SnapPoint
+  - BedZone
+  - DresserZone
+  - Juliet
+  - LadyCapulet
+  - JulietCutscene
+  - LadyCapuletCutscene
   layers:
   - Default
   - TransparentFX

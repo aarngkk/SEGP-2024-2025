@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DragCharacter : MonoBehaviour
 {
-    public UndoRedoManager undoRedoManager;
+    public UndoRedoManager undoRedoManager; // Assign via Inspector or use a singleton pattern
     private Vector3 startPosition;
     private Quaternion startRotation;
     private Vector3 offset;
@@ -10,16 +10,14 @@ public class DragCharacter : MonoBehaviour
     private Rigidbody rb;
     private bool isDragging = false;
     private static DragCharacter selectedCharacter = null;
-    public static DragCharacter SelectedCharacter => selectedCharacter;
+    public static DragCharacter SelectedCharacter => selectedCharacter; // Allows CameraController to check selection
     private Plane groundPlane;
 
-    private Outline outline;
+    private Outline outline; // Reference to Quick Outline component
     private Vector3 originalPosition;
     private Bounds stageBounds;
-    private Transform parentObject;
 
-    private Transform snapTarget = null; // New: Holds the closest snap point
-    private SnapManager snapManager;
+    private Transform parentObject; // New: Reference to parent group
 
     void Start()
     {
@@ -27,7 +25,6 @@ public class DragCharacter : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         groundPlane = new Plane(Vector3.up, Vector3.zero);
         originalPosition = transform.position;
-        snapManager = FindObjectOfType<SnapManager>();
 
         outline = GetComponent<Outline>();
         if (outline != null)
@@ -53,6 +50,7 @@ public class DragCharacter : MonoBehaviour
             Debug.LogError("No GameObject with the 'Stage' tag found!");
         }
 
+        // Find the parent GameObject (if this character has one)
         parentObject = transform.parent != null ? transform.parent : transform;
     }
 
@@ -113,26 +111,37 @@ public class DragCharacter : MonoBehaviour
     {
         isDragging = false;
 
-        if (snapTarget != null)
-        {
-            parentObject.position = snapTarget.position;
-            parentObject.rotation = snapTarget.rotation;
-
-            // Find a SnapPointHighlightController in the snap target's parent
-            SnapPointHighlightController snapHighlight = snapTarget.GetComponentInParent<SnapPointHighlightController>();
-            if (snapHighlight != null)
-            {
-                snapHighlight.SetCharacterSnapped(true);
-            }
-        }
-
         if (undoRedoManager != null)
         {
             Vector3 endPosition = parentObject.position;
             Quaternion endRotation = parentObject.rotation;
-
             undoRedoManager.RecordMove(this, startPosition, startRotation, endPosition, endRotation);
         }
+
+        CheckSnapPoint();
+    }
+
+    void CheckSnapPoint()
+    {
+        Collider[] colliders = Physics.OverlapSphere(parentObject.position, 0.5f);
+        foreach (Collider col in colliders)
+        {
+            if (col.CompareTag("BedZone"))
+            {
+                Debug.Log("Snapped to Bed");
+                FindObjectOfType<PlaySceneButton>().SetCurrentSnapPoint("Bed");
+                return;
+            }
+            else if (col.CompareTag("DresserZone"))
+            {
+                Debug.Log("Snapped to Dresser");
+                FindObjectOfType<PlaySceneButton>().SetCurrentSnapPoint("Dresser");
+                return;
+            }
+        }
+
+        Debug.Log("Not snapped to a valid point.");
+        FindObjectOfType<PlaySceneButton>().SetCurrentSnapPoint(""); // Disable play button
     }
 
     private bool GetMouseWorldPosition(out Vector3 worldPosition)
@@ -178,44 +187,5 @@ public class DragCharacter : MonoBehaviour
     public void ResetPosition()
     {
         parentObject.position = originalPosition;
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("SnapPoint"))
-        {
-            snapTarget = other.transform;
-
-            SnapPointHighlightController snapHighlight = other.GetComponentInParent<SnapPointHighlightController>();
-            if (snapHighlight != null)
-            {
-                snapHighlight.SetCharacterSnapped(true);
-            }
-
-            // Notify SnapManager of the specific snap point
-            if (snapManager != null)
-            {
-                snapManager.SetCharacterSnapped(true, other.gameObject.name); // Pass snap point name
-            }
-        }
-    }
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("SnapPoint") && other.transform == snapTarget)
-        {
-            snapTarget = null;
-
-            SnapPointHighlightController snapHighlight = other.GetComponentInParent<SnapPointHighlightController>();
-            if (snapHighlight != null)
-            {
-                snapHighlight.SetCharacterSnapped(false);
-            }
-
-            // Notify SnapManager that no character is snapped
-            if (snapManager != null)
-            {
-                snapManager.SetCharacterSnapped(false, "");
-            }
-        }
     }
 }
