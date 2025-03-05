@@ -124,6 +124,13 @@ public class DragCharacter : MonoBehaviour
     {
         Collider[] colliders = Physics.OverlapSphere(parentObject.position, 0.5f);
 
+        // Get references to the Outline components of the Bed and Dresser
+        Outline bedOutline = GameObject.FindWithTag("Bed").GetComponent<Outline>();
+        Outline dresserOutline = GameObject.FindWithTag("Dresser").GetComponent<Outline>();
+
+        bool snappedToBed = false;
+        bool snappedToDresser = false;
+
         foreach (Collider col in colliders)
         {
             if (col.CompareTag("BedZone"))
@@ -131,27 +138,55 @@ public class DragCharacter : MonoBehaviour
                 Debug.Log("Snapped to Bed");
 
                 // Set group to preset Bed position
-                parentObject.position = new Vector3(-4.0f, -1.5f, -4.1f); // Example coordinates
-                parentObject.rotation = Quaternion.Euler(0, 0, 0); // Example rotation
+                parentObject.position = new Vector3(-4.0f, -1.5f, -4.1f);
+                parentObject.rotation = Quaternion.Euler(0, 0, 0);
 
                 FindObjectOfType<PlaySceneButton>().SetCurrentSnapPoint("Bed");
-                return;
+                snappedToBed = true;
             }
             else if (col.CompareTag("DresserZone"))
             {
                 Debug.Log("Snapped to Dresser");
 
                 // Set group to preset Dresser position
-                parentObject.position = new Vector3(4.7f, -1.5f, -3.85f); // Example coordinates
-                parentObject.rotation = Quaternion.Euler(0, 0, 0); // Example rotation
+                parentObject.position = new Vector3(4.7f, -1.5f, -3.85f);
+                parentObject.rotation = Quaternion.Euler(0, 0, 0);
 
                 FindObjectOfType<PlaySceneButton>().SetCurrentSnapPoint("Dresser");
-                return;
+                snappedToDresser = true;
             }
         }
 
-        Debug.Log("Not snapped to a valid point.");
-        FindObjectOfType<PlaySceneButton>().SetCurrentSnapPoint(""); // Disable play button
+        if (bedOutline != null && dresserOutline != null)
+        {
+            if (snappedToBed)
+            {
+                // Bed selected: Yellow outline, Dresser disabled
+                bedOutline.enabled = true;
+                bedOutline.OutlineColor = Color.yellow;
+
+                dresserOutline.enabled = false;
+            }
+            else if (snappedToDresser)
+            {
+                // Dresser selected: Yellow outline, Bed disabled
+                dresserOutline.enabled = true;
+                dresserOutline.OutlineColor = Color.yellow;
+
+                bedOutline.enabled = false;
+            }
+            else
+            {
+                // Not snapped to anything: Enable white outlines for both
+                bedOutline.enabled = true;
+                bedOutline.OutlineColor = Color.white;
+
+                dresserOutline.enabled = true;
+                dresserOutline.OutlineColor = Color.white;
+
+                FindObjectOfType<PlaySceneButton>().SetCurrentSnapPoint(""); // Disable play button
+            }
+        }
     }
 
     private bool GetMouseWorldPosition(out Vector3 worldPosition)

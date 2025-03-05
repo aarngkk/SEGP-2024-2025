@@ -10,6 +10,8 @@ TagManager:
   - DresserZone
   - Juliet
   - LadyCapulet
+  - Bed
+  - Dresser
   layers:
   - Default
   - TransparentFX
