@@ -43,12 +43,41 @@ public class PlaySceneButton : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(currentSnapPoint) && cutsceneManager != null)
         {
+            // Disable yellow outlines when the cutscene starts
+            DisableYellowOutlines();
+
             // Play the corresponding Timeline cutscene before transitioning
-            cutsceneManager.PlayCutscene(currentSnapPoint, LoadNextScene);
+            cutsceneManager.PlayCutscene(currentSnapPoint, RestoreWhiteOutlines);
         }
         else
         {
             Debug.LogWarning("No snap point selected or CutsceneManager is missing!");
+        }
+    }
+
+    // Function to disable yellow outlines
+    private void DisableYellowOutlines()
+    {
+        if (bedOutline != null && dresserOutline != null)
+        {
+            bedOutline.enabled = false;
+            dresserOutline.enabled = false;
+        }
+    }
+
+    // Function to restore white outlines after the cutscene ends
+    private void RestoreWhiteOutlines()
+    {
+        if (bedOutline != null)
+        {
+            bedOutline.enabled = true;
+            bedOutline.OutlineColor = Color.white;
+        }
+
+        if (dresserOutline != null)
+        {
+            dresserOutline.enabled = true;
+            dresserOutline.OutlineColor = Color.white;
         }
     }
 
