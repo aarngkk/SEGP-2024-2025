@@ -10164,7 +10164,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1049344572}
         m_TargetAssemblyTypeName: SceneSaverUI, Assembly-CSharp
         m_MethodName: OnBackButtonPressed
         m_Mode: 1
@@ -10624,7 +10624,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1049344572}
         m_TargetAssemblyTypeName: SceneSaverUI, Assembly-CSharp
         m_MethodName: OpenSavePanel
         m_Mode: 1
