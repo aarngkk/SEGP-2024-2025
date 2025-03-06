@@ -562,12 +562,12 @@ MonoBehaviour:
   - {fileID: -2100256522553294388}
   - {fileID: 3616153843632025555}
   - {fileID: -8000933306244603617}
-  m_FixedDuration: 37.5
+  m_FixedDuration: 36.647999999999996
   m_EditorSettings:
     m_Framerate: 60
     m_ScenePreview: 1
-  m_DurationMode: 1
-  m_MarkerTrack: {fileID: 0}
+  m_DurationMode: 0
+  m_MarkerTrack: {fileID: 8213012238905414528}
 --- !u!114 &2089454908237140971
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -957,6 +957,29 @@ MonoBehaviour:
   m_Loop: 0
   m_Version: 1
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
+--- !u!114 &8213012238905414528
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a16748d9461eae46a725db9776d5390, type: 3}
+  m_Name: Markers
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips: []
+  m_Markers:
+    m_Objects: []
 --- !u!114 &8282834903632776889
 MonoBehaviour:
   m_ObjectHideFlags: 1

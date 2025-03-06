@@ -1,63 +1,96 @@
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.UI; // Import UI namespace
 using System.Collections;
 
 public class CutsceneManager : MonoBehaviour
 {
-    public PlayableDirector bedCutscene;     // Assign in Inspector
-    public PlayableDirector dresserCutscene; // Assign in Inspector
-
+    public PlayableDirector bedCutscene;
+    public PlayableDirector dresserCutscene;
+    public PlayableDirector bedSadCutscene;
+    public PlayableDirector bedAngryCutscene;
+    public PlayableDirector dresserSadCutscene;
+    public PlayableDirector dresserAngryCutscene;
     private PlayableDirector currentCutscene;
 
-    private Vector3 julietOriginalPos, ladyCapuletOriginalPos;
-    private Quaternion julietOriginalRot, ladyCapuletOriginalRot;
+    public GameObject choicePopupPanel; // Assign in Inspector
+    public Button sadButton; // Assign in Inspector
+    public Button angryButton; // Assign in Inspector
 
-    public void PlayCutscene(string cutsceneType, System.Action onCutsceneEnd)
+    public void PlayCutscene(string cutsceneType, System.Action onCutsceneEnd = null)
     {
         Debug.Log($"Attempting to play cutscene: {cutsceneType}");
 
-        if (cutsceneType == "Bed" && bedCutscene != null)
+        switch (cutsceneType)
         {
-            currentCutscene = bedCutscene;
+            case "Bed":
+                currentCutscene = bedCutscene;
+                break;
+            case "Dresser":
+                currentCutscene = dresserCutscene;
+                break;
+            case "BedSad":
+                currentCutscene = bedSadCutscene;
+                break;
+            case "BedAngry":
+                currentCutscene = bedAngryCutscene;
+                break;
+            case "DresserSad":
+                currentCutscene = dresserSadCutscene;
+                break;
+            case "DresserAngry":
+                currentCutscene = dresserAngryCutscene;
+                break;
+            default:
+                Debug.LogWarning("Invalid cutscene type!");
+                onCutsceneEnd?.Invoke();
+                return;
         }
-        else if (cutsceneType == "Dresser" && dresserCutscene != null)
+
+        Debug.Log($"Playing cutscene: {currentCutscene.name}");
+
+        currentCutscene.stopped += OnCutsceneFinished;
+        currentCutscene.Play();
+    }
+
+    private void OnCutsceneFinished(PlayableDirector director)
+    {
+        Debug.Log("Cutscene finished playing.");
+
+        director.stopped -= OnCutsceneFinished;
+        ShowChoicePopup();
+    }
+
+    private void ShowChoicePopup()
+    {
+        if (choicePopupPanel != null)
         {
-            currentCutscene = dresserCutscene;
+            choicePopupPanel.SetActive(true);
+
+            // Assign button actions based on previous choice
+            sadButton.onClick.RemoveAllListeners();
+            angryButton.onClick.RemoveAllListeners();
+
+            if (currentCutscene == bedCutscene)
+            {
+                sadButton.onClick.AddListener(() => PlayNextCutscene("BedSad"));
+                angryButton.onClick.AddListener(() => PlayNextCutscene("BedAngry"));
+            }
+            else if (currentCutscene == dresserCutscene)
+            {
+                sadButton.onClick.AddListener(() => PlayNextCutscene("DresserSad"));
+                angryButton.onClick.AddListener(() => PlayNextCutscene("DresserAngry"));
+            }
         }
         else
         {
-            Debug.LogWarning("Invalid cutscene type or cutscene not assigned!");
-            onCutsceneEnd?.Invoke();
-            return;
+            Debug.LogError("Choice popup panel is not assigned!");
         }
-
-        Debug.Log($"Playing {cutsceneType} cutscene: {currentCutscene.name}");
-
-        currentCutscene.Play();
-
-        StartCoroutine(WaitForCutscene(currentCutscene, onCutsceneEnd));
     }
 
-    private IEnumerator WaitForCutscene(PlayableDirector director, System.Action onCutsceneEnd)
+    private void PlayNextCutscene(string nextCutsceneType)
     {
-        while (director.state == PlayState.Playing)
-        {
-            yield return null;
-        }
-
-        // Restore original positions
-        GameObject juliet = GameObject.FindWithTag("Juliet");
-        GameObject ladyCapulet = GameObject.FindWithTag("LadyCapulet");
-
-        if (juliet != null && ladyCapulet != null)
-        {
-            juliet.transform.position = julietOriginalPos;
-            ladyCapulet.transform.position = ladyCapuletOriginalPos;
-            juliet.transform.rotation = julietOriginalRot;
-            ladyCapulet.transform.rotation = ladyCapuletOriginalRot;
-        }
-
-        // Call next action after cutscene
-        onCutsceneEnd?.Invoke();
+        choicePopupPanel.SetActive(false);
+        PlayCutscene(nextCutsceneType);
     }
 }
