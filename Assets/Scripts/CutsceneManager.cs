@@ -17,9 +17,13 @@ public class CutsceneManager : MonoBehaviour
     public Button sadButton; // Assign in Inspector
     public Button angryButton; // Assign in Inspector
 
+
     public void PlayCutscene(string cutsceneType, System.Action onCutsceneEnd = null)
     {
         Debug.Log($"Attempting to play cutscene: {cutsceneType}");
+
+        // Ensure the Animators are re-enabled before playing a new cutscene
+        RestoreCharacterAnimation();
 
         switch (cutsceneType)
         {
@@ -52,13 +56,40 @@ public class CutsceneManager : MonoBehaviour
         currentCutscene.stopped += OnCutsceneFinished;
         currentCutscene.Play();
     }
+    private void RestoreCharacterAnimation()
+    {
+        Animator julietAnimator = GameObject.Find("Juliet")?.GetComponent<Animator>();
+        Animator ladyCapuletAnimator = GameObject.Find("Lady Capulet")?.GetComponent<Animator>();
+
+        if (julietAnimator != null)
+        {
+            julietAnimator.enabled = true;  // Re-enable the Animator so animations work again
+        }
+        if (ladyCapuletAnimator != null)
+        {
+            ladyCapuletAnimator.enabled = true;
+        }
+    }
 
     private void OnCutsceneFinished(PlayableDirector director)
     {
         Debug.Log("Cutscene finished playing.");
-
         director.stopped -= OnCutsceneFinished;
+
+        // Disable Animator to freeze characters in final pose
+        FreezeCharacterPose();
+
+        // Show the choice popup
         ShowChoicePopup();
+    }
+
+    private void FreezeCharacterPose()
+    {
+        Animator julietAnimator = GameObject.Find("Juliet")?.GetComponent<Animator>();
+        Animator ladyCapuletAnimator = GameObject.Find("Lady Capulet")?.GetComponent<Animator>();
+
+        if (julietAnimator != null) julietAnimator.enabled = false;
+        if (ladyCapuletAnimator != null) ladyCapuletAnimator.enabled = false;
     }
 
     private void ShowChoicePopup()

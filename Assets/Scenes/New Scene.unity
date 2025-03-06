@@ -6196,8 +6196,8 @@ MonoBehaviour:
   dresserCutscene: {fileID: 1662324478}
   bedSadCutscene: {fileID: 1586005305}
   bedAngryCutscene: {fileID: 1662324478}
-  dresserSadCutscene: {fileID: 0}
-  dresserAngryCutscene: {fileID: 0}
+  dresserSadCutscene: {fileID: 1662324478}
+  dresserAngryCutscene: {fileID: 1586005305}
   choicePopupPanel: {fileID: 1831793131}
   sadButton: {fileID: 224664677}
   angryButton: {fileID: 1988784977}
@@ -12707,7 +12707,7 @@ RectTransform:
   m_GameObject: {fileID: 1831793131}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6172585, y: 0.6172585, z: 0.6172585}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 341786117}
@@ -12716,7 +12716,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 20, y: 346}
   m_SizeDelta: {x: 1000, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1831793133
