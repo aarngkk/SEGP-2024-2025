@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 public class EditSceneManager : MonoBehaviour
 {
@@ -37,4 +37,4 @@ public class EditSceneManager : MonoBehaviour
             }
         }
     }
-}
+}*/

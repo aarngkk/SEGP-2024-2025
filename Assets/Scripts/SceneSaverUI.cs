@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class SceneSaverUI : MonoBehaviour
 {
     // Reference to the SceneSaver component
-    public SceneSaver sceneSaver;
+    //public SceneSaver sceneSaver;
 
     // Reference to the ScriptSelectionManager component (assign via Inspector)
     public ScriptSelectionManager scriptSelectionManager;
@@ -164,7 +164,7 @@ public class SceneSaverUI : MonoBehaviour
         CloseSavePanel();
         SceneManager.LoadScene("Main Menu");
     }
-
+/*
     public void OnEditSceneSaveButtonClicked()
     {
         string selectedScript = scriptSelectionManager != null ? scriptSelectionManager.SelectedScript : "";
@@ -178,7 +178,7 @@ public class SceneSaverUI : MonoBehaviour
         {
             Debug.LogError("No scene is currently loaded. Please provide a scene name.");
         }
-    }
+    }*/
 
     /// <summary>
     /// Called when the Back button is pressed.

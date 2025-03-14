@@ -4,25 +4,23 @@ public class SceneDataTransfer : MonoBehaviour
 {
     public static SceneDataTransfer Instance { get; private set; }
 
-    public SceneData SceneData { get; private set; }
-    public string SceneName { get; private set; } // Track scene name
+    public string LogFileName { get; private set; } // Stores the selected log file name
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Make this object persistent
+            DontDestroyOnLoad(gameObject); // Keep data when changing scenes
         }
         else
         {
-            Destroy(gameObject); // Ensure only one instance exists
+            Destroy(gameObject);
         }
     }
 
-    public void SetSceneData(SceneData sceneData,string sceneName)
+    public void SetLogFile(string fileName)
     {
-        SceneData = sceneData;
-        SceneName = sceneName;
+        LogFileName = fileName;
     }
 }

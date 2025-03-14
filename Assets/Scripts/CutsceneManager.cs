@@ -48,6 +48,7 @@ public class CutsceneManager : MonoBehaviour
 
     private PlayableDirector currentCutscene;
     private List<string> choicesMade = new List<string>();
+    public bool isReplayMode = false;
 
     public void PlayCutscene(string cutsceneType, System.Action onCutsceneEnd = null)
     {
@@ -94,10 +95,25 @@ public class CutsceneManager : MonoBehaviour
         }
 
         Debug.Log($"Playing cutscene: {currentCutscene.name}");
-        currentCutscene.stopped += OnCutsceneFinished;
+        if (!isReplayMode)
+        {
+            choicesMade.Add(cutsceneType);
+            Debug.Log("Choice added: " + cutsceneType);
+            currentCutscene.stopped += OnCutsceneFinished;
+        }
+
+        if (isReplayMode)
+        {
+            currentCutscene.stopped += (PlayableDirector director) =>
+            {
+                Debug.Log("Cutscene finished playing.");
+                director.stopped -= OnCutsceneFinished; // Remove previous event handler
+                FreezeCharacterPose();
+                onCutsceneEnd?.Invoke(); // Ensure callback is called
+            };
+        }
+        //currentCutscene.stopped += OnCutsceneFinished;
         currentCutscene.Play();
-        choicesMade.Add(cutsceneType);
-        Debug.Log("Choice added: " + cutsceneType);
     }
 
     private void RestoreCharacterAnimation()
@@ -115,6 +131,12 @@ public class CutsceneManager : MonoBehaviour
         director.stopped -= OnCutsceneFinished;
 
         FreezeCharacterPose();
+
+        if (isReplayMode)
+        {
+            Debug.Log("Replay mode active, continuing to next cutscene.");
+            return;
+        }
 
         if (currentCutscene == bedCutscene || currentCutscene == dresserCutscene)
         {
@@ -253,5 +275,7 @@ public class CutsceneManager : MonoBehaviour
             Debug.LogError($"Failed to write log file: {e.Message}");
         }
     }
+
+    
 
 }

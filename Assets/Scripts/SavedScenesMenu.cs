@@ -3,10 +3,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.IO;
 
 public class SavedScenesMenu : MonoBehaviour
 {
-    public SceneSaver sceneSaver; // Reference to SceneSaver
+    //public CutsceneReplayManager cutsceneReplayManager;
+    //public SceneSaver sceneSaver; // Reference to SceneSaver
     public GameObject sceneButtonPrefab; // Assign the button prefab in Inspector
     public Transform contentParent; // Assign the Scroll View Content in Inspector
     private VerticalLayoutGroup layoutGroup;
@@ -20,13 +22,8 @@ public class SavedScenesMenu : MonoBehaviour
 
     void Start()
     {
-        if (sceneSaver == null)
-        {
-            sceneSaver = FindObjectOfType<SceneSaver>(); // Auto-assign if not set
-        }
         layoutGroup = contentParent.GetComponent<VerticalLayoutGroup>(); // Get layout group
         PopulateSavedScenes();
-
         sceneOptionsPanel.SetActive(false);
     }
 
@@ -38,7 +35,7 @@ public class SavedScenesMenu : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        string[] savedScenes = sceneSaver.GetAllSavedScenes();
+        string[] savedScenes = GetAllSavedScenes();
         if (layoutGroup != null)
         {
             layoutGroup.spacing = 80f; // Change this value to increase spacing
@@ -61,7 +58,7 @@ public class SavedScenesMenu : MonoBehaviour
 
     public void ShowSceneOptions(string sceneName) {
         selectedSceneName = sceneName;
-        sceneNameText.text = "Would you like to edit or play " + sceneName;
+        sceneNameText.text = "Would you like to play " + sceneName + "?";
         
         Debug.Log("Opening pop-up for: " + sceneName);
 
@@ -71,67 +68,34 @@ public class SavedScenesMenu : MonoBehaviour
         
         // Assign button functions dynamically
         playButton.onClick.RemoveAllListeners();
-        editButton.onClick.RemoveAllListeners();
         backButton.onClick.RemoveAllListeners();
 
-        playButton.onClick.AddListener(() => PlayScene(sceneName));
-        editButton.onClick.AddListener(() => EditScene(sceneName));
+        playButton.onClick.AddListener(() => LoadReplayScene(sceneName));
         backButton.onClick.AddListener(() => CloseSceneOptions());
 
     }
+    
     /*
-    public void LoadSceneAndRestore(string sceneName)
-    {
-        // Store the selected scene name before switching scenes
-        PlayerPrefs.SetString("LastLoadedScene", sceneName);
-        PlayerPrefs.Save();
-
-        // Load the scene where the model will be displayed
-        SceneManager.LoadScene("Load Scene"); // Change to your actual scene name
-        Debug.Log("Loading load scene 1");
-    }*/
-    private void EditScene(string sceneName)
-    {
-        Debug.Log("button clicked for scene: " + sceneName);
-        // Load the saved scene data
-        SceneData sceneData = sceneSaver.LoadScene(sceneName);
-
-        if (sceneData != null)
-        {
-            Debug.Log("Scene data loaded successfully: " + sceneData.sceneName);
-            // Pass the scene data to the next scene
-            SceneDataTransfer.Instance.SetSceneData(sceneData, sceneName);
-
-            // Load the new scene
-            SceneManager.LoadScene("Edit Scene"); // Replace "EditScene" with your target scene name
-            Debug.Log("Editing scene: "+ sceneName);
-        }
-        else
-        {
-            Debug.LogError("Failed to load scene data for: " + sceneName);
-        }
-    }
     private void PlayScene(string sceneName)
     {
         Debug.Log("button clicked for scene: " + sceneName);
-        // Load the saved scene data
-        SceneData sceneData = sceneSaver.LoadScene(sceneName);
-
-        if (sceneData != null)
+        if (cutsceneReplayManager != null)
         {
-            Debug.Log("Scene data loaded successfully: " + sceneData.sceneName);
-            // Pass the scene data to the next scene
-            SceneDataTransfer.Instance.SetSceneData(sceneData, sceneName);
-
-            // Load the new scene
-            SceneManager.LoadScene("Play Scene"); // Replace "EditScene" with your target scene name
-            Debug.Log("Playing scene: " + sceneName);
+            cutsceneReplayManager.SetLogFile(sceneName);
+            cutsceneReplayManager.StartReplay();
         }
         else
         {
-            Debug.LogError("Failed to load scene data for: " + sceneName);
+            Debug.LogError("CutsceneReplayManager is not assigned.");
         }
+    }*/
+    private void LoadReplayScene(string sceneName)
+    {
+        Debug.Log("Loading replay scene for: " + sceneName);
+        SceneDataTransfer.Instance.SetLogFile(sceneName);
+        SceneManager.LoadScene("Play All Scenes"); // Load your replay scene
     }
+
     public void CloseSceneOptions()
     {
         sceneOptionsPanel.SetActive(false);
@@ -143,5 +107,20 @@ public class SavedScenesMenu : MonoBehaviour
         {
             btn.interactable = interactable;
         }
+    }
+
+    private string[] GetAllSavedScenes()
+    {
+        string savePath = Application.persistentDataPath + "/SavedScenes/";
+
+        if (!Directory.Exists(savePath))
+            return new string[0];
+
+        string[] files = Directory.GetFiles(savePath, "*.log");
+        for (int i = 0; i < files.Length; i++)
+        {
+            files[i] = Path.GetFileNameWithoutExtension(files[i]);
+        }
+        return files;
     }
 }
