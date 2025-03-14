@@ -1,9 +1,14 @@
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using System.IO;
 
 public class CutsceneManager : MonoBehaviour
 {
+    private string SavePath => Application.persistentDataPath + "/SavedScenes/";
+    public string logFileName; // Default filename if none is set
+
     [Header("Script 1")]
     public PlayableDirector bedCutscene;
     public PlayableDirector dresserCutscene;
@@ -42,6 +47,7 @@ public class CutsceneManager : MonoBehaviour
     [SerializeField] private Button standButton;
 
     private PlayableDirector currentCutscene;
+    private List<string> choicesMade = new List<string>();
 
     public void PlayCutscene(string cutsceneType, System.Action onCutsceneEnd = null)
     {
@@ -90,6 +96,8 @@ public class CutsceneManager : MonoBehaviour
         Debug.Log($"Playing cutscene: {currentCutscene.name}");
         currentCutscene.stopped += OnCutsceneFinished;
         currentCutscene.Play();
+        choicesMade.Add(cutsceneType);
+        Debug.Log("Choice added: " + cutsceneType);
     }
 
     private void RestoreCharacterAnimation()
@@ -216,5 +224,34 @@ public class CutsceneManager : MonoBehaviour
         julietKneelingChoicePopupPanel?.SetActive(false);
 
         PlayCutscene(nextCutsceneType);
+
     }
+
+    
+    public void LogChoicesToFile()
+    {
+        if (choicesMade.Count == 0)
+        {
+            Debug.LogWarning("No choices have been made yet. Nothing to save.");
+            return;
+        }
+       if (string.IsNullOrWhiteSpace(logFileName))
+        {
+        logFileName = "default_log"; // Fallback filename
+        }
+
+        //string filePath = Path.Combine(Application.persistentDataPath, logFileName + ".log");
+
+        try
+        {
+            string filePath = SavePath + logFileName + ".log";
+            File.WriteAllLines(filePath, choicesMade); // Save choices as lines in a file
+            Debug.Log($"Choices logged to: {filePath}");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Failed to write log file: {e.Message}");
+        }
+    }
+
 }

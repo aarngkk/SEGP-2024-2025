@@ -133,6 +133,25 @@ public class SceneSaverUI : MonoBehaviour
 
             return; // Stop here; user must press Save again to confirm
         }
+
+        // Ensure the directory exists
+        string directoryPath = System.IO.Path.Combine(Application.persistentDataPath, "SavedScenes");
+        if (!System.IO.Directory.Exists(directoryPath))
+        {
+            System.IO.Directory.CreateDirectory(directoryPath);
+        }
+
+        CutsceneManager cutsceneManager = FindObjectOfType<CutsceneManager>();
+        if (cutsceneManager != null)
+        {
+            cutsceneManager.logFileName = sceneName; // Set filename
+            cutsceneManager.LogChoicesToFile();      // Save choices
+        }
+        else
+        {
+            Debug.LogError("CutsceneManager not found! Choices were not logged.");
+        }
+
         // Clear Undo/Redo after saving
         if (undoRedoManager != null)
         {
@@ -140,7 +159,7 @@ public class SceneSaverUI : MonoBehaviour
         }
 
         // Save the scene with both the scene name, the selected script, and the positions of draggable characters.
-        sceneSaver.SaveScene(sceneName, selectedScript);
+        //sceneSaver.SaveScene(sceneName, selectedScript);
         sceneIsSaved = true;  // Mark that the scene has been saved
         CloseSavePanel();
         SceneManager.LoadScene("Main Menu");
