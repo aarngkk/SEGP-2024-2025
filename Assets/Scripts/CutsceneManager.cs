@@ -52,6 +52,14 @@ public class CutsceneManager : MonoBehaviour
     public PlayableDirector julietStandsCapuletCalm;
     public PlayableDirector julietStandsCapuletAngry;
 
+    [SerializeField] private GameObject capuletThirdChoicePopupPanel;
+    [SerializeField] private Button calmDownButton;
+    [SerializeField] private Button remainAngryButton;
+
+    [Header("Script 6")] // NEW: Fields for Capulet's reaction after the third choice
+    public PlayableDirector capuletCalmsDownCutscene;
+    public PlayableDirector capuletRemainsAngryCutscene;
+
     private PlayableDirector currentCutscene;
     private List<string> choicesMade = new List<string>();
     public bool isReplayMode = false;
@@ -106,6 +114,13 @@ public class CutsceneManager : MonoBehaviour
             case "JulietStandsCapuletAngry":
                 currentCutscene = julietStandsCapuletAngry;
                 break;
+            case "CapuletCalmsDown":
+                currentCutscene = capuletCalmsDownCutscene;
+                break;
+            case "CapuletRemainsAngry":
+                currentCutscene = capuletRemainsAngryCutscene;
+                break;
+
             default:
                 Debug.LogWarning("Invalid cutscene type!");
                 onCutsceneEnd?.Invoke();
@@ -172,6 +187,12 @@ public class CutsceneManager : MonoBehaviour
         {
             ShowJulietKneelingChoicePopup();
         }
+        else if (currentCutscene == julietKneelsCapuletCalm || currentCutscene == julietKneelsCapuletAngry ||
+         currentCutscene == julietStandsCapuletCalm || currentCutscene == julietStandsCapuletAngry)
+        {
+            ShowCapuletThirdChoicePopup();
+        }
+
     }
 
     private void FreezeCharacterPose()
@@ -276,12 +297,32 @@ public class CutsceneManager : MonoBehaviour
             Debug.LogError("Juliet kneeling choice popup panel is not assigned!");
         }
     }
+
+    private void ShowCapuletThirdChoicePopup()
+    {
+        if (capuletThirdChoicePopupPanel != null)
+        {
+            capuletThirdChoicePopupPanel.SetActive(true);
+
+            calmDownButton.onClick.RemoveAllListeners();
+            remainAngryButton.onClick.RemoveAllListeners();
+
+            calmDownButton.onClick.AddListener(() => PlayNextCutscene("CapuletCalmsDown"));
+            remainAngryButton.onClick.AddListener(() => PlayNextCutscene("CapuletRemainsAngry"));
+        }
+        else
+        {
+            Debug.LogError("Capulet third choice popup panel is not assigned!");
+        }
+    }
+
     private void PlayNextCutscene(string nextCutsceneType)
     {
         choicePopupPanel?.SetActive(false);
         capuletChoicePopupPanel?.SetActive(false);
         capuletFinalChoicePopupPanel?.SetActive(false);
         julietKneelingChoicePopupPanel?.SetActive(false);
+        capuletThirdChoicePopupPanel?.SetActive(false);
 
         PlayCutscene(nextCutsceneType);
     }
