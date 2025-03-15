@@ -175,8 +175,18 @@ public class CutsceneManager : MonoBehaviour
             sadButton.onClick.RemoveAllListeners();
             angryButton.onClick.RemoveAllListeners();
 
-            sadButton.onClick.AddListener(() => PlayNextCutscene("BedSad"));
-            angryButton.onClick.AddListener(() => PlayNextCutscene("BedAngry"));
+            if (currentCutscene == dresserCutscene)
+            {
+                // If previous cutscene was dresser, play dresser variations
+                sadButton.onClick.AddListener(() => PlayNextCutscene("DresserSad"));
+                angryButton.onClick.AddListener(() => PlayNextCutscene("DresserAngry"));
+            }
+            else
+            {
+                // Otherwise, assume it was the bed cutscene
+                sadButton.onClick.AddListener(() => PlayNextCutscene("BedSad"));
+                angryButton.onClick.AddListener(() => PlayNextCutscene("BedAngry"));
+            }
         }
         else
         {
