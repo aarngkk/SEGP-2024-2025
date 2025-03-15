@@ -386,4 +386,25 @@ public class CutsceneManager : MonoBehaviour
         }
 
     }
+    public void SkipCutscene()
+    {
+        if (currentCutscene == null || currentCutscene.state != PlayState.Playing)
+        {
+            Debug.LogWarning("No cutscene is currently playing to skip!");
+            return;
+        }
+
+        Debug.Log($"Skipping cutscene: {currentCutscene.name}");
+
+        // Temporarily detach OnCutsceneFinished to avoid incorrect execution order
+        currentCutscene.stopped -= OnCutsceneFinished;
+        
+        // Stop the current cutscene
+        currentCutscene.Stop();
+        
+        // Immediately call OnCutsceneFinished to proceed to the next choice panel
+        OnCutsceneFinished(currentCutscene);
+    }
+
+
 }
