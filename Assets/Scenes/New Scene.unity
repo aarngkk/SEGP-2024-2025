@@ -12801,9 +12801,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2089510275}
-        m_TargetAssemblyTypeName: UndoRedoManager, Assembly-CSharp
-        m_MethodName: Undo
+      - m_Target: {fileID: 1030452484}
+        m_TargetAssemblyTypeName: CutsceneManager, Assembly-CSharp
+        m_MethodName: UndoChoice
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -62,6 +62,7 @@ public class CutsceneManager : MonoBehaviour
 
     private PlayableDirector currentCutscene;
     private List<string> choicesMade = new List<string>();
+    private Stack<string> choiceHistory = new Stack<string>(); // Stores past choices
     public bool isReplayMode = false;
 
     public void PlayCutscene(string cutsceneType, System.Action onCutsceneEnd = null)
@@ -130,8 +131,8 @@ public class CutsceneManager : MonoBehaviour
         Debug.Log($"Playing cutscene: {currentCutscene.name}");
         if (!isReplayMode)
         {
+            choiceHistory.Push(currentCutscene.name);
             choicesMade.Add(cutsceneType);
-            Debug.Log("Choice added: " + cutsceneType);
             currentCutscene.stopped += OnCutsceneFinished;
         }
 
@@ -338,9 +339,6 @@ public class CutsceneManager : MonoBehaviour
         {
         logFileName = "default_log"; // Fallback filename
         }
-
-        //string filePath = Path.Combine(Application.persistentDataPath, logFileName + ".log");
-
         try
         {
             string filePath = SavePath + logFileName + ".log";
@@ -352,7 +350,40 @@ public class CutsceneManager : MonoBehaviour
             Debug.LogError($"Failed to write log file: {e.Message}");
         }
     }
-
+    
+    public void UndoChoice()
+    {
+        if (choiceHistory.Count < 2) // Ensure there is a previous choice to revert to
+        {
+            Debug.LogWarning("No previous choice to undo!");
+            return;
+        }
+        if (currentCutscene != null && currentCutscene.state == PlayState.Playing)
+        {
+            currentCutscene.stopped-=OnCutsceneFinished; //removes the listener
+            currentCutscene.Stop();
+            Debug.Log("Current cutscene stopped.");
+        }
     
 
+        // Remove the last choice
+        choiceHistory.Pop(); // Remove the latest choice
+        string previousChoice = choiceHistory.Peek(); // Get the choice before it
+        choicesMade.RemoveAt(choicesMade.Count-1);
+        Debug.Log($"Undoing choice, returning to: {previousChoice}");
+        PlayableDirector previousDirector = GameObject.Find(previousChoice)?.GetComponent<PlayableDirector>();
+
+        //PlayableDirector previousDirector = GetPlayableDirector(previousChoice);
+        if (previousDirector != null)
+        {
+            currentCutscene = previousDirector;
+            currentCutscene.stopped+=OnCutsceneFinished; //reattach listener
+            OnCutsceneFinished(currentCutscene); // Call the existing logic to show the choice panel
+        }
+        else
+        {
+            Debug.LogError("Could not find PlayableDirector for previous choice: " + previousChoice);
+        }
+
+    }
 }
