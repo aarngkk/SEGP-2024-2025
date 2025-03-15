@@ -75,20 +75,6 @@ public class SavedScenesMenu : MonoBehaviour
 
     }
     
-    /*
-    private void PlayScene(string sceneName)
-    {
-        Debug.Log("button clicked for scene: " + sceneName);
-        if (cutsceneReplayManager != null)
-        {
-            cutsceneReplayManager.SetLogFile(sceneName);
-            cutsceneReplayManager.StartReplay();
-        }
-        else
-        {
-            Debug.LogError("CutsceneReplayManager is not assigned.");
-        }
-    }*/
     private void LoadReplayScene(string sceneName)
     {
         Debug.Log("Loading replay scene for: " + sceneName);
