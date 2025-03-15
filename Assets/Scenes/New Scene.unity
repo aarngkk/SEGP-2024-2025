@@ -8886,6 +8886,10 @@ MonoBehaviour:
   julietKneelingChoicePopupPanel: {fileID: 64174512}
   kneelButton: {fileID: 624476929}
   standButton: {fileID: 291770900}
+  julietKneelsCapuletCalm: {fileID: 1247866391}
+  julietKneelsCapuletAngry: {fileID: 992088936}
+  julietStandsCapuletCalm: {fileID: 1787048482}
+  julietStandsCapuletAngry: {fileID: 722744605}
   isReplayMode: 0
 --- !u!320 &1030452485
 PlayableDirector:

@@ -46,6 +46,12 @@ public class CutsceneManager : MonoBehaviour
     [SerializeField] private Button kneelButton;
     [SerializeField] private Button standButton;
 
+    [Header("Script 5")] // NEW: Fields for 4 final cutscenes
+    public PlayableDirector julietKneelsCapuletCalm;
+    public PlayableDirector julietKneelsCapuletAngry;
+    public PlayableDirector julietStandsCapuletCalm;
+    public PlayableDirector julietStandsCapuletAngry;
+
     private PlayableDirector currentCutscene;
     private List<string> choicesMade = new List<string>();
     public bool isReplayMode = false;
@@ -88,6 +94,18 @@ public class CutsceneManager : MonoBehaviour
             case "CapuletComposed":
                 currentCutscene = capuletComposedCutscene;
                 break;
+            case "JulietKneelsCapuletCalm":
+                currentCutscene = julietKneelsCapuletCalm;
+                break;
+            case "JulietKneelsCapuletAngry":
+                currentCutscene = julietKneelsCapuletAngry;
+                break;
+            case "JulietStandsCapuletCalm":
+                currentCutscene = julietStandsCapuletCalm;
+                break;
+            case "JulietStandsCapuletAngry":
+                currentCutscene = julietStandsCapuletAngry;
+                break;
             default:
                 Debug.LogWarning("Invalid cutscene type!");
                 onCutsceneEnd?.Invoke();
@@ -107,15 +125,14 @@ public class CutsceneManager : MonoBehaviour
             currentCutscene.stopped += (PlayableDirector director) =>
             {
                 Debug.Log("Cutscene finished playing.");
-                director.stopped -= OnCutsceneFinished; // Remove previous event handler
+                director.stopped -= OnCutsceneFinished;
                 FreezeCharacterPose();
-                onCutsceneEnd?.Invoke(); // Ensure callback is called
+                onCutsceneEnd?.Invoke();
             };
         }
-        //currentCutscene.stopped += OnCutsceneFinished;
+
         currentCutscene.Play();
     }
-
     private void RestoreCharacterAnimation()
     {
         Animator julietAnimator = GameObject.Find("Juliet")?.GetComponent<Animator>();
@@ -239,15 +256,26 @@ public class CutsceneManager : MonoBehaviour
             kneelButton.onClick.RemoveAllListeners();
             standButton.onClick.RemoveAllListeners();
 
-            kneelButton.onClick.AddListener(() => Debug.Log("Juliet chooses to kneel."));
-            standButton.onClick.AddListener(() => Debug.Log("Juliet refuses to kneel."));
+            // Determine the previous Capulet choice
+            bool capuletWasComposed = choicesMade.Contains("CapuletComposed");
+
+            kneelButton.onClick.AddListener(() =>
+            {
+                string nextCutscene = capuletWasComposed ? "JulietKneelsCapuletCalm" : "JulietKneelsCapuletAngry";
+                PlayNextCutscene(nextCutscene);
+            });
+
+            standButton.onClick.AddListener(() =>
+            {
+                string nextCutscene = capuletWasComposed ? "JulietStandsCapuletCalm" : "JulietStandsCapuletAngry";
+                PlayNextCutscene(nextCutscene);
+            });
         }
         else
         {
             Debug.LogError("Juliet kneeling choice popup panel is not assigned!");
         }
     }
-
     private void PlayNextCutscene(string nextCutsceneType)
     {
         choicePopupPanel?.SetActive(false);
@@ -256,10 +284,8 @@ public class CutsceneManager : MonoBehaviour
         julietKneelingChoicePopupPanel?.SetActive(false);
 
         PlayCutscene(nextCutsceneType);
-
     }
 
-    
     public void LogChoicesToFile()
     {
         if (choicesMade.Count == 0)
