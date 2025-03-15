@@ -164,27 +164,7 @@ public class SceneSaverUI : MonoBehaviour
         CloseSavePanel();
         SceneManager.LoadScene("Main Menu");
     }
-/*
-    public void OnEditSceneSaveButtonClicked()
-    {
-        string selectedScript = scriptSelectionManager != null ? scriptSelectionManager.SelectedScript : "";
 
-        if (!string.IsNullOrEmpty(SceneDataTransfer.Instance.SceneName))
-        {
-            sceneSaver.SaveScene(SceneDataTransfer.Instance.SceneName, selectedScript);
-            Debug.Log("Edited scene saved as: " + SceneDataTransfer.Instance.SceneName);
-        }
-        else
-        {
-            Debug.LogError("No scene is currently loaded. Please provide a scene name.");
-        }
-    }*/
-
-    /// <summary>
-    /// Called when the Back button is pressed.
-    /// If a script is selected but the scene is not saved (or scene name is empty), show the save panel.
-    /// Otherwise, navigate back to the main menu.
-    /// </summary>
     public void OnBackButtonPressed()
     {
         if (scriptSelectionManager != null && !string.IsNullOrEmpty(scriptSelectionManager.SelectedScript))
@@ -207,10 +187,6 @@ public class SceneSaverUI : MonoBehaviour
         SceneManager.LoadScene("Main Menu");
     }
 
-    /// <summary>
-    /// Called when the Cancel button in the pop-up panel is clicked.
-    /// Closes the panel without saving.
-    /// </summary>
     public void OnCancelButtonClicked()
     {
         CloseSavePanel();

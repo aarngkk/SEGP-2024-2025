@@ -73,54 +73,22 @@ public class CutsceneManager : MonoBehaviour
 
         switch (cutsceneType)
         {
-            case "Bed":
-                currentCutscene = bedCutscene;
-                break;
-            case "Dresser":
-                currentCutscene = dresserCutscene;
-                break;
-            case "BedSad":
-                currentCutscene = bedSadCutscene;
-                break;
-            case "BedAngry":
-                currentCutscene = bedAngryCutscene;
-                break;
-            case "DresserSad":
-                currentCutscene = dresserSadCutscene;
-                break;
-            case "DresserAngry":
-                currentCutscene = dresserAngryCutscene;
-                break;
-            case "CapuletSympathetic":
-                currentCutscene = capuletSympatheticCutscene;
-                break;
-            case "CapuletAnnoyed":
-                currentCutscene = capuletAnnoyedCutscene;
-                break;
-            case "CapuletEnraged":
-                currentCutscene = capuletEnragedCutscene;
-                break;
-            case "CapuletComposed":
-                currentCutscene = capuletComposedCutscene;
-                break;
-            case "JulietKneelsCapuletCalm":
-                currentCutscene = julietKneelsCapuletCalm;
-                break;
-            case "JulietKneelsCapuletAngry":
-                currentCutscene = julietKneelsCapuletAngry;
-                break;
-            case "JulietStandsCapuletCalm":
-                currentCutscene = julietStandsCapuletCalm;
-                break;
-            case "JulietStandsCapuletAngry":
-                currentCutscene = julietStandsCapuletAngry;
-                break;
-            case "CapuletCalmsDown":
-                currentCutscene = capuletCalmsDownCutscene;
-                break;
-            case "CapuletRemainsAngry":
-                currentCutscene = capuletRemainsAngryCutscene;
-                break;
+            case "Bed": currentCutscene = bedCutscene; break;
+            case "Dresser": currentCutscene = dresserCutscene; break;
+            case "BedSad": currentCutscene = bedSadCutscene; break;
+            case "BedAngry": currentCutscene = bedAngryCutscene; break;
+            case "DresserSad": currentCutscene = dresserSadCutscene; break;
+            case "DresserAngry": currentCutscene = dresserAngryCutscene; break;
+            case "CapuletSympathetic":currentCutscene = capuletSympatheticCutscene; break;
+            case "CapuletAnnoyed": currentCutscene = capuletAnnoyedCutscene; break;
+            case "CapuletEnraged": currentCutscene = capuletEnragedCutscene; break;
+            case "CapuletComposed": currentCutscene = capuletComposedCutscene; break;
+            case "JulietKneelsCapuletCalm": currentCutscene = julietKneelsCapuletCalm; break;
+            case "JulietKneelsCapuletAngry": currentCutscene = julietKneelsCapuletAngry; break;
+            case "JulietStandsCapuletCalm": currentCutscene = julietStandsCapuletCalm; break;
+            case "JulietStandsCapuletAngry":currentCutscene = julietStandsCapuletAngry;break;
+            case "CapuletCalmsDown": currentCutscene = capuletCalmsDownCutscene;break;
+            case "CapuletRemainsAngry":currentCutscene = capuletRemainsAngryCutscene;break;
 
             default:
                 Debug.LogWarning("Invalid cutscene type!");
@@ -364,16 +332,13 @@ public class CutsceneManager : MonoBehaviour
             currentCutscene.Stop();
             Debug.Log("Current cutscene stopped.");
         }
-    
 
-        // Remove the last choice
         choiceHistory.Pop(); // Remove the latest choice
         string previousChoice = choiceHistory.Peek(); // Get the choice before it
         choicesMade.RemoveAt(choicesMade.Count-1);
         Debug.Log($"Undoing choice, returning to: {previousChoice}");
-        PlayableDirector previousDirector = GameObject.Find(previousChoice)?.GetComponent<PlayableDirector>();
 
-        //PlayableDirector previousDirector = GetPlayableDirector(previousChoice);
+        PlayableDirector previousDirector = GameObject.Find(previousChoice)?.GetComponent<PlayableDirector>();
         if (previousDirector != null)
         {
             currentCutscene = previousDirector;
@@ -395,14 +360,8 @@ public class CutsceneManager : MonoBehaviour
         }
 
         Debug.Log($"Skipping cutscene: {currentCutscene.name}");
-
-        // Temporarily detach OnCutsceneFinished to avoid incorrect execution order
         currentCutscene.stopped -= OnCutsceneFinished;
-        
-        // Stop the current cutscene
         currentCutscene.Stop();
-        
-        // Immediately call OnCutsceneFinished to proceed to the next choice panel
         OnCutsceneFinished(currentCutscene);
     }
 
