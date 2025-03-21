@@ -6065,9 +6065,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 629963619}
-  - component: {fileID: 629963618}
   - component: {fileID: 629963617}
   - component: {fileID: 629963616}
+  - component: {fileID: 629963620}
   m_Layer: 0
   m_Name: Characters
   m_TagString: Untagged
@@ -6120,19 +6120,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &629963618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 629963615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08abd3e1a0aac574d9a0f4ef2d952597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  undoRedoManager: {fileID: 0}
 --- !u!4 &629963619
 Transform:
   m_ObjectHideFlags: 0
@@ -6152,6 +6139,19 @@ Transform:
   - {fileID: 1870061691}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &629963620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629963615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df8ffb7848473544d8f7061b26e81647, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoRedoManager: {fileID: 0}
 --- !u!1 &697091933
 GameObject:
   m_ObjectHideFlags: 0
@@ -7706,6 +7706,7 @@ MonoBehaviour:
   remainAngryButton: {fileID: 0}
   capuletCalmsDownCutscene: {fileID: 0}
   capuletRemainsAngryCutscene: {fileID: 0}
+  currentCutscene: {fileID: 0}
   isReplayMode: 0
 --- !u!320 &1030452485
 PlayableDirector:

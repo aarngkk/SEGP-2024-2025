@@ -129,15 +129,6 @@ public class SceneSaverUI : MonoBehaviour
         }
 
         // Retrieve the selected script from the ScriptSelectionManager
-        string selectedScript = "";
-        if (scriptSelectionManager != null)
-        {
-            selectedScript = scriptSelectionManager.SelectedScript;
-        }
-        else
-        {
-            Debug.LogWarning("ScriptSelectionManager is not assigned.");
-        }
         
         // Build the full path
         string filePath = System.IO.Path.Combine(Application.persistentDataPath + "/SavedScenes/", sceneName + ".json");
@@ -221,12 +212,7 @@ public class SceneSaverUI : MonoBehaviour
     /// </summary>
     public void OnDiscardAllButtonClicked()
     {
-        // Clear the script selection via the ScriptSelectionManager
-        if (scriptSelectionManager != null)
-        {
-            scriptSelectionManager.ClearSelection();
-        }
-
+       
         // Reset the scene name input and the saved flag
         sceneNameInputField.text = "";
         sceneIsSaved = false;
@@ -259,5 +245,6 @@ public class SceneSaverUI : MonoBehaviour
             cutsceneManager.currentCutscene.Stop();
             Debug.Log("Cutscene stopped after discarding all.");
         }
+        SceneManager.LoadScene("New Scene");
     }
 }

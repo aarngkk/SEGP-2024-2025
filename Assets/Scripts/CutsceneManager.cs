@@ -326,13 +326,23 @@ public class CutsceneManager : MonoBehaviour
             Debug.LogWarning("No previous choice to undo!");
             return;
         }
+        
         if (currentCutscene != null && currentCutscene.state == PlayState.Playing)
         {
             currentCutscene.stopped-=OnCutsceneFinished; //removes the listener
             currentCutscene.Stop();
             Debug.Log("Current cutscene stopped.");
         }
-
+        /*if (choiceHistory.Count == 1) // Ensure there is a previous choice to revert to
+        {
+            string bedDresserChoice=choiceHistory.Pop();
+            DragCharacter[] draggableCharacters = FindObjectsOfType<DragCharacter>();
+            foreach (DragCharacter character in draggableCharacters)
+            {
+                character.ResetPosition();
+            }
+            return;
+        }*/
         choiceHistory.Pop(); // Remove the latest choice
         string previousChoice = choiceHistory.Peek(); // Get the choice before it
         choicesMade.RemoveAt(choicesMade.Count-1);

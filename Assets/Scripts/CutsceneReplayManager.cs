@@ -40,7 +40,24 @@ public class CutsceneReplayManager : MonoBehaviour
         string[] choices = File.ReadAllLines(filePath);
         foreach (string choice in choices)
         {
+
             cutsceneQueue.Enqueue(choice);
+            if (choice == "Bed")
+            {
+                ReplayCharacter[] draggableCharacters = FindObjectsOfType<ReplayCharacter>();
+                foreach (ReplayCharacter character in draggableCharacters)
+                {
+                    character.BedPosition();
+                }
+            }
+            else if (choice == "Dresser")
+            {
+                ReplayCharacter[] draggableCharacters = FindObjectsOfType<ReplayCharacter>();
+                foreach (ReplayCharacter character in draggableCharacters)
+                {
+                    character.DresserPosition();
+                }
+            }
         }
 
         if (cutsceneQueue.Count > 0)
@@ -71,4 +88,5 @@ public class CutsceneReplayManager : MonoBehaviour
         Debug.Log("Cutscene replay finished.");
         isReplaying = false;
     }
+
 }
