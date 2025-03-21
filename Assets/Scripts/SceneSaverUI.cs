@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.Playables;
+
 
 public class SceneSaverUI : MonoBehaviour
 {
@@ -30,13 +32,26 @@ public class SceneSaverUI : MonoBehaviour
     // Flag to track if the scene has been saved
     public bool sceneIsSaved = false;
     public UndoRedoManager undoRedoManager;
+    private CutsceneManager cutsceneManager;
+
     /// <summary>
     /// Called when the main Save button is pressed: opens the save pop-up panel.
     /// </summary>
 
+    private void Start()
+    {
+        cutsceneManager = FindObjectOfType<CutsceneManager>();
+    }
 
     public void OpenSavePanel()
     {
+        //pauses cutscene
+        if (cutsceneManager != null && cutsceneManager.currentCutscene != null &&
+            cutsceneManager.currentCutscene.state == PlayState.Playing)
+        {
+            cutsceneManager.currentCutscene.Pause();
+            Debug.Log("Cutscene paused on save panel open.");
+        }
         // Disable all main screen buttons
         if (mainScreenButtons != null)
         {
@@ -65,6 +80,13 @@ public class SceneSaverUI : MonoBehaviour
         if (savePanel != null)
         {
             savePanel.SetActive(false);
+        }
+
+        if (cutsceneManager != null && cutsceneManager.currentCutscene != null &&
+            cutsceneManager.currentCutscene.state == PlayState.Paused)
+        {
+            cutsceneManager.currentCutscene.Resume();
+            Debug.Log("Cutscene resumed after closing save panel.");
         }
         
         // Re-enable all main screen buttons
@@ -231,6 +253,11 @@ public class SceneSaverUI : MonoBehaviour
         if (saveButton != null)
         {
             saveButton.interactable = false;
+        }
+        if (cutsceneManager != null && cutsceneManager.currentCutscene != null)
+        {
+            cutsceneManager.currentCutscene.Stop();
+            Debug.Log("Cutscene stopped after discarding all.");
         }
     }
 }

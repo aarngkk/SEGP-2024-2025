@@ -60,7 +60,7 @@ public class CutsceneManager : MonoBehaviour
     public PlayableDirector capuletCalmsDownCutscene;
     public PlayableDirector capuletRemainsAngryCutscene;
 
-    private PlayableDirector currentCutscene;
+    public PlayableDirector currentCutscene;
     private List<string> choicesMade = new List<string>();
     private Stack<string> choiceHistory = new Stack<string>(); // Stores past choices
     public bool isReplayMode = false;
