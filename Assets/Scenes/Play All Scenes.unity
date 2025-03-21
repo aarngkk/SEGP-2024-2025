@@ -1243,6 +1243,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d50552af2e88ad0498c8bbb0cc29f634, type: 3}
+--- !u!1 &217748687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 217748688}
+  - component: {fileID: 217748689}
+  m_Layer: 0
+  m_Name: Script 4 Capulet Enraged
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &217748688
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217748687}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.47012743, y: 0.8892217, z: 0.26800334}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1075845305}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &217748689
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217748687}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: ef1d9e0efba01224fa45c9a0990dbce0, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -4213576651772935029, guid: ef1d9e0efba01224fa45c9a0990dbce0, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -1842207869887510185, guid: ef1d9e0efba01224fa45c9a0990dbce0, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 5734186494487808264, guid: ef1d9e0efba01224fa45c9a0990dbce0, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -6788759066754160815, guid: ef1d9e0efba01224fa45c9a0990dbce0, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &224664674
 GameObject:
   m_ObjectHideFlags: 0
@@ -6311,6 +6368,7 @@ GameObject:
   m_Component:
   - component: {fileID: 722636248}
   - component: {fileID: 722636247}
+  - component: {fileID: 722636249}
   m_Layer: 0
   m_Name: BedCamera
   m_TagString: Untagged
@@ -6384,6 +6442,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1075845305}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &722636249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722636245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98ac045265af5f4f8761cc75cd51e3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dragSpeed: 0.01
+  rotateSpeed: 0.15
+  zoomSpeed: 5
+  minZoomDistance: 1
+  maxZoomDistance: 50
 --- !u!1 &722744603
 GameObject:
   m_ObjectHideFlags: 0
@@ -9599,6 +9674,8 @@ Transform:
   - {fileID: 1313210671}
   - {fileID: 303048336}
   - {fileID: 905369289}
+  - {fileID: 217748688}
+  - {fileID: 1790018738}
   - {fileID: 1247866390}
   - {fileID: 1787048481}
   - {fileID: 992088935}
@@ -11233,6 +11310,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1487739087}
   - component: {fileID: 1487739086}
+  - component: {fileID: 1487739088}
   m_Layer: 0
   m_Name: DresserCamera
   m_TagString: Untagged
@@ -11306,6 +11384,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1075845305}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1487739088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1487739084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98ac045265af5f4f8761cc75cd51e3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dragSpeed: 0.01
+  rotateSpeed: 0.15
+  zoomSpeed: 5
+  minZoomDistance: 1
+  maxZoomDistance: 50
 --- !u!1 &1499802044
 GameObject:
   m_ObjectHideFlags: 0
@@ -12528,6 +12623,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1784193831}
   - component: {fileID: 1784193830}
+  - component: {fileID: 1784193832}
   m_Layer: 0
   m_Name: StageCamera
   m_TagString: Untagged
@@ -12601,6 +12697,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1075845305}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1784193832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784193829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98ac045265af5f4f8761cc75cd51e3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dragSpeed: 0.01
+  rotateSpeed: 0.15
+  zoomSpeed: 5
+  minZoomDistance: 1
+  maxZoomDistance: 50
 --- !u!1 &1787048480
 GameObject:
   m_ObjectHideFlags: 0
@@ -12664,6 +12777,63 @@ PlayableDirector:
     value: {fileID: 1289631093}
   - key: {fileID: -706295854140554728, guid: edfeef46cd3e571428cb8b21f3b576a3, type: 2}
     value: {fileID: 1870061692}
+  m_ExposedReferences:
+    m_References: []
+--- !u!1 &1790018737
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1790018738}
+  - component: {fileID: 1790018739}
+  m_Layer: 0
+  m_Name: Script 4 Capulet Composed
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1790018738
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790018737}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.47012743, y: 0.8892217, z: 0.26800334}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1075845305}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &1790018739
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790018737}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: d2922f131b03a2345a929c6068c7a020, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 3280884275947616718, guid: d2922f131b03a2345a929c6068c7a020, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -5158849953198315591, guid: d2922f131b03a2345a929c6068c7a020, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -4633558832479962168, guid: d2922f131b03a2345a929c6068c7a020, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 5200869610391166287, guid: d2922f131b03a2345a929c6068c7a020, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &1794378759
