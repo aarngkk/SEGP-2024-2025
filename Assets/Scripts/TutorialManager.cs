@@ -48,11 +48,11 @@ public class TutorialManager : MonoBehaviour
             tutorialSteps[currentStep].SetActive(true);
 
             // Check if we've just moved onto step #3 (index 2)
-            if (currentStep == 2 && scriptSelectionManager != null)
+            if (currentStep == 5 && scriptSelectionManager != null)
             {
                 scriptSelectionManager.OpenScriptSelection();
             }
-            else if (currentStep == 3 && scriptSelectionManager != null)
+            else if (currentStep == 6 && scriptSelectionManager != null)
             {
                 scriptSelectionManager.CloseScriptSelection();
             }
