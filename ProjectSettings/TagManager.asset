@@ -12,6 +12,7 @@ TagManager:
   - LadyCapulet
   - Bed
   - Dresser
+  - CarpetZone
   layers:
   - Default
   - TransparentFX

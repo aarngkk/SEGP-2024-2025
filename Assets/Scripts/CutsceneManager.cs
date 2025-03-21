@@ -8,6 +8,10 @@ public class CutsceneManager : MonoBehaviour
 {
     private string SavePath => Application.persistentDataPath + "/SavedScenes/";
     public string logFileName; // Default filename if none is set
+    private bool isCutscene1Started = false;
+    public bool IsCutscene1Started() => isCutscene1Started;
+
+    public GameObject carpetObject;
 
     [Header("Script 1")]
     public PlayableDirector bedCutscene;
@@ -60,16 +64,34 @@ public class CutsceneManager : MonoBehaviour
     public PlayableDirector capuletCalmsDownCutscene;
     public PlayableDirector capuletRemainsAngryCutscene;
 
+    public GameObject script7ChoicePopupPanel;
+    public Button desperateButton;
+    public Button sorrowfulButton;
+
+    [Header("Script 7")]
+    public PlayableDirector bedDesperateCutscene;
+    public PlayableDirector bedSorrowfulCutscene;
+    public PlayableDirector carpetDesperateCutscene;
+    public PlayableDirector carpetSorrowfulCutscene;
+
     public PlayableDirector currentCutscene;
     private List<string> choicesMade = new List<string>();
     private Stack<string> choiceHistory = new Stack<string>(); // Stores past choices
     public bool isReplayMode = false;
+    private bool isCutscene6Finished = false;
+    public bool IsCutscene6Finished() => isCutscene6Finished;
 
     public void PlayCutscene(string cutsceneType, System.Action onCutsceneEnd = null)
     {
         Debug.Log($"Attempting to play cutscene: {cutsceneType}");
 
         RestoreCharacterAnimation();
+
+        // Set the flag when cutscene 1 starts
+        if (cutsceneType == "Bed" || cutsceneType == "Dresser")
+        {
+            isCutscene1Started = true;
+        }
 
         switch (cutsceneType)
         {
@@ -89,6 +111,10 @@ public class CutsceneManager : MonoBehaviour
             case "JulietStandsCapuletAngry":currentCutscene = julietStandsCapuletAngry;break;
             case "CapuletCalmsDown": currentCutscene = capuletCalmsDownCutscene;break;
             case "CapuletRemainsAngry":currentCutscene = capuletRemainsAngryCutscene;break;
+            case "BedDesperate": currentCutscene = bedDesperateCutscene; break;
+            case "BedSorrowful": currentCutscene = bedSorrowfulCutscene; break;
+            case "CarpetDesperate": currentCutscene = carpetDesperateCutscene; break;
+            case "CarpetSorrowful": currentCutscene = carpetSorrowfulCutscene; break;
 
             default:
                 Debug.LogWarning("Invalid cutscene type!");
@@ -161,7 +187,18 @@ public class CutsceneManager : MonoBehaviour
         {
             ShowCapuletThirdChoicePopup();
         }
+        else if (currentCutscene == capuletCalmsDownCutscene || currentCutscene == capuletRemainsAngryCutscene)
+        {
+            // Cutscene 6 has finished
+            isCutscene6Finished = true;
+            Debug.Log("Cutscene 6 finished. Ready for script 7 choices.");
 
+            if (carpetObject != null)
+            {
+                carpetObject.SetActive(true);
+                Debug.Log("Carpet GameObject enabled.");
+            }
+        }
     }
 
     private void FreezeCharacterPose()
@@ -375,5 +412,29 @@ public class CutsceneManager : MonoBehaviour
         OnCutsceneFinished(currentCutscene);
     }
 
+    public void ShowScript7ChoicePopup(string zone)
 
+    {
+        if (script7ChoicePopupPanel != null)
+        {
+            script7ChoicePopupPanel.SetActive(true);
+
+            desperateButton.onClick.RemoveAllListeners();
+            sorrowfulButton.onClick.RemoveAllListeners();
+
+            desperateButton.onClick.AddListener(() => PlayScript7Cutscene(zone, "Desperate"));
+            sorrowfulButton.onClick.AddListener(() => PlayScript7Cutscene(zone, "Sorrowful"));
+        }
+        else
+        {
+            Debug.LogError("Script 7 choice popup panel is not assigned!");
+        }
+    }
+    private void PlayScript7Cutscene(string zone, string emotion)
+    {
+        script7ChoicePopupPanel.SetActive(false);
+
+        string cutsceneType = $"{zone}{emotion}"; // e.g., "BedDesperate" or "CarpetSorrowful"
+        PlayCutscene(cutsceneType);
+    }
 }
