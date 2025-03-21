@@ -20,12 +20,12 @@ public class CameraController : MonoBehaviour
 
     void HandleDragging()
     {
-        if (Input.GetMouseButtonDown(0))  // Middle mouse button pressed
+        if (Input.GetMouseButtonDown(2))  // Middle mouse button pressed
         {
             lastMousePosition = Input.mousePosition;
         }
 
-        if (Input.GetMouseButton(0))  // While holding middle mouse button
+        if (Input.GetMouseButton(2))  // While holding middle mouse button
         {
             Vector3 delta = Input.mousePosition - lastMousePosition;
             Vector3 move = new Vector3(-delta.x * dragSpeed, 0, -delta.y * dragSpeed);
@@ -65,7 +65,7 @@ public class CameraController : MonoBehaviour
         // Calculate distance from camera to scene
         float distance = Vector3.Distance(newPosition, Vector3.zero);
 
-        // Clamp zooming so it doesnï¿½t go too far or too close
+        // Clamp zooming so it doesn’t go too far or too close
         if (distance >= minZoomDistance && distance <= maxZoomDistance)
         {
             transform.position = newPosition;

@@ -18,11 +18,9 @@ public class DragCharacter : MonoBehaviour
     private Bounds stageBounds;
 
     private Transform parentObject; // New: Reference to parent group
-    private CutsceneManager cutsceneManager;
 
     void Start()
     {
-        cutsceneManager = FindObjectOfType<CutsceneManager>();
         cam = Camera.main;
         rb = GetComponent<Rigidbody>();
         groundPlane = new Plane(Vector3.up, Vector3.zero);
@@ -129,11 +127,9 @@ public class DragCharacter : MonoBehaviour
         // Get references to the Outline components of the Bed and Dresser
         Outline bedOutline = GameObject.FindWithTag("Bed").GetComponent<Outline>();
         Outline dresserOutline = GameObject.FindWithTag("Dresser").GetComponent<Outline>();
-        Outline carpetOutline = GameObject.FindWithTag("CarpetZone")?.GetComponent<Outline>();
 
         bool snappedToBed = false;
         bool snappedToDresser = false;
-        bool snappedToCarpet = false;
 
         foreach (Collider col in colliders)
         {
@@ -147,12 +143,6 @@ public class DragCharacter : MonoBehaviour
 
                 FindObjectOfType<PlaySceneButton>().SetCurrentSnapPoint("Bed");
                 snappedToBed = true;
-
-                CutsceneManager cutsceneManager = FindObjectOfType<CutsceneManager>();
-                if (cutsceneManager != null && cutsceneManager.IsCutscene6Finished())
-                {
-                    cutsceneManager.ShowScript7ChoicePopup("Bed");
-                }
             }
             else if (col.CompareTag("DresserZone"))
             {
@@ -165,30 +155,6 @@ public class DragCharacter : MonoBehaviour
                 FindObjectOfType<PlaySceneButton>().SetCurrentSnapPoint("Dresser");
                 snappedToDresser = true;
             }
-            else if (col.CompareTag("CarpetZone"))
-            {
-                Debug.Log("Snapped to Carpet");
-
-                // Set group to preset Carpet position
-                parentObject.position = new Vector3(1.1f, -1.5f, -2.5f); // Adjust position as needed
-                parentObject.rotation = Quaternion.Euler(0, 0, 0);
-
-                FindObjectOfType<PlaySceneButton>().SetCurrentSnapPoint("Carpet");
-                snappedToCarpet = true;
-
-                CutsceneManager cutsceneManager = FindObjectOfType<CutsceneManager>();
-                if (cutsceneManager != null && cutsceneManager.IsCutscene6Finished())
-                {
-                    cutsceneManager.ShowScript7ChoicePopup("Carpet");
-                }
-            }
-        }
-
-        // Check if cutscene 1 has started
-        if (cutsceneManager != null && cutsceneManager.IsCutscene1Started())
-        {
-            // If cutscene 1 has started, do not enable outlines
-            return;
         }
 
         if (bedOutline != null && dresserOutline != null)
@@ -200,7 +166,6 @@ public class DragCharacter : MonoBehaviour
                 bedOutline.OutlineColor = Color.yellow;
 
                 dresserOutline.enabled = false;
-                carpetOutline.enabled = false;
             }
             else if (snappedToDresser)
             {
@@ -209,29 +174,15 @@ public class DragCharacter : MonoBehaviour
                 dresserOutline.OutlineColor = Color.yellow;
 
                 bedOutline.enabled = false;
-                carpetOutline.enabled = false;
             }
-            else if (snappedToCarpet)
-            {
-                // Carpet selected: Yellow outline, Bed and Dresser disabled
-                carpetOutline.enabled = true;
-                carpetOutline.OutlineColor = Color.yellow;
-
-                bedOutline.enabled = false;
-                dresserOutline.enabled = false;
-            }
-
             else
             {
-                // Not snapped to anything: Enable white outlines for all
+                // Not snapped to anything: Enable white outlines for both
                 bedOutline.enabled = true;
                 bedOutline.OutlineColor = Color.white;
 
                 dresserOutline.enabled = true;
                 dresserOutline.OutlineColor = Color.white;
-
-                carpetOutline.enabled = true;
-                carpetOutline.OutlineColor = Color.white;
 
                 FindObjectOfType<PlaySceneButton>().SetCurrentSnapPoint(""); // Disable play button
             }
