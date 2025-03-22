@@ -385,6 +385,14 @@ public class CutsceneManager : MonoBehaviour
         choicesMade.RemoveAt(choicesMade.Count-1);
         Debug.Log($"Undoing choice, returning to: {previousChoice}");
 
+        // Reset the state of isCutscene6Finished and deactivate the Carpet GameObject
+        isCutscene6Finished = false;
+        if (carpetObject != null)
+        {
+            carpetObject.SetActive(false);
+            Debug.Log("Carpet GameObject deactivated.");
+        }
+
         PlayableDirector previousDirector = GameObject.Find(previousChoice)?.GetComponent<PlayableDirector>();
         if (previousDirector != null)
         {
