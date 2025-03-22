@@ -11,6 +11,7 @@ public class SceneSaverUI : MonoBehaviour
     public ScriptSelectionManager scriptSelectionManager;
     public TMP_InputField sceneNameInputField;
     public GameObject savePanel;
+    public GameObject leavePanel;
     public TextMeshProUGUI errorMessageText;
     public List<Button> mainScreenButtons;
     public Button saveButton;
@@ -156,24 +157,80 @@ public class SceneSaverUI : MonoBehaviour
 
     public void OnBackButtonPressed()
     {
-        if (scriptSelectionManager != null && !string.IsNullOrEmpty(scriptSelectionManager.SelectedScript))
+        if (saveButton.interactable == true)
         {
             if (string.IsNullOrEmpty(sceneNameInputField.text) || !sceneIsSaved)
             {
                 if (savePanel != null && !savePanel.activeSelf)
                 {
-                    OpenSavePanel();
-                    if (errorMessageText != null)
-                    {
-                        errorMessageText.text = "Please enter a scene name before exit.";
-                    }
+                    OpenLeavePanel();
                 }
                 return; // Prevent navigating away until the scene is saved
             }
         }
-        
-        Debug.Log("Conditions met. Loading Main Menu scene.");
         SceneManager.LoadScene("Main Menu");
+    }
+
+    public void OnLeaveButtonClicked()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
+
+    
+    public void OpenLeavePanel()
+    {
+        //pauses cutscene
+        if (cutsceneManager != null && cutsceneManager.currentCutscene != null &&
+            cutsceneManager.currentCutscene.state == PlayState.Playing)
+        {
+            cutsceneManager.currentCutscene.Pause();
+            Debug.Log("Cutscene paused on leave panel open.");
+        }
+        // Disable all main screen buttons
+        if (mainScreenButtons != null)
+        {
+            foreach (Button btn in mainScreenButtons)
+            {
+                btn.interactable = false;
+            }
+        }
+
+        if (leavePanel != null)
+        {
+            leavePanel.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// Closes the save pop-up panel and re-enables main screen buttons.
+    /// </summary>
+    public void CloseLeavePanel()
+    {
+        if (leavePanel != null)
+        {
+            leavePanel.SetActive(false);
+        }
+
+        if (cutsceneManager != null && cutsceneManager.currentCutscene != null &&
+            cutsceneManager.currentCutscene.state == PlayState.Paused)
+        {
+            cutsceneManager.currentCutscene.Resume();
+            Debug.Log("Cutscene resumed after closing save panel.");
+        }
+        
+        // Re-enable all main screen buttons
+        if (mainScreenButtons != null)
+        {
+            foreach (Button btn in mainScreenButtons)
+            {
+                btn.interactable = true;
+            }
+        }
+    }
+
+    public void OnStayButtonClicked()
+    {
+        CloseLeavePanel();
     }
 
     public void OnCancelButtonClicked()
