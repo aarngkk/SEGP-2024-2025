@@ -8,35 +8,15 @@ using UnityEngine.Playables;
 
 public class SceneSaverUI : MonoBehaviour
 {
-    // Reference to the SceneSaver component
-    //public SceneSaver sceneSaver;
-
-    // Reference to the ScriptSelectionManager component (assign via Inspector)
     public ScriptSelectionManager scriptSelectionManager;
-
-    // Reference to the TMP_InputField where the user types the scene name
     public TMP_InputField sceneNameInputField;
-
-    // Pop-up panel for saving (the panel that appears when you click "Save")
     public GameObject savePanel;
-
-    // TextMeshPro element for displaying error messages
     public TextMeshProUGUI errorMessageText;
-    
-    // List of main screen buttons to disable when the pop-up appears
     public List<Button> mainScreenButtons;
-
-    // Reference to the Save button (if using for enabling/disabling)
     public Button saveButton;
-
-    // Flag to track if the scene has been saved
     public bool sceneIsSaved = false;
     public UndoRedoManager undoRedoManager;
     private CutsceneManager cutsceneManager;
-
-    /// <summary>
-    /// Called when the main Save button is pressed: opens the save pop-up panel.
-    /// </summary>
 
     private void Start()
     {
@@ -106,18 +86,14 @@ public class SceneSaverUI : MonoBehaviour
     /// </summary>
     public void OnSaveButtonClicked()
     {
-        // Prevent saving if the tutorial is active.
         if (TutorialManager.tutorialActive)
         {
             if (errorMessageText != null)
                 errorMessageText.text = "Finish the tutorial before saving!";
             return;
         }
-
-        // Retrieve the scene name from the input field
         string sceneName = sceneNameInputField.text;
 
-        // Check if the input is empty
         if (string.IsNullOrEmpty(sceneName))
         {
             Debug.LogWarning("Scene name is empty. Please enter a scene name.");
