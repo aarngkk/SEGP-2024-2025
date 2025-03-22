@@ -11,6 +11,8 @@ public class CutsceneManager : MonoBehaviour
     private bool isCutscene1Started = false;
     public bool IsCutscene1Started() => isCutscene1Started;
 
+    [Header("Objects to Disable")]
+    public Button playButton;
     public GameObject carpetObject;
 
     [Header("Script 1")]
@@ -91,6 +93,13 @@ public class CutsceneManager : MonoBehaviour
         if (cutsceneType == "Bed" || cutsceneType == "Dresser")
         {
             isCutscene1Started = true;
+
+            // Clear snap points and reset character positions
+            DragCharacter[] dragCharacters = FindObjectsOfType<DragCharacter>();
+            foreach (DragCharacter character in dragCharacters)
+            {
+                character.ClearSnapPoints();
+            }
         }
 
         switch (cutsceneType)

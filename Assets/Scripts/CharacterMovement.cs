@@ -283,4 +283,30 @@ public class DragCharacter : MonoBehaviour
         parentObject.position = originalPosition;
     }
 
+    public void ClearSnapPoints()
+    {
+        // Reset the characters' positions to their original positions
+        parentObject.position = originalPosition;
+
+        // Clear any snap-related state
+        PlaySceneButton playSceneButton = FindObjectOfType<PlaySceneButton>();
+        if (playSceneButton != null)
+        {
+            playSceneButton.SetCurrentSnapPoint("");
+        }
+
+        // Disable outlines for bed and dresser
+        Outline bedOutline = GameObject.FindWithTag("Bed")?.GetComponent<Outline>();
+        Outline dresserOutline = GameObject.FindWithTag("Dresser")?.GetComponent<Outline>();
+
+        if (bedOutline != null)
+        {
+            bedOutline.enabled = false;
+        }
+
+        if (dresserOutline != null)
+        {
+            dresserOutline.enabled = false;
+        }
+    }
 }
