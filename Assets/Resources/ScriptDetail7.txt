@@ -1,7 +1,4 @@
-SCRIPT 7
 ACT 3 SCENE 5
-LINES 197-226
-11:49.00 - 13:43.71
 
 Juliet
 Is there no pity sitting in the clouds

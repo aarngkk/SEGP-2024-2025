@@ -87,15 +87,5 @@ public class TutorialManager : MonoBehaviour
 
         // Mark the tutorial as inactive
         tutorialActive = false;
-
-        // Finally open the Script Selection UI if not already done
-        if (scriptSelectionManager != null)
-        {
-            scriptSelectionManager.OpenScriptSelection();
-        }
-        else
-        {
-            Debug.LogWarning("ScriptSelectionManager is not assigned in TutorialManager!");
-        }
     }
 }

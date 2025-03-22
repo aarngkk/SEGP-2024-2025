@@ -1,7 +1,4 @@
-SCRIPT 5
 ACT 3 SCENE 5
-LINES 158-175b
-09:18.00 - 10:24.28
 
 Juliet
 Good father, I beseech you on my knees,

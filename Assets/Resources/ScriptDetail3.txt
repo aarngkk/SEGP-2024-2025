@@ -1,7 +1,4 @@
-SCRIPT 3
 ACT 3 SCENE 5
-LINES 126 - 145
-07:12.30 - 08:31.97
 
 Capulet
 When the sun sets, the earth doth drizzle dew;

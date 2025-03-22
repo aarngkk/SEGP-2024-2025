@@ -1,7 +1,4 @@
-SCRIPT 1
 ACT 3 SCENE 5
-LINES 103 - 111
-05:45:00 - 06:21:60
 
 Lady Capulet
 Find thou the means, and I'll find such a man.
@@ -19,4 +16,10 @@ That thou expects not, nor I looked not for.
 
 Juliet
 Madam, in happy time. What day is that?
+
+Lady Capulet
+Marry, my child, early next Thursday morn
+The gallant, young, and noble gentleman,
+The County Paris, at Saint Peter's Church,
+Shall happily make thee there a joyful bride.
 

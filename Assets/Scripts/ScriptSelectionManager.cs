@@ -10,12 +10,16 @@ public class ScriptSelectionManager : MonoBehaviour
     public TextMeshProUGUI scriptDetailText;          // Displays the current script detail
     public Button nextButton;                         // Button to go to the next script
     public Button prevButton;                         // Button to go to the previous script
-    public Button selectButton;                       // Button to select the current script
     public Button backButton;                         // Button to close the panel
     public List<Button> otherButtons;                 // Other buttons to disable/enable
     public ScrollRect scrollRect;                     // Scroll area for the script text
     public Button saveButton;
+    public Button undoButton;
+    public Button redoButton;
     public Button scriptButton;
+
+    public TMP_Text buttonText;
+    public TMP_Text titleText;
 
 
     private List<string> scripts = new List<string>();
@@ -25,107 +29,29 @@ public class ScriptSelectionManager : MonoBehaviour
 
     private void Start()
     {
-        LoadScripts();                // Load the script texts from Resources
-        UpdateScriptDetail();         // Display the first script detail
-        //OpenScriptSelection();        // Open the script selection panel immediately
+        LoadScripts();
+        UpdateScriptDetail();
         backButton.onClick.AddListener(CloseScriptSelection);
 
-        // Initially, if no script is selected, disable the save button.
-        if (saveButton != null)
-        {
-            saveButton.interactable = false;
-        }
-        UpdateScriptButtonLabel();
+        if (saveButton != null) saveButton.interactable = false;
+        if (undoButton != null) undoButton.interactable = false;
+        if (redoButton != null) redoButton.interactable = false;
     }
 
     // Loads script details from text files in the Resources folder
     private void LoadScripts()
     {
-        // Assume we have 8 script files. Adjust the count if needed.
         for (int i = 1; i <= 8; i++)
         {
-            // Build the file name (without extension)
             string fileName = "ScriptDetail" + i;
-
-            // Load the text asset from Resources
             TextAsset textAsset = Resources.Load<TextAsset>(fileName);
-            if (textAsset != null)
-            {
-                scripts.Add(textAsset.text);
-            }
-            else
-            {
-                Debug.LogWarning("Could not load " + fileName + ".txt from Resources!");
-            }
+            if (textAsset != null) scripts.Add(textAsset.text);
+            else Debug.LogWarning("Could not load " + fileName + ".txt from Resources!");
         }
-
         Debug.Log("Loaded " + scripts.Count + " script details.");
     }
 
-    // Opens the pop-up panel and disables all other buttons
-    public void OpenScriptSelection()
-    {
-        scriptPanel.SetActive(true);
-        IsPanelOpen = true; // Mark the panel as open
-
-        foreach (Button btn in otherButtons)
-        {
-            btn.interactable = false;
-        }
-    }
-
-    // Closes the pop-up panel, re-enables other buttons, and updates the title display
-    public void CloseScriptSelection()
-    {
-        scriptPanel.SetActive(false);
-        IsPanelOpen = false; // Mark the panel as closed
-
-        foreach (Button btn in otherButtons)
-        {
-            btn.interactable = true;
-        }
-        if (saveButton != null)
-        {
-            saveButton.interactable = false;
-        }
-    }
-
-    // Advances to the next script in the list
-    public void ShowNextScript()
-    {
-        if (scripts.Count == 0) return;
-
-        currentIndex = (currentIndex + 1) % scripts.Count;
-        UpdateScriptDetail();
-    }
-
-    // Moves to the previous script in the list
-    public void ShowPreviousScript()
-    {
-        if (scripts.Count == 0) return;
-
-        currentIndex = (currentIndex - 1 + scripts.Count) % scripts.Count;
-        UpdateScriptDetail();
-    }
-
-    // Selects the current script and logs it
-    public void SelectCurrentScript()
-    {
-        if (scripts.Count == 0) return;
-
-        SelectedScript = scripts[currentIndex];
-        Debug.Log("Selected Script: " + SelectedScript);
-        CloseScriptSelection();
-
-        // If a script is now selected, enable the save button.
-        if (saveButton != null)
-        {
-            saveButton.interactable = true;
-        }
-        
-        UpdateScriptButtonLabel();
-    }
-
+   
     // Updates the text element with the current script detail and resets the scroll position
     private void UpdateScriptDetail()
     {
@@ -149,35 +75,7 @@ public class ScriptSelectionManager : MonoBehaviour
         }
     }
 
-/*
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape) && scriptPanel.activeSelf)
-        {
-            CloseScriptSelection();
-        }
-        if (CutsceneManager.Instance != null && CutsceneManager.Instance.currentCutscene != null)
-        {
-            string name = CutsceneManager.Instance.currentCutscene.name;
 
-            if (name.Equals("bedCutscene") || name.Equals("dresserCutscene"))
-                currentIndex = 0; // Script 1
-            else if (name.Equals("bedSadCutscene") || name.Contains("dresserSad") || name.Contains("bedAngryCutscene") || name.Contains("dresserAngry") )
-                currentIndex = 1; // Script 2
-            else if (name.Contains("Sympathetic") || name.Contains("Annoyed"))
-                currentIndex = 2; // Script 3
-            else if (name.Contains("Enraged") || name.Contains("Composed"))
-                currentIndex = 3; // Script 4
-            else if (name.Contains("Juliet"))
-                currentIndex = 4; // Script 5
-            else if (name.Contains("CalmsDown") || name.Contains("RemainsAngry"))
-                currentIndex = 5; // Script 6
-            else if (name.Contains("BedDesperate") || name.Contains("BedSorrowful"))
-                currentIndex = 6; // Script 7
-
-            UpdateScriptDetail();
-        }
-    }*/
     private void Update()
     {
         if (CutsceneManager.Instance == null || CutsceneManager.Instance.currentCutsceneType == null)
@@ -226,69 +124,67 @@ public class ScriptSelectionManager : MonoBehaviour
             default:
                 return;
         }
-
+        UpdateTitle(currentIndex);
         UpdateScriptDetail();
-    }
-
-
-    /// <summary>
-    /// Clears the current script selection.
-    /// Call this method when the user clicks the "Discard All" button.
-    /// </summary>
-    public void ClearSelection()
-    {
-        SelectedScript = "";
-        // if (selectedScriptTitleText != null)
-        // {
-        //     selectedScriptTitleText.text = "";
-        // }
-        // Debug.Log("Script selection cleared.");
-
-        // Disable the save button since no script is selected now.
-        if (saveButton != null)
-        {
-            saveButton.interactable = false;
-        }
-        UpdateScriptButtonLabel();
-        Debug.Log("Script selection cleared.");
-    }
-    /// <summary>
-    /// Updates the text on the script selection button.
-    /// If no script is selected, it shows the default text ("Script").
-    /// Otherwise, it displays the first line of the selected script.
-    /// </summary>
-    private void UpdateScriptButtonLabel()
-{
-    if (scriptButton != null)
-    {
-        TextMeshProUGUI buttonText = scriptButton.GetComponentInChildren<TextMeshProUGUI>();
-        if (buttonText != null)
-        {
-            if (string.IsNullOrEmpty(SelectedScript))
+        UpdateScriptButtonLabel(currentIndex);
+        if (currentIndex >= 0) {
+            if (saveButton != null)
             {
-                buttonText.text = "SCRIPT";
+                saveButton.interactable = true;
             }
-            else
+            if (redoButton != null) 
             {
-                // Split the selected script into lines
-                string[] lines = SelectedScript.Split('\n');
-
-                // Find the first non-empty, trimmed line
-                string firstLine = "";
-                foreach (string line in lines)
-                {
-                    if (!string.IsNullOrEmpty(line.Trim()))
-                    {
-                        firstLine = line.Trim();
-                        break;
-                    }
-                }
-
-                // Update button text with the first non-empty line or fallback text
-                buttonText.text = !string.IsNullOrEmpty(firstLine) ? firstLine : "Script";
+                redoButton.interactable = true;
+            }
+        }
+        if (currentIndex > 0) {
+            if (undoButton != null) 
+            {
+                undoButton.interactable = true;
             }
         }
     }
-}
+
+    private void UpdateScriptButtonLabel(int currentIndex)
+    {
+        int scriptNumber = currentIndex + 1;
+        buttonText.text = "Script " + scriptNumber;
+    }
+
+    private void UpdateTitle(int currentIndex)
+    {
+        switch(currentIndex)
+        {
+            case 0: titleText.text = "Lines 103-115";break;
+            case 1: titleText.text = "Lines 116-125";break;
+            case 2: titleText.text = "Lines 126-145";break;
+            case 3: titleText.text = "Lines 146-157b";break;
+            case 4: titleText.text = "Lines 158-175b";break;
+            case 5: titleText.text = "Lines 176-196";break;
+            case 6: titleText.text = "Lines 197-226";break;
+            case 7: titleText.text = "Lines 227-243";break;
+            default: return;            
+        }
+    }
+
+    // Opens the pop-up panel and disables all other buttons
+    public void OpenScriptSelection()
+    {
+        scriptPanel.SetActive(true);
+        IsPanelOpen = true;
+        foreach (Button btn in otherButtons) btn.interactable = false;
+    }
+
+    // Closes the pop-up panel, re-enables other buttons, and updates the title display
+    public void CloseScriptSelection()
+    {
+        scriptPanel.SetActive(false);
+        IsPanelOpen = false; // Mark the panel as closed
+
+        foreach (Button btn in otherButtons) btn.interactable = true;
+        if (saveButton != null) saveButton.interactable = false;
+        if (undoButton != null) undoButton.interactable = false;
+        if (redoButton != null) redoButton.interactable = false;
+    }
 
 }
