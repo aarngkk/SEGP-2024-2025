@@ -11101,6 +11101,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logFileName: 
+  bedZone: {fileID: 261301836}
+  dresserZone: {fileID: 1362566953}
   carpetObject: {fileID: 743699086}
   bedCutscene: {fileID: 1586005305}
   dresserCutscene: {fileID: 1662324478}

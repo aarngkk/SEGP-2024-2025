@@ -15,6 +15,7 @@ public class CutsceneManager : MonoBehaviour
 
     [Header("Objects to Disable")]
     public GameObject bedZone;
+    public GameObject dresserZone;
     public GameObject carpetObject;
 
     [Header("Script 1")]
@@ -101,6 +102,13 @@ public class CutsceneManager : MonoBehaviour
             foreach (DragCharacter character in dragCharacters)
             {
                 character.ClearSnapPoints();
+            }
+
+            // Disable the DresserZone game object
+            if (dresserZone != null)
+            {
+                dresserZone.SetActive(false);
+                Debug.Log("DresserZone GameObject disabled.");
             }
         }
 
