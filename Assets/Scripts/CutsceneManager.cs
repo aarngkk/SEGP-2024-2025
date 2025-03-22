@@ -10,9 +10,11 @@ public class CutsceneManager : MonoBehaviour
     public string logFileName; // Default filename if none is set
     private bool isCutscene1Started = false;
     public bool IsCutscene1Started() => isCutscene1Started;
+    private bool isCutscene7Started = false; // New flag to track Cutscene7 state
+    public bool IsCutscene7Started() => isCutscene7Started; // Public getter
 
     [Header("Objects to Disable")]
-    public Button playButton;
+    public GameObject bedZone;
     public GameObject carpetObject;
 
     [Header("Script 1")]
@@ -192,7 +194,7 @@ public class CutsceneManager : MonoBehaviour
             ShowJulietKneelingChoicePopup();
         }
         else if (currentCutscene == julietKneelsCapuletCalm || currentCutscene == julietKneelsCapuletAngry ||
-         currentCutscene == julietStandsCapuletCalm || currentCutscene == julietStandsCapuletAngry)
+                 currentCutscene == julietStandsCapuletCalm || currentCutscene == julietStandsCapuletAngry)
         {
             ShowCapuletThirdChoicePopup();
         }
@@ -206,6 +208,15 @@ public class CutsceneManager : MonoBehaviour
             {
                 carpetObject.SetActive(true);
                 Debug.Log("Carpet GameObject enabled.");
+            }
+
+            // Enable the bed outline immediately after Cutscene6 finishes
+            Outline bedOutline = GameObject.FindWithTag("Bed")?.GetComponent<Outline>();
+            if (bedOutline != null)
+            {
+                bedOutline.enabled = true;
+                bedOutline.OutlineColor = Color.white; // Set the outline color to white
+                Debug.Log("Bed outline enabled after Cutscene6.");
             }
         }
     }
@@ -364,7 +375,7 @@ public class CutsceneManager : MonoBehaviour
             Debug.LogError($"Failed to write log file: {e.Message}");
         }
     }
-    
+
     public void UndoChoice()
     {
         if (choiceHistory.Count < 2) // Ensure there is a previous choice to revert to
@@ -372,49 +383,77 @@ public class CutsceneManager : MonoBehaviour
             Debug.LogWarning("No previous choice to undo!");
             return;
         }
-        
+
         if (currentCutscene != null && currentCutscene.state == PlayState.Playing)
         {
-            currentCutscene.stopped-=OnCutsceneFinished; //removes the listener
+            currentCutscene.stopped -= OnCutsceneFinished; // Removes the listener
             currentCutscene.Stop();
             Debug.Log("Current cutscene stopped.");
         }
-        /*if (choiceHistory.Count == 1) // Ensure there is a previous choice to revert to
-        {
-            string bedDresserChoice=choiceHistory.Pop();
-            DragCharacter[] draggableCharacters = FindObjectsOfType<DragCharacter>();
-            foreach (DragCharacter character in draggableCharacters)
-            {
-                character.ResetPosition();
-            }
-            return;
-        }*/
+
         choiceHistory.Pop(); // Remove the latest choice
         string previousChoice = choiceHistory.Peek(); // Get the choice before it
-        choicesMade.RemoveAt(choicesMade.Count-1);
+        choicesMade.RemoveAt(choicesMade.Count - 1);
         Debug.Log($"Undoing choice, returning to: {previousChoice}");
 
-        // Reset the state of isCutscene6Finished and deactivate the Carpet GameObject
+        // Reset the state of isCutscene6Finished and isCutscene7Started
         isCutscene6Finished = false;
+        isCutscene7Started = false; // Reset the Cutscene7 flag
+        Debug.Log("Cutscene7 state reset. Bed outline and snap points re-enabled.");
+
+        // Re-enable the Carpet GameObject
         if (carpetObject != null)
         {
-            carpetObject.SetActive(false);
-            Debug.Log("Carpet GameObject deactivated.");
+            carpetObject.SetActive(true);
+            Debug.Log("Carpet GameObject re-enabled.");
         }
 
+        // Re-enable the BedZone GameObject
+        if (bedZone != null)
+        {
+            bedZone.SetActive(true);
+            Debug.Log("BedZone GameObject re-enabled.");
+        }
+
+        // Reset the Bed and Carpet outlines to white
+        Outline bedOutline = GameObject.FindWithTag("Bed")?.GetComponent<Outline>();
+        Outline carpetOutline = GameObject.FindWithTag("CarpetZone")?.GetComponent<Outline>();
+
+        if (bedOutline != null)
+        {
+            bedOutline.enabled = true;
+            bedOutline.OutlineColor = Color.white; // Reset the outline color to white
+            Debug.Log("Bed outline re-enabled and reset to white.");
+        }
+
+        if (carpetOutline != null)
+        {
+            carpetOutline.enabled = true;
+            carpetOutline.OutlineColor = Color.white; // Reset the outline color to white
+            Debug.Log("Carpet outline re-enabled and reset to white.");
+        }
+
+        // Reset the characters' positions to their original positions
+        DragCharacter[] dragCharacters = FindObjectsOfType<DragCharacter>();
+        foreach (DragCharacter character in dragCharacters)
+        {
+            character.ResetPosition();
+        }
+
+        // Play the previous cutscene
         PlayableDirector previousDirector = GameObject.Find(previousChoice)?.GetComponent<PlayableDirector>();
         if (previousDirector != null)
         {
             currentCutscene = previousDirector;
-            currentCutscene.stopped+=OnCutsceneFinished; //reattach listener
+            currentCutscene.stopped += OnCutsceneFinished; // Reattach listener
             OnCutsceneFinished(currentCutscene); // Call the existing logic to show the choice panel
         }
         else
         {
             Debug.LogError("Could not find PlayableDirector for previous choice: " + previousChoice);
         }
-
     }
+
     public void SkipCutscene()
     {
         if (currentCutscene == null || currentCutscene.state != PlayState.Playing)
@@ -449,9 +488,45 @@ public class CutsceneManager : MonoBehaviour
     }
     private void PlayScript7Cutscene(string zone, string emotion)
     {
+        // Hide the Script7ChoicePopup panel
         script7ChoicePopupPanel.SetActive(false);
 
+        // Disable the carpet GameObject
+        if (carpetObject != null)
+        {
+            carpetObject.SetActive(false);
+            Debug.Log("Carpet GameObject disabled.");
+        }
+
+        // Disable the BedZone GameObject
+        if (bedZone != null)
+        {
+            bedZone.SetActive(false);
+            Debug.Log("BedZone GameObject disabled.");
+        }
+
+        // Disable the Bed outline component
+        Outline bedOutline = GameObject.FindWithTag("Bed")?.GetComponent<Outline>();
+        if (bedOutline != null)
+        {
+            bedOutline.enabled = false;
+            Debug.Log("Bed outline disabled.");
+        }
+
+        // Set the flag to indicate that Cutscene7 has started
+        isCutscene7Started = true;
+        Debug.Log("Cutscene7 started. Bed outline and snap points disabled.");
+
+        // Play the selected cutscene
         string cutsceneType = $"{zone}{emotion}"; // e.g., "BedDesperate" or "CarpetSorrowful"
         PlayCutscene(cutsceneType);
+    }
+
+    public void HideScript7ChoicePopup()
+    {
+        if (script7ChoicePopupPanel != null)
+        {
+            script7ChoicePopupPanel.SetActive(false);
+        }
     }
 }
