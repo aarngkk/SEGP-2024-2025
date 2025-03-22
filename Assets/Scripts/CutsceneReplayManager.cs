@@ -42,22 +42,6 @@ public class CutsceneReplayManager : MonoBehaviour
         {
 
             cutsceneQueue.Enqueue(choice);
-            if (choice == "Bed")
-            {
-                ReplayCharacter[] draggableCharacters = FindObjectsOfType<ReplayCharacter>();
-                foreach (ReplayCharacter character in draggableCharacters)
-                {
-                    character.BedPosition();
-                }
-            }
-            else if (choice == "Dresser")
-            {
-                ReplayCharacter[] draggableCharacters = FindObjectsOfType<ReplayCharacter>();
-                foreach (ReplayCharacter character in draggableCharacters)
-                {
-                    character.DresserPosition();
-                }
-            }
         }
 
         if (cutsceneQueue.Count > 0)

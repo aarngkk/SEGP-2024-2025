@@ -68,12 +68,5 @@ public class ReplayCharacter : MonoBehaviour
     {
         parentObject.position = originalPosition;
     }
-    public void BedPosition()
-    {
-        parentObject.position = new Vector3(-4.0f, -1.5f, -4.1f);
-    }
-    public void DresserPosition()
-    {
-        parentObject.position = new Vector3(4.7f, -1.5f, -3.85f);
-    }
+
 }
