@@ -86,11 +86,17 @@ public class CutsceneManager : MonoBehaviour
     private bool isCutscene6Finished = false;
     public bool IsCutscene6Finished() => isCutscene6Finished;
 
+    public static CutsceneManager Instance { get; private set; }
+    public string currentCutsceneType { get; private set; }
+
+
+
     public void PlayCutscene(string cutsceneType, System.Action onCutsceneEnd = null)
     {
         Debug.Log($"Attempting to play cutscene: {cutsceneType}");
 
         RestoreCharacterAnimation();
+        currentCutsceneType = cutsceneType; 
 
         // Set the flag when cutscene 1 starts
         if (cutsceneType == "Bed" || cutsceneType == "Dresser")
@@ -530,6 +536,7 @@ public class CutsceneManager : MonoBehaviour
         PlayCutscene(cutsceneType);
     }
 
+
     public void HideScript7ChoicePopup()
     {
         if (script7ChoicePopupPanel != null)
@@ -537,4 +544,13 @@ public class CutsceneManager : MonoBehaviour
             script7ChoicePopupPanel.SetActive(false);
         }
     }
+    
+
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
+
+
 }

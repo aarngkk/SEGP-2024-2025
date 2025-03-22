@@ -14,22 +14,12 @@ public class ScriptSelectionManager : MonoBehaviour
     public Button backButton;                         // Button to close the panel
     public List<Button> otherButtons;                 // Other buttons to disable/enable
     public ScrollRect scrollRect;                     // Scroll area for the script text
-    // public TextMeshProUGUI selectedScriptTitleText;   // Displays the selected script's title
-    // public GameObject backgroundBlocker;
-    // public MonoBehaviour cameraZoomController;
-
-
-    // Reference to the Save button (to enable/disable based on selection)
     public Button saveButton;
-    // This button's label will update to "Script" if nothing is selected,
-    // or to the selected script's title when a script is selected.
     public Button scriptButton;
-    // List to store the full text details loaded from files
+
+
     private List<string> scripts = new List<string>();
-
     private int currentIndex = 0;
-
-    // The currently selected script (read-only property)
     public string SelectedScript { get; private set; }
     public static bool IsPanelOpen { get; private set; }
 
@@ -88,7 +78,7 @@ public class ScriptSelectionManager : MonoBehaviour
     public void CloseScriptSelection()
     {
         scriptPanel.SetActive(false);
-            IsPanelOpen = false; // Mark the panel as closed
+        IsPanelOpen = false; // Mark the panel as closed
 
         foreach (Button btn in otherButtons)
         {
@@ -159,13 +149,87 @@ public class ScriptSelectionManager : MonoBehaviour
         }
     }
 
+/*
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && scriptPanel.activeSelf)
         {
             CloseScriptSelection();
         }
+        if (CutsceneManager.Instance != null && CutsceneManager.Instance.currentCutscene != null)
+        {
+            string name = CutsceneManager.Instance.currentCutscene.name;
+
+            if (name.Equals("bedCutscene") || name.Equals("dresserCutscene"))
+                currentIndex = 0; // Script 1
+            else if (name.Equals("bedSadCutscene") || name.Contains("dresserSad") || name.Contains("bedAngryCutscene") || name.Contains("dresserAngry") )
+                currentIndex = 1; // Script 2
+            else if (name.Contains("Sympathetic") || name.Contains("Annoyed"))
+                currentIndex = 2; // Script 3
+            else if (name.Contains("Enraged") || name.Contains("Composed"))
+                currentIndex = 3; // Script 4
+            else if (name.Contains("Juliet"))
+                currentIndex = 4; // Script 5
+            else if (name.Contains("CalmsDown") || name.Contains("RemainsAngry"))
+                currentIndex = 5; // Script 6
+            else if (name.Contains("BedDesperate") || name.Contains("BedSorrowful"))
+                currentIndex = 6; // Script 7
+
+            UpdateScriptDetail();
+        }
+    }*/
+    private void Update()
+    {
+        if (CutsceneManager.Instance == null || CutsceneManager.Instance.currentCutsceneType == null)
+            return;
+
+        string type = CutsceneManager.Instance.currentCutsceneType;
+
+        switch (type)
+        {
+            case "Bed":
+            case "Dresser":
+                currentIndex = 0; // Script 1 (index 0)
+                break;
+            case "BedSad":
+            case "DresserSad":
+            case "BedAngry":
+            case "DresserAngry":
+                currentIndex = 1; // Script 2
+                break;
+            case "CapuletSympathetic":
+            case "CapuletAnnoyed":
+                currentIndex = 2; // Script 3
+                break;
+            case "CapuletEnraged":
+            case "CapuletComposed":
+                currentIndex = 3; // Script 1 (index 0)
+                break;
+            case "JulietKneelsCapuletCalm":
+            case "JulietKneelsCapuletAngry":
+            case "JulietStandsCapuletCalm":
+            case "JulietStandsCapuletAngry":
+                currentIndex = 4; // Script 2
+                break;
+            case "CapuletCalmsDown":
+            case "CapuletRemainsAngry":
+                currentIndex = 5; // Script 3
+                break;
+            case "BedDesperate":
+            case "BedSorrowful":
+                currentIndex = 6; // Script 3
+                break;
+            case "CarpetDesperate":
+            case "CarpetSorrowful":
+                currentIndex = 7; // Script 3
+                break;            
+            default:
+                return;
+        }
+
+        UpdateScriptDetail();
     }
+
 
     /// <summary>
     /// Clears the current script selection.
