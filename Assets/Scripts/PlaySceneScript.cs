@@ -23,8 +23,15 @@ public class PlaySceneButton : MonoBehaviour
         Debug.Log($"Received snap point: {snapPoint}");
         currentSnapPoint = snapPoint;
 
-        // Enable play button only if a valid snap point is set
-        playButton.interactable = (snapPoint == "Bed" || snapPoint == "Dresser");
+        // Enable play button only if a valid snap point is set AND the first cutscene has not started
+        if (cutsceneManager != null && !cutsceneManager.IsCutscene1Started())
+        {
+            playButton.interactable = (snapPoint == "Bed" || snapPoint == "Dresser");
+        }
+        else
+        {
+            playButton.interactable = false; // Disable the button if the first cutscene has started
+        }
 
         // Enable/disable outline based on whether a snap point is selected
         SetOutlineState(string.IsNullOrEmpty(snapPoint));
