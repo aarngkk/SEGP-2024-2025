@@ -60,9 +60,7 @@ public class SceneSaverUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Closes the save pop-up panel and re-enables main screen buttons.
-    /// </summary>
+
     public void CloseSavePanel()
     {
         if (savePanel != null)
@@ -88,11 +86,7 @@ public class SceneSaverUI : MonoBehaviour
         if (undoButton != null) undoButton.interactable = wasUndoInteractable;
     }
 
-    /// <summary>
-    /// Called when the Save button in the pop-up panel is clicked.
-    /// Checks sceneName input, retrieves the selected script, and calls SaveScene.
-    /// Also, it will save the current positions of all draggable characters.
-    /// </summary>
+>
      public void OnSaveButtonClicked()
     {
 
@@ -158,72 +152,6 @@ public class SceneSaverUI : MonoBehaviour
         CloseSavePanel();
         SceneManager.LoadScene("Main Menu");
     }
-    /*
-    public void OnSaveButtonClicked()
-    {
-        if (TutorialManager.tutorialActive)
-        {
-            if (errorMessageText != null)
-                errorMessageText.text = "Finish the tutorial before saving!";
-            return;
-        }
-        string sceneName = sceneNameInputField.text;
-
-        if (string.IsNullOrEmpty(sceneName))
-        {
-            Debug.LogWarning("Scene name is empty. Please enter a scene name.");
-            if (errorMessageText != null)
-            {
-                errorMessageText.text = "Please enter a scene name before saving.";
-            }
-            return;
-        }
-
-        // Retrieve the selected script from the ScriptSelectionManager
-        
-        // Build the full path
-        string filePath = System.IO.Path.Combine(Application.persistentDataPath + "/SavedScenes/", sceneName + ".json");
-
-        // Check if file already exists and we haven't confirmed overwriting
-        if (System.IO.File.Exists(filePath))
-        {
-            // Warn the user: same scene name already exists
-            if (errorMessageText != null)
-            {
-                errorMessageText.text = "A scene with this name already exists.\n"
-                + "Please enter a different name.";
-            }
-            Debug.Log("Save aborted: file already exists. User must rename.");
-
-            return; // Stop here; user must press Save again to confirm
-        }
-
-        // Ensure the directory exists
-        string directoryPath = System.IO.Path.Combine(Application.persistentDataPath, "SavedScenes");
-        if (!System.IO.Directory.Exists(directoryPath))
-        {
-            System.IO.Directory.CreateDirectory(directoryPath);
-        }
-
-        CutsceneManager cutsceneManager = FindObjectOfType<CutsceneManager>();
-        if (cutsceneManager != null)
-        {
-            cutsceneManager.logFileName = sceneName; // Set filename
-            cutsceneManager.LogChoicesToFile();      // Save choices
-        }
-        else
-        {
-            Debug.LogError("CutsceneManager not found! Choices were not logged.");
-        }
-
-        
-
-        // Save the scene with both the scene name, the selected script, and the positions of draggable characters.
-        //sceneSaver.SaveScene(sceneName, selectedScript);
-        sceneIsSaved = true;  // Mark that the scene has been saved
-        CloseSavePanel();
-        SceneManager.LoadScene("Main Menu");
-    }*/
 
     public void OnBackButtonPressed()
     {
@@ -278,9 +206,7 @@ public class SceneSaverUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Closes the save pop-up panel and re-enables main screen buttons.
-    /// </summary>
+
     public void CloseLeavePanel()
     {
         if (leavePanel != null)
@@ -319,46 +245,9 @@ public class SceneSaverUI : MonoBehaviour
         CloseSavePanel();
     }
 
-    /// <summary>
-    /// Called when the Discard All button is clicked.
-    /// This will clear the selected script, reset the scene save state,
-    /// and move all draggable characters back to their original positions.
-    /// </summary>
+ 
     public void OnDiscardAllButtonClicked()
     {
-       
-        // Reset the scene name input and the saved flag
-        sceneNameInputField.text = "";
-        sceneIsSaved = false;
-
-        // Optionally, clear any error messages
-        if (errorMessageText != null)
-        {
-            errorMessageText.text = "All selections have been discarded.";
-        }
-
-        // Reset all draggable characters to their original positions
-        DragCharacter[] draggableCharacters = FindObjectsOfType<DragCharacter>();
-        foreach (DragCharacter character in draggableCharacters)
-        {
-            character.ResetPosition();
-        }
-
-        // Optionally, close the save panel if it's open
-        if (savePanel != null && savePanel.activeSelf)
-        {
-            CloseSavePanel();
-        }
-
-        if (saveButton != null)
-        {
-            saveButton.interactable = false;
-        }
-        if (cutsceneManager != null && cutsceneManager.currentCutscene != null)
-        {
-            cutsceneManager.currentCutscene.Stop();
-            Debug.Log("Cutscene stopped after discarding all.");
-        }
         SceneManager.LoadScene("New Scene");
     }
 }

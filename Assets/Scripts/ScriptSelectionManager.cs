@@ -60,7 +60,7 @@ public class ScriptSelectionManager : MonoBehaviour
             Debug.LogError("scriptDetailText is not assigned in the Inspector!");
             return;
         }
-
+        
         if (scripts.Count > 0)
         {
             scriptDetailText.text = scripts[currentIndex];
@@ -125,7 +125,6 @@ public class ScriptSelectionManager : MonoBehaviour
                 return;
         }
         UpdateTitle(currentIndex);
-        UpdateScriptDetail();
         UpdateScriptButtonLabel(currentIndex);
         if (currentIndex >= 0) {
             if (saveButton != null)
@@ -170,6 +169,7 @@ public class ScriptSelectionManager : MonoBehaviour
     // Opens the pop-up panel and disables all other buttons
     public void OpenScriptSelection()
     {
+        UpdateScriptDetail();
         scriptPanel.SetActive(true);
         IsPanelOpen = true;
         foreach (Button btn in otherButtons) btn.interactable = false;

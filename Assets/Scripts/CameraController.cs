@@ -20,6 +20,7 @@ public class CameraController : MonoBehaviour
 
     void HandleDragging()
     {
+        if (ScriptSelectionManager.IsPanelOpen) return; 
         if (Input.GetMouseButtonDown(0))  // Middle mouse button pressed
         {
             lastMousePosition = Input.mousePosition;
@@ -40,6 +41,7 @@ public class CameraController : MonoBehaviour
 
     void HandleRotation()
     {
+        if (ScriptSelectionManager.IsPanelOpen) return; 
         if (Input.GetMouseButtonDown(1))  // Right mouse button pressed
         {
             lastMousePosition = Input.mousePosition;
@@ -58,6 +60,7 @@ public class CameraController : MonoBehaviour
 
     void HandleZoom()
     {
+        if (ScriptSelectionManager.IsPanelOpen) return; 
         float scroll = Input.GetAxis("Mouse ScrollWheel"); // Get scroll input (-1 to 1)
         Vector3 direction = transform.forward * scroll * zoomSpeed;
         Vector3 newPosition = transform.position + direction;
