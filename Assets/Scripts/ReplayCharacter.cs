@@ -8,7 +8,6 @@ public class ReplayCharacter : MonoBehaviour
     private Vector3 offset;
     private Camera cam;
     private Rigidbody rb;
-    private bool isDragging = false;
     private static DragCharacter selectedCharacter = null;
     public static DragCharacter SelectedCharacter => selectedCharacter; // Allows CameraController to check selection
     private Plane groundPlane;

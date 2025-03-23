@@ -8,7 +8,6 @@ public class CutsceneReplayManager : MonoBehaviour
 {
     public CutsceneManager cutsceneManager;
     private Queue<string> cutsceneQueue = new Queue<string>();
-    private bool isReplaying = false;
 
     private void Start()
     {
@@ -56,7 +55,6 @@ public class CutsceneReplayManager : MonoBehaviour
 
     private IEnumerator ReplayCutscenes()
     {
-        isReplaying = true;
 
         while (cutsceneQueue.Count > 0)
         {
@@ -70,7 +68,6 @@ public class CutsceneReplayManager : MonoBehaviour
         }
 
         Debug.Log("Cutscene replay finished.");
-        isReplaying = false;
     }
 
 }

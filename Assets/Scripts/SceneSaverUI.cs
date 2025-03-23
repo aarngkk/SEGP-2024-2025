@@ -9,15 +9,18 @@ using UnityEngine.Playables;
 public class SceneSaverUI : MonoBehaviour
 {
     public ScriptSelectionManager scriptSelectionManager;
+    private CutsceneManager cutsceneManager;
     public TMP_InputField sceneNameInputField;
     public GameObject savePanel;
     public GameObject leavePanel;
+    public GameObject overwriteConfirmPanel;
     public TextMeshProUGUI errorMessageText;
     public List<Button> mainScreenButtons;
     public Button saveButton;
+    public Button undoButton;
     public bool sceneIsSaved = false;
-    public UndoRedoManager undoRedoManager;
-    private CutsceneManager cutsceneManager;
+    private bool wasUndoInteractable = false;
+    private string pendingOverwriteSceneName = "";
 
     private void Start()
     {
@@ -26,6 +29,10 @@ public class SceneSaverUI : MonoBehaviour
 
     public void OpenSavePanel()
     {
+        if (undoButton != null)
+        {
+            wasUndoInteractable = undoButton.interactable;
+        }
         //pauses cutscene
         if (cutsceneManager != null && cutsceneManager.currentCutscene != null &&
             cutsceneManager.currentCutscene.state == PlayState.Playing)
@@ -78,6 +85,7 @@ public class SceneSaverUI : MonoBehaviour
                 btn.interactable = true;
             }
         }
+        if (undoButton != null) undoButton.interactable = wasUndoInteractable;
     }
 
     /// <summary>
@@ -85,6 +93,72 @@ public class SceneSaverUI : MonoBehaviour
     /// Checks sceneName input, retrieves the selected script, and calls SaveScene.
     /// Also, it will save the current positions of all draggable characters.
     /// </summary>
+     public void OnSaveButtonClicked()
+    {
+
+        string sceneName = sceneNameInputField.text;
+
+        if (string.IsNullOrEmpty(sceneName))
+        {
+            if (errorMessageText != null)
+                errorMessageText.text = "Please enter a scene name before saving.";
+            return;
+        }
+
+        string filePath = System.IO.Path.Combine(Application.persistentDataPath + "/SavedScenes/", sceneName + ".log");
+
+        if (System.IO.File.Exists(filePath))
+        {
+            pendingOverwriteSceneName = sceneName;
+            if (overwriteConfirmPanel != null)
+                overwriteConfirmPanel.SetActive(true);
+            return;
+        }
+
+        SaveScene(sceneName);
+    }
+    public void OnConfirmOverwrite()
+    {
+        if (!string.IsNullOrEmpty(pendingOverwriteSceneName))
+        {
+            SaveScene(pendingOverwriteSceneName);
+            pendingOverwriteSceneName = "";
+        }
+
+        if (overwriteConfirmPanel != null)
+            overwriteConfirmPanel.SetActive(false);
+    }
+
+    public void OnCancelOverwrite()
+    {
+        pendingOverwriteSceneName = "";
+        if (overwriteConfirmPanel != null)
+            overwriteConfirmPanel.SetActive(false);
+    }
+
+    private void SaveScene(string sceneName)
+    {
+        string directoryPath = System.IO.Path.Combine(Application.persistentDataPath, "SavedScenes");
+        if (!System.IO.Directory.Exists(directoryPath))
+        {
+            System.IO.Directory.CreateDirectory(directoryPath);
+        }
+
+        if (cutsceneManager != null)
+        {
+            cutsceneManager.logFileName = sceneName;
+            cutsceneManager.LogChoicesToFile();
+        }
+        else
+        {
+            Debug.LogError("CutsceneManager not found! Choices were not logged.");
+        }
+
+        sceneIsSaved = true;
+        CloseSavePanel();
+        SceneManager.LoadScene("Main Menu");
+    }
+    /*
     public void OnSaveButtonClicked()
     {
         if (TutorialManager.tutorialActive)
@@ -142,32 +216,31 @@ public class SceneSaverUI : MonoBehaviour
             Debug.LogError("CutsceneManager not found! Choices were not logged.");
         }
 
-        // Clear Undo/Redo after saving
-        if (undoRedoManager != null)
-        {
-            undoRedoManager.ClearHistory();
-        }
+        
 
         // Save the scene with both the scene name, the selected script, and the positions of draggable characters.
         //sceneSaver.SaveScene(sceneName, selectedScript);
         sceneIsSaved = true;  // Mark that the scene has been saved
         CloseSavePanel();
         SceneManager.LoadScene("Main Menu");
-    }
+    }*/
 
     public void OnBackButtonPressed()
     {
-        if (saveButton.interactable == true)
-        {
-            if (string.IsNullOrEmpty(sceneNameInputField.text) || !sceneIsSaved)
+        if (saveButton != null) {
+            if (saveButton.interactable == true)
             {
-                if (savePanel != null && !savePanel.activeSelf)
+                if (string.IsNullOrEmpty(sceneNameInputField.text) || !sceneIsSaved)
                 {
-                    OpenLeavePanel();
+                    if (savePanel != null && !savePanel.activeSelf)
+                    {
+                        OpenLeavePanel();
+                    }
+                    return; // Prevent navigating away until the scene is saved
                 }
-                return; // Prevent navigating away until the scene is saved
             }
         }
+        
         SceneManager.LoadScene("Main Menu");
     }
 
@@ -179,6 +252,10 @@ public class SceneSaverUI : MonoBehaviour
     
     public void OpenLeavePanel()
     {
+        if (undoButton != null)
+        {
+            wasUndoInteractable = undoButton.interactable;
+        }
         //pauses cutscene
         if (cutsceneManager != null && cutsceneManager.currentCutscene != null &&
             cutsceneManager.currentCutscene.state == PlayState.Playing)
@@ -225,6 +302,10 @@ public class SceneSaverUI : MonoBehaviour
             {
                 btn.interactable = true;
             }
+        }
+        if (undoButton != null)
+        {
+            undoButton.interactable = wasUndoInteractable;
         }
     }
 
