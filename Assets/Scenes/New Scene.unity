@@ -3071,6 +3071,8 @@ PlayableDirector:
     value: {fileID: 1289631093}
   - key: {fileID: 5102985905043599259, guid: 8907ca2d4e6c6e74ab2437200e01112d, type: 2}
     value: {fileID: 722636245}
+  - key: {fileID: 8243151374585476144, guid: 8907ca2d4e6c6e74ab2437200e01112d, type: 2}
+    value: {fileID: 1784193829}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &291770900 stripped
@@ -9404,6 +9406,8 @@ PlayableDirector:
     value: {fileID: 1289631093}
   - key: {fileID: -3855872646805119771, guid: 3db9f0e8d2c3dc84db4ddf6dbe89436f, type: 2}
     value: {fileID: 722636245}
+  - key: {fileID: 3772868422783417760, guid: 3db9f0e8d2c3dc84db4ddf6dbe89436f, type: 2}
+    value: {fileID: 1784193829}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &705507993
@@ -11332,6 +11336,8 @@ PlayableDirector:
     value: {fileID: 1289631093}
   - key: {fileID: 3450749568896736209, guid: 7d51f5fa3282c2a45810fda983420bef, type: 2}
     value: {fileID: 1487739084}
+  - key: {fileID: 3780265090433284792, guid: 7d51f5fa3282c2a45810fda983420bef, type: 2}
+    value: {fileID: 1784193829}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &905369288
@@ -11943,7 +11949,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.25879756, y: 0.012458186, z: -0.0033381614, w: 0.96584547}
   m_LocalPosition: {x: 0, y: 2.77, z: -7.99}
-  m_LocalScale: {x: 0.96466, y: 0.96466, z: 0.96466}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -12056,6 +12062,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logFileName: 
+  playButton: {fileID: 0}
+  pauseButton: {fileID: 0}
   bedZone: {fileID: 261301836}
   dresserZone: {fileID: 1362566953}
   carpetObject: {fileID: 743699086}
@@ -16777,6 +16785,8 @@ PlayableDirector:
     value: {fileID: 1487739084}
   - key: {fileID: 3640205661467402111, guid: 6b22e440ee9fa4b4abac8b75737bdf0c, type: 2}
     value: {fileID: 0}
+  - key: {fileID: -5531090326534958569, guid: 6b22e440ee9fa4b4abac8b75737bdf0c, type: 2}
+    value: {fileID: 1784193829}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &1322385112
@@ -20770,13 +20780,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1784193829}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.11494501, y: -0.0011918512, z: 0.00013791182, w: 0.9933711}
-  m_LocalPosition: {x: 0.8437847, y: 2.0393066, z: -7.210821}
+  m_LocalRotation: {x: 0.1305153, y: 0.0127873225, z: -0.0016834824, w: 0.99136245}
+  m_LocalPosition: {x: 0.47012743, y: 2.767, z: -8.599}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1075845305}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 15, y: 1.478, z: 0}
 --- !u!114 &1784193832
 MonoBehaviour:
   m_ObjectHideFlags: 0
