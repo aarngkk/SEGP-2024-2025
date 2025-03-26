@@ -79,6 +79,14 @@ public class CutsceneManager : MonoBehaviour
     public PlayableDirector carpetDesperateCutscene;
     public PlayableDirector carpetSorrowfulCutscene;
 
+    public GameObject JulietSitWalkChoicePopupPanel; // Choice popup for Script 8
+    public Button sitButton;
+    public Button walkButton;
+
+    [Header("Script 8")]
+    public PlayableDirector julietSitCutscene;
+    public PlayableDirector julietWalkCutscene;
+
     public PlayableDirector currentCutscene;
     private List<string> choicesMade = new List<string>();
     private Stack<string> choiceHistory = new Stack<string>(); // Stores past choices
@@ -140,6 +148,8 @@ public class CutsceneManager : MonoBehaviour
             case "BedSorrowful": currentCutscene = bedSorrowfulCutscene; break;
             case "CarpetDesperate": currentCutscene = carpetDesperateCutscene; break;
             case "CarpetSorrowful": currentCutscene = carpetSorrowfulCutscene; break;
+            case "JulietSit": currentCutscene = julietSitCutscene; break;
+            case "JulietWalk": currentCutscene = julietWalkCutscene; break;
 
             default:
                 Debug.LogWarning("Invalid cutscene type!");
@@ -232,6 +242,11 @@ public class CutsceneManager : MonoBehaviour
                 bedOutline.OutlineColor = Color.white; // Set the outline color to white
                 Debug.Log("Bed outline enabled after Cutscene6.");
             }
+        }
+        else if (currentCutscene == bedDesperateCutscene || currentCutscene == bedSorrowfulCutscene ||
+                 currentCutscene == carpetDesperateCutscene || currentCutscene == carpetSorrowfulCutscene)
+        {
+            ShowScript8ChoicePopup();
         }
     }
 
@@ -356,6 +371,24 @@ public class CutsceneManager : MonoBehaviour
         }
     }
 
+    private void ShowScript8ChoicePopup()
+    {
+        if (JulietSitWalkChoicePopupPanel != null)
+        {
+            JulietSitWalkChoicePopupPanel.SetActive(true);
+
+            sitButton.onClick.RemoveAllListeners();
+            walkButton.onClick.RemoveAllListeners();
+
+            sitButton.onClick.AddListener(() => PlayNextCutscene("JulietSit"));
+            walkButton.onClick.AddListener(() => PlayNextCutscene("JulietWalk"));
+        }
+        else
+        {
+            Debug.LogError("Script 8 choice popup panel is not assigned!");
+        }
+    }
+
     private void PlayNextCutscene(string nextCutsceneType)
     {
         choicePopupPanel?.SetActive(false);
@@ -363,6 +396,7 @@ public class CutsceneManager : MonoBehaviour
         capuletFinalChoicePopupPanel?.SetActive(false);
         julietKneelingChoicePopupPanel?.SetActive(false);
         capuletThirdChoicePopupPanel?.SetActive(false);
+        JulietSitWalkChoicePopupPanel?.SetActive(false);
 
         PlayCutscene(nextCutsceneType);
     }
