@@ -3,11 +3,16 @@ using UnityEngine.Playables;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 
 public class CutsceneManager : MonoBehaviour
 {
     private string SavePath => Application.persistentDataPath + "/SavedScenes/";
     public string logFileName; // Default filename if none is set
+    private bool isPaused = false;
+    public Button pausePlayButton;
+    public TMP_Text pausePlayButtonText;
+
     private bool isCutscene1Started = false;
     public bool IsCutscene1Started() => isCutscene1Started;
     private bool isCutscene7Started = false; // New flag to track Cutscene7 state
@@ -586,5 +591,23 @@ public class CutsceneManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
+    public void TogglePausePlay()
+    {
+        if (currentCutscene == null)
+            return;
+
+        if (isPaused)
+        {
+            currentCutscene.Play();
+            pausePlayButtonText.text = "Pause";
+        }
+        else
+        {
+            currentCutscene.Pause();
+            pausePlayButtonText.text = "Play";
+        }
+
+        isPaused = !isPaused;
+    }
 
 }
