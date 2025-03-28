@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using System.IO;
 
 public class CutsceneReplayManager : MonoBehaviour
@@ -68,6 +69,7 @@ public class CutsceneReplayManager : MonoBehaviour
         }
 
         Debug.Log("Cutscene replay finished.");
+        SceneManager.LoadScene("Main Menu");
     }
 
 }
