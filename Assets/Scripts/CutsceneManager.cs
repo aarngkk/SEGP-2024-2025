@@ -99,6 +99,8 @@ public class CutsceneManager : MonoBehaviour
     private bool isCutscene6Finished = false;
     public bool IsCutscene6Finished() => isCutscene6Finished;
 
+    public GameObject FinishedPopUp;
+
     public static CutsceneManager Instance { get; private set; }
     public string currentCutsceneType { get; private set; }
 
@@ -135,6 +137,31 @@ public class CutsceneManager : MonoBehaviour
             {
                 dresserZone.SetActive(false);
                 Debug.Log("DresserZone GameObject disabled.");
+            }
+        }
+
+        if (cutsceneType == "BedDesperate" || cutsceneType == "BedSorrowful" ||
+            cutsceneType == "CarpetDesperate" || cutsceneType == "CarpetSorrowful" )
+        {
+            isCutscene1Started = true;
+
+            // Clear snap points and reset character positions
+            DragCharacter[] dragCharacters = FindObjectsOfType<DragCharacter>();
+            foreach (DragCharacter character in dragCharacters)
+            {
+                character.ClearSnapPoints();
+            }
+
+            // Disable the DresserZone game object
+            if (bedZone != null)
+            {
+                bedZone.SetActive(false);
+                Debug.Log("BedZone GameObject disabled.");
+            }
+            if (carpetObject != null)
+            {
+                carpetObject.SetActive(false);
+                Debug.Log("CarpetZone GameObject disabled.");
             }
         }
 
@@ -259,6 +286,10 @@ public class CutsceneManager : MonoBehaviour
                  currentCutscene == carpetDesperateCutscene || currentCutscene == carpetSorrowfulCutscene)
         {
             ShowScript8ChoicePopup();
+        }
+        else if (currentCutscene == julietSitCutscene || currentCutscene == julietWalkCutscene)
+        {
+            ShowFinishPopUp();
         }
     }
 
@@ -398,6 +429,18 @@ public class CutsceneManager : MonoBehaviour
         else
         {
             Debug.LogError("Script 8 choice popup panel is not assigned!");
+        }
+    }
+
+    private void ShowFinishPopUp()
+    {
+        if (FinishedPopUp != null)
+        {
+            FinishedPopUp.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("Finished Pop Up Not Assigned!!");
         }
     }
 

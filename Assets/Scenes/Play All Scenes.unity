@@ -7979,15 +7979,15 @@ MonoBehaviour:
   script7ChoicePopupPanel: {fileID: 0}
   desperateButton: {fileID: 0}
   sorrowfulButton: {fileID: 0}
-  bedDesperateCutscene: {fileID: 0}
-  bedSorrowfulCutscene: {fileID: 0}
-  carpetDesperateCutscene: {fileID: 0}
-  carpetSorrowfulCutscene: {fileID: 0}
+  bedDesperateCutscene: {fileID: 2092172532}
+  bedSorrowfulCutscene: {fileID: 1848263020}
+  carpetDesperateCutscene: {fileID: 2036469904}
+  carpetSorrowfulCutscene: {fileID: 569402263}
   JulietSitWalkChoicePopupPanel: {fileID: 0}
   sitButton: {fileID: 0}
   walkButton: {fileID: 0}
-  julietSitCutscene: {fileID: 0}
-  julietWalkCutscene: {fileID: 0}
+  julietSitCutscene: {fileID: 1449696395}
+  julietWalkCutscene: {fileID: 428988891}
   currentCutscene: {fileID: 0}
   isReplayMode: 0
 --- !u!320 &1030452485
