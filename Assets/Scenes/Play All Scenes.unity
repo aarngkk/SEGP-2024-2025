@@ -2492,6 +2492,73 @@ PlayableDirector:
     value: {fileID: 1784193829}
   m_ExposedReferences:
     m_References: []
+--- !u!1 &428988889
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 428988890}
+  - component: {fileID: 428988891}
+  m_Layer: 0
+  m_Name: Script 8 Juliet Walk
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &428988890
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428988889}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.86012745, y: -0.56281227, z: -3.4319968}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1075845305}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &428988891
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428988889}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 28148ae346e5e83469c3733613707242, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -2100256522553294388, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 3616153843632025555, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -8000933306244603617, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -681431734411497504, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -3036829081217736995, guid: 28148ae346e5e83469c3733613707242, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -7798722042927096476, guid: 28148ae346e5e83469c3733613707242, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -3336492933139965145, guid: 28148ae346e5e83469c3733613707242, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -3097016246202143390, guid: 28148ae346e5e83469c3733613707242, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -4934840408157343387, guid: 28148ae346e5e83469c3733613707242, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &463187560
 GameObject:
   m_ObjectHideFlags: 0
@@ -3905,6 +3972,73 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &569402261
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 569402262}
+  - component: {fileID: 569402263}
+  m_Layer: 0
+  m_Name: Script 7 Carpet Sorrowful
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &569402262
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569402261}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.86012745, y: -0.56281227, z: -3.4319968}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1075845305}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &569402263
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569402261}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 477ac71ff18dd314e90966906c873c32, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -2100256522553294388, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 3616153843632025555, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -8000933306244603617, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -681431734411497504, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 1085364887759793870, guid: 477ac71ff18dd314e90966906c873c32, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 4646604730103133579, guid: 477ac71ff18dd314e90966906c873c32, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 1719730742087559181, guid: 477ac71ff18dd314e90966906c873c32, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 5420016069093190796, guid: 477ac71ff18dd314e90966906c873c32, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -1759557403593339789, guid: 477ac71ff18dd314e90966906c873c32, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &583891691
 GameObject:
   m_ObjectHideFlags: 0
@@ -9660,6 +9794,12 @@ Transform:
   - {fileID: 722744604}
   - {fileID: 25012609}
   - {fileID: 403601769}
+  - {fileID: 2092172531}
+  - {fileID: 1848263019}
+  - {fileID: 2036469903}
+  - {fileID: 569402262}
+  - {fileID: 1449696394}
+  - {fileID: 428988890}
   - {fileID: 1487739087}
   - {fileID: 722636248}
   - {fileID: 1784193831}
@@ -10963,6 +11103,73 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1075845305}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1449696393
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1449696394}
+  - component: {fileID: 1449696395}
+  m_Layer: 0
+  m_Name: Script 8 Juliet Sit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1449696394
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449696393}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.86012745, y: -0.56281227, z: -3.4319968}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1075845305}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &1449696395
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449696393}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 9c85ac441b3c10c468c9fa09fc083853, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -2100256522553294388, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 3616153843632025555, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -8000933306244603617, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -681431734411497504, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -3036829081217736995, guid: 9c85ac441b3c10c468c9fa09fc083853, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -7798722042927096476, guid: 9c85ac441b3c10c468c9fa09fc083853, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -3336492933139965145, guid: 9c85ac441b3c10c468c9fa09fc083853, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -3097016246202143390, guid: 9c85ac441b3c10c468c9fa09fc083853, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 8679229005113863131, guid: 9c85ac441b3c10c468c9fa09fc083853, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &1456162195
 GameObject:
   m_ObjectHideFlags: 0
@@ -13038,6 +13245,73 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1831793131}
   m_CullTransparentMesh: 1
+--- !u!1 &1848263018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1848263019}
+  - component: {fileID: 1848263020}
+  m_Layer: 0
+  m_Name: Script 7 Bed Sorrowful
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1848263019
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848263018}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.86012745, y: -0.56281227, z: -3.4319968}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1075845305}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &1848263020
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848263018}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: cf7d2e9a6e1568e4cbefedde7c8000c7, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -2100256522553294388, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 3616153843632025555, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -8000933306244603617, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -681431734411497504, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 1085364887759793870, guid: cf7d2e9a6e1568e4cbefedde7c8000c7, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 4646604730103133579, guid: cf7d2e9a6e1568e4cbefedde7c8000c7, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 1719730742087559181, guid: cf7d2e9a6e1568e4cbefedde7c8000c7, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 5420016069093190796, guid: cf7d2e9a6e1568e4cbefedde7c8000c7, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 1366364736842771347, guid: cf7d2e9a6e1568e4cbefedde7c8000c7, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &1865673079
 GameObject:
   m_ObjectHideFlags: 0
@@ -15230,6 +15504,73 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverScale: {x: 1.2, y: 1.2, z: 1}
   smoothSpeed: 10
+--- !u!1 &2036469902
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2036469903}
+  - component: {fileID: 2036469904}
+  m_Layer: 0
+  m_Name: Script 7 Carpet Desperate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2036469903
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036469902}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.86012745, y: -0.56281227, z: -3.4319968}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1075845305}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &2036469904
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036469902}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 8630ac626a13bf14ba522a84cfcd6579, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -2100256522553294388, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 3616153843632025555, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -8000933306244603617, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -681431734411497504, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 1085364887759793870, guid: 8630ac626a13bf14ba522a84cfcd6579, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 4646604730103133579, guid: 8630ac626a13bf14ba522a84cfcd6579, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 1719730742087559181, guid: 8630ac626a13bf14ba522a84cfcd6579, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 5420016069093190796, guid: 8630ac626a13bf14ba522a84cfcd6579, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 4683610379199700287, guid: 8630ac626a13bf14ba522a84cfcd6579, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References: []
 --- !u!114 &2074572986 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6093994324302070596, guid: d50552af2e88ad0498c8bbb0cc29f634, type: 3}
@@ -15331,6 +15672,73 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2079928739}
   m_CullTransparentMesh: 1
+--- !u!1 &2092172530
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2092172531}
+  - component: {fileID: 2092172532}
+  m_Layer: 0
+  m_Name: Script 7 Bed Desperate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2092172531
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092172530}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.86012745, y: -0.56281227, z: -3.4319968}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1075845305}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &2092172532
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092172530}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: ea651887706720d478c83e4186dd98d7, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -2100256522553294388, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 3616153843632025555, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -8000933306244603617, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -681431734411497504, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 1085364887759793870, guid: ea651887706720d478c83e4186dd98d7, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 1719730742087559181, guid: ea651887706720d478c83e4186dd98d7, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 5420016069093190796, guid: ea651887706720d478c83e4186dd98d7, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 4646604730103133579, guid: ea651887706720d478c83e4186dd98d7, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 38015940411382151, guid: ea651887706720d478c83e4186dd98d7, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

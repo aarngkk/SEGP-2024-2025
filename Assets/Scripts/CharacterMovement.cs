@@ -58,16 +58,6 @@ public class DragCharacter : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButton(1) && selectedCharacter == this && GetMouseWorldPosition(out Vector3 mouseWorldPos))
-        {
-            Vector3 direction = mouseWorldPos - parentObject.position;
-            direction.y = 0;
-            if (direction.magnitude > 0.1f)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                parentObject.rotation = Quaternion.Slerp(parentObject.rotation, targetRotation, Time.deltaTime * 10f);
-            }
-        }
 
         if (Input.GetMouseButtonDown(0))
         {
