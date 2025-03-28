@@ -17,6 +17,7 @@ public class CutsceneManager : MonoBehaviour
     public bool IsCutscene1Started() => isCutscene1Started;
     private bool isCutscene7Started = false; // New flag to track Cutscene7 state
     public bool IsCutscene7Started() => isCutscene7Started; // Public getter
+    public GameObject Script1ChoicePopUp;
 
     [Header("Objects to Disable")]
     public GameObject bedZone;
@@ -74,6 +75,7 @@ public class CutsceneManager : MonoBehaviour
     public PlayableDirector capuletCalmsDownCutscene;
     public PlayableDirector capuletRemainsAngryCutscene;
 
+    public GameObject script7PositionPanel;
     public GameObject script7ChoicePopupPanel;
     public Button desperateButton;
     public Button sorrowfulButton;
@@ -138,12 +140,16 @@ public class CutsceneManager : MonoBehaviour
                 dresserZone.SetActive(false);
                 Debug.Log("DresserZone GameObject disabled.");
             }
+
+            if (Script1ChoicePopUp!=null)
+            {
+                Script1ChoicePopUp.SetActive(false);
+            }
         }
 
         if (cutsceneType == "BedDesperate" || cutsceneType == "BedSorrowful" ||
             cutsceneType == "CarpetDesperate" || cutsceneType == "CarpetSorrowful" )
         {
-            isCutscene1Started = true;
 
             // Clear snap points and reset character positions
             DragCharacter[] dragCharacters = FindObjectsOfType<DragCharacter>();
@@ -266,6 +272,11 @@ public class CutsceneManager : MonoBehaviour
             // Cutscene 6 has finished
             isCutscene6Finished = true;
             Debug.Log("Cutscene 6 finished. Ready for script 7 choices.");
+
+            if(script7PositionPanel!=null)
+            {
+                script7PositionPanel.SetActive(true);
+            }
 
             if (carpetObject != null)
             {
@@ -574,6 +585,10 @@ public class CutsceneManager : MonoBehaviour
     public void ShowScript7ChoicePopup(string zone)
 
     {
+        if (script7PositionPanel!=null)
+        {
+            script7PositionPanel.SetActive(false);
+        }
         if (script7ChoicePopupPanel != null)
         {
             script7ChoicePopupPanel.SetActive(true);

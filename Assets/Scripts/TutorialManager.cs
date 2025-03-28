@@ -7,6 +7,7 @@ public class TutorialManager : MonoBehaviour
     [Header("Tutorial Steps (in order)")]
     public GameObject[] tutorialSteps;  // Each step is a UI element in the overlay.
     private int currentStep = 0;
+    public GameObject Script1ChoicePopUp;
 
     public Button nextButton;  // Button to move to the next step.
     public Button skipButton;  // Button to skip the tutorial.
@@ -87,5 +88,7 @@ public class TutorialManager : MonoBehaviour
 
         // Mark the tutorial as inactive
         tutorialActive = false;
+
+        Script1ChoicePopUp.SetActive(true);
     }
 }
