@@ -99,6 +99,11 @@ public class SceneSaverUI : MonoBehaviour
             return;
         }
 
+        if (cutsceneManager != null && cutsceneManager.FinishedPopUp != null && cutsceneManager.FinishedPopUp.activeSelf)
+        {
+            cutsceneManager.HideFinishPopup();
+        }
+
         string filePath = System.IO.Path.Combine(Application.persistentDataPath + "/SavedScenes/", sceneName + ".log");
 
         if (System.IO.File.Exists(filePath))

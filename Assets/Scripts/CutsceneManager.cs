@@ -648,6 +648,16 @@ public class CutsceneManager : MonoBehaviour
             script7ChoicePopupPanel.SetActive(false);
         }
     }
+   public void HideFinishPopup()
+    {
+        if (FinishedPopUp != null)
+        {
+            FinishedPopUp.SetActive(false);
+            Debug.Log("Finished popup hidden from SceneSaverUI.");
+        }
+    }
+
+    
     
 
     private void Awake()
