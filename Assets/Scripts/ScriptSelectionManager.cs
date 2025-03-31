@@ -115,15 +115,13 @@ public class ScriptSelectionManager : MonoBehaviour
                 break;
             case "BedDesperate":
             case "BedSorrowful":
-                currentIndex = 6; // Script 3
-                break;
             case "CarpetDesperate":
             case "CarpetSorrowful":
-                currentIndex = 7; // Script 3
+                currentIndex = 6; // Script 3
                 break;   
             case "JulietSit":
             case "JulietWalk":
-                currentIndex = 8; // Script 3
+                currentIndex = 7; // Script 3
                 break;            
             default:
                 return;
