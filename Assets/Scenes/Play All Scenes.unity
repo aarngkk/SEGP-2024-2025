@@ -2548,15 +2548,15 @@ PlayableDirector:
   - key: {fileID: -681431734411497504, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
     value: {fileID: 0}
   - key: {fileID: -3036829081217736995, guid: 28148ae346e5e83469c3733613707242, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1289631093}
   - key: {fileID: -7798722042927096476, guid: 28148ae346e5e83469c3733613707242, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1870061692}
   - key: {fileID: -3336492933139965145, guid: 28148ae346e5e83469c3733613707242, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1088951325}
   - key: {fileID: -3097016246202143390, guid: 28148ae346e5e83469c3733613707242, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1970383691}
   - key: {fileID: -4934840408157343387, guid: 28148ae346e5e83469c3733613707242, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1784193829}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &463187560
@@ -4028,15 +4028,15 @@ PlayableDirector:
   - key: {fileID: -681431734411497504, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
     value: {fileID: 0}
   - key: {fileID: 1085364887759793870, guid: 477ac71ff18dd314e90966906c873c32, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1289631093}
   - key: {fileID: 4646604730103133579, guid: 477ac71ff18dd314e90966906c873c32, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1088951325}
   - key: {fileID: 1719730742087559181, guid: 477ac71ff18dd314e90966906c873c32, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1870061692}
   - key: {fileID: 5420016069093190796, guid: 477ac71ff18dd314e90966906c873c32, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1870061692}
   - key: {fileID: -1759557403593339789, guid: 477ac71ff18dd314e90966906c873c32, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1784193829}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &583891691
@@ -7942,6 +7942,7 @@ MonoBehaviour:
   logFileName: 
   playButton: {fileID: 1014219500}
   pauseButton: {fileID: 1077732882}
+  Script1ChoicePopUp: {fileID: 0}
   bedZone: {fileID: 0}
   dresserZone: {fileID: 0}
   carpetObject: {fileID: 0}
@@ -7976,6 +7977,7 @@ MonoBehaviour:
   remainAngryButton: {fileID: 0}
   capuletCalmsDownCutscene: {fileID: 25012610}
   capuletRemainsAngryCutscene: {fileID: 403601770}
+  script7PositionPanel: {fileID: 0}
   script7ChoicePopupPanel: {fileID: 0}
   desperateButton: {fileID: 0}
   sorrowfulButton: {fileID: 0}
@@ -7990,6 +7992,7 @@ MonoBehaviour:
   julietWalkCutscene: {fileID: 428988891}
   currentCutscene: {fileID: 0}
   isReplayMode: 0
+  FinishedPopUp: {fileID: 0}
 --- !u!320 &1030452485
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -11159,15 +11162,15 @@ PlayableDirector:
   - key: {fileID: -681431734411497504, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
     value: {fileID: 0}
   - key: {fileID: -3036829081217736995, guid: 9c85ac441b3c10c468c9fa09fc083853, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1289631093}
   - key: {fileID: -7798722042927096476, guid: 9c85ac441b3c10c468c9fa09fc083853, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1870061692}
   - key: {fileID: -3336492933139965145, guid: 9c85ac441b3c10c468c9fa09fc083853, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1088951325}
   - key: {fileID: -3097016246202143390, guid: 9c85ac441b3c10c468c9fa09fc083853, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1970383691}
   - key: {fileID: 8679229005113863131, guid: 9c85ac441b3c10c468c9fa09fc083853, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1784193829}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &1456162195
@@ -13301,15 +13304,15 @@ PlayableDirector:
   - key: {fileID: -681431734411497504, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
     value: {fileID: 0}
   - key: {fileID: 1085364887759793870, guid: cf7d2e9a6e1568e4cbefedde7c8000c7, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1289631093}
   - key: {fileID: 4646604730103133579, guid: cf7d2e9a6e1568e4cbefedde7c8000c7, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1088951325}
   - key: {fileID: 1719730742087559181, guid: cf7d2e9a6e1568e4cbefedde7c8000c7, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1870061692}
   - key: {fileID: 5420016069093190796, guid: cf7d2e9a6e1568e4cbefedde7c8000c7, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1970383691}
   - key: {fileID: 1366364736842771347, guid: cf7d2e9a6e1568e4cbefedde7c8000c7, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1784193829}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &1865673079
@@ -15560,15 +15563,15 @@ PlayableDirector:
   - key: {fileID: -681431734411497504, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
     value: {fileID: 0}
   - key: {fileID: 1085364887759793870, guid: 8630ac626a13bf14ba522a84cfcd6579, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1289631093}
   - key: {fileID: 4646604730103133579, guid: 8630ac626a13bf14ba522a84cfcd6579, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1088951325}
   - key: {fileID: 1719730742087559181, guid: 8630ac626a13bf14ba522a84cfcd6579, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1870061692}
   - key: {fileID: 5420016069093190796, guid: 8630ac626a13bf14ba522a84cfcd6579, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1970383691}
   - key: {fileID: 4683610379199700287, guid: 8630ac626a13bf14ba522a84cfcd6579, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1784193829}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &2074572986 stripped
@@ -15728,15 +15731,15 @@ PlayableDirector:
   - key: {fileID: -681431734411497504, guid: faa0b37385cdc70408b010c34b9f6f27, type: 2}
     value: {fileID: 0}
   - key: {fileID: 1085364887759793870, guid: ea651887706720d478c83e4186dd98d7, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1289631093}
   - key: {fileID: 1719730742087559181, guid: ea651887706720d478c83e4186dd98d7, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1870061692}
   - key: {fileID: 5420016069093190796, guid: ea651887706720d478c83e4186dd98d7, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1970383691}
   - key: {fileID: 4646604730103133579, guid: ea651887706720d478c83e4186dd98d7, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1088951325}
   - key: {fileID: 38015940411382151, guid: ea651887706720d478c83e4186dd98d7, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1784193829}
   m_ExposedReferences:
     m_References: []
 --- !u!1660057539 &9223372036854775807
