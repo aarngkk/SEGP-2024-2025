@@ -492,85 +492,75 @@ public class CutsceneManager : MonoBehaviour
 
     public void UndoChoice()
     {
-        if (choiceHistory.Count < 2)
+        if (choiceHistory.Count < 2) // Ensure there is a previous choice to revert to
         {
             Debug.LogWarning("No previous choice to undo!");
             return;
         }
 
-        // Get the current cutscene type before popping
-        string currentChoice = choiceHistory.Peek();
-
         if (currentCutscene != null && currentCutscene.state == PlayState.Playing)
         {
-            currentCutscene.stopped -= OnCutsceneFinished;
+            currentCutscene.stopped -= OnCutsceneFinished; // Removes the listener
             currentCutscene.Stop();
             Debug.Log("Current cutscene stopped.");
         }
 
-        choiceHistory.Pop();
-        string previousChoice = choiceHistory.Peek();
+        choiceHistory.Pop(); // Remove the latest choice
+        string previousChoice = choiceHistory.Peek(); // Get the choice before it
         choicesMade.RemoveAt(choicesMade.Count - 1);
         Debug.Log($"Undoing choice, returning to: {previousChoice}");
 
-        // Only reset these if we're undoing from Cutscene6 or later
-        bool isUndoingFromLateCutscene = currentChoice.Contains("CapuletCalmsDown") ||
-                                        currentChoice.Contains("CapuletRemainsAngry") ||
-                                        currentChoice.Contains("BedDesperate") ||
-                                        currentChoice.Contains("BedSorrowful") ||
-                                        currentChoice.Contains("CarpetDesperate") ||
-                                        currentChoice.Contains("CarpetSorrowful");
+        // Reset the state of isCutscene6Finished and isCutscene7Started
+        isCutscene6Finished = false;
+        isCutscene7Started = false; // Reset the Cutscene7 flag
+        Debug.Log("Cutscene7 state reset. Bed outline and snap points re-enabled.");
 
-        if (isUndoingFromLateCutscene)
+        // Re-enable the Carpet GameObject
+        if (carpetObject != null)
         {
-            isCutscene6Finished = false;
-            isCutscene7Started = false;
-            Debug.Log("Cutscene7 state reset. Bed outline and snap points re-enabled.");
-
-            if (carpetObject != null)
-            {
-                carpetObject.SetActive(true);
-                Debug.Log("Carpet GameObject re-enabled.");
-            }
-
-            if (bedZone != null)
-            {
-                bedZone.SetActive(true);
-                Debug.Log("BedZone GameObject re-enabled.");
-            }
-
-            Outline bedOutline = GameObject.FindWithTag("Bed")?.GetComponent<Outline>();
-            Outline carpetOutline = GameObject.FindWithTag("CarpetZone")?.GetComponent<Outline>();
-
-            if (bedOutline != null)
-            {
-                bedOutline.enabled = true;
-                bedOutline.OutlineColor = Color.white;
-                Debug.Log("Bed outline re-enabled and reset to white.");
-            }
-
-            if (carpetOutline != null)
-            {
-                carpetOutline.enabled = true;
-                carpetOutline.OutlineColor = Color.white;
-                Debug.Log("Carpet outline re-enabled and reset to white.");
-            }
+            carpetObject.SetActive(true);
+            Debug.Log("Carpet GameObject re-enabled.");
         }
 
-        // Reset characters' positions
+        // Re-enable the BedZone GameObject
+        if (bedZone != null)
+        {
+            bedZone.SetActive(true);
+            Debug.Log("BedZone GameObject re-enabled.");
+        }
+
+        // Reset the Bed and Carpet outlines to white
+        Outline bedOutline = GameObject.FindWithTag("Bed")?.GetComponent<Outline>();
+        Outline carpetOutline = GameObject.FindWithTag("CarpetZone")?.GetComponent<Outline>();
+
+        if (bedOutline != null)
+        {
+            bedOutline.enabled = true;
+            bedOutline.OutlineColor = Color.white; // Reset the outline color to white
+            Debug.Log("Bed outline re-enabled and reset to white.");
+        }
+
+        if (carpetOutline != null)
+        {
+            carpetOutline.enabled = true;
+            carpetOutline.OutlineColor = Color.white; // Reset the outline color to white
+            Debug.Log("Carpet outline re-enabled and reset to white.");
+        }
+
+        // Reset the characters' positions to their original positions
         DragCharacter[] dragCharacters = FindObjectsOfType<DragCharacter>();
         foreach (DragCharacter character in dragCharacters)
         {
             character.ResetPosition();
         }
 
-        // Play previous cutscene
+        // Play the previous cutscene
         PlayableDirector previousDirector = GameObject.Find(previousChoice)?.GetComponent<PlayableDirector>();
         if (previousDirector != null)
         {
             currentCutscene = previousDirector;
-            currentCutscene.stopped += OnCutsceneFinished;
-            OnCutsceneFinished(currentCutscene);
+            currentCutscene.stopped += OnCutsceneFinished; // Reattach listener
+            OnCutsceneFinished(currentCutscene); // Call the existing logic to show the choice panel
         }
         else
         {
