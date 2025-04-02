@@ -36,6 +36,7 @@ public class ScriptSelectionManager : MonoBehaviour
         if (saveButton != null) saveButton.interactable = false;
         if (undoButton != null) undoButton.interactable = false;
         if (redoButton != null) redoButton.interactable = false;
+        if (scriptButton != null) scriptButton.interactable = false;
     }
 
     // Loads script details from text files in the Resources folder
@@ -137,6 +138,10 @@ public class ScriptSelectionManager : MonoBehaviour
             {
                 redoButton.interactable = true;
             }
+            if (scriptButton != null) 
+            {
+                scriptButton.interactable = true;
+            }
         }
         if (currentIndex > 0) {
             if (undoButton != null) 
@@ -187,6 +192,7 @@ public class ScriptSelectionManager : MonoBehaviour
         if (saveButton != null) saveButton.interactable = false;
         if (undoButton != null) undoButton.interactable = false;
         if (redoButton != null) redoButton.interactable = false;
+        if (scriptButton != null) scriptButton.interactable = false;
     }
 
 }
