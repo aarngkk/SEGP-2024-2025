@@ -24,6 +24,10 @@ public class CutsceneManager : MonoBehaviour
     public GameObject dresserZone;
     public GameObject carpetObject;
 
+    [Header("Cameras")]
+    public GameObject mainCamera;
+    public GameObject stageCamera;
+
     [Header("Script 1")]
     public PlayableDirector bedCutscene;
     public PlayableDirector dresserCutscene;
@@ -141,10 +145,7 @@ public class CutsceneManager : MonoBehaviour
                 Debug.Log("DresserZone GameObject disabled.");
             }
 
-            if (Script1ChoicePopUp!=null)
-            {
-                Script1ChoicePopUp.SetActive(false);
-            }
+            if (Script1ChoicePopUp!=null) Script1ChoicePopUp.SetActive(false);
         }
 
         if (cutsceneType == "BedDesperate" || cutsceneType == "BedSorrowful" ||
@@ -273,16 +274,16 @@ public class CutsceneManager : MonoBehaviour
             isCutscene6Finished = true;
             Debug.Log("Cutscene 6 finished. Ready for script 7 choices.");
 
-            if(script7PositionPanel!=null)
-            {
-                script7PositionPanel.SetActive(true);
-            }
+            if(script7PositionPanel!=null) script7PositionPanel.SetActive(true);
 
             if (carpetObject != null)
             {
                 carpetObject.SetActive(true);
                 Debug.Log("Carpet GameObject enabled.");
             }
+
+            if (mainCamera != null) mainCamera.SetActive(true);
+            if (stageCamera != null) stageCamera.SetActive(false);
 
             // Enable the bed outline immediately after Cutscene6 finishes
             Outline bedOutline = GameObject.FindWithTag("Bed")?.GetComponent<Outline>();
@@ -585,10 +586,7 @@ public class CutsceneManager : MonoBehaviour
     public void ShowScript7ChoicePopup(string zone)
 
     {
-        if (script7PositionPanel!=null)
-        {
-            script7PositionPanel.SetActive(false);
-        }
+        if (script7PositionPanel!=null) script7PositionPanel.SetActive(false);
         if (script7ChoicePopupPanel != null)
         {
             script7ChoicePopupPanel.SetActive(true);
@@ -598,6 +596,12 @@ public class CutsceneManager : MonoBehaviour
 
             desperateButton.onClick.AddListener(() => PlayScript7Cutscene(zone, "Desperate"));
             sorrowfulButton.onClick.AddListener(() => PlayScript7Cutscene(zone, "Sorrowful"));
+
+            if (stageCamera != null)
+            {
+                stageCamera.SetActive(true);
+                if (mainCamera != null) mainCamera.SetActive(false);
+            }
         }
         else
         {

@@ -13694,6 +13694,8 @@ MonoBehaviour:
   bedZone: {fileID: 261301836}
   dresserZone: {fileID: 1362566953}
   carpetObject: {fileID: 743699086}
+  mainCamera: {fileID: 963194225}
+  stageCamera: {fileID: 1784193829}
   bedCutscene: {fileID: 1586005305}
   dresserCutscene: {fileID: 1662324478}
   choicePopupPanel: {fileID: 1831793131}
@@ -19621,7 +19623,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1486268369
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22296,7 +22298,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1709121576
 Transform:
   m_ObjectHideFlags: 0
