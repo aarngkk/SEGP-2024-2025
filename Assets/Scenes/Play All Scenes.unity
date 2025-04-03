@@ -10456,10 +10456,10 @@ MonoBehaviour:
   prevButton: {fileID: 0}
   backButton: {fileID: 553678936}
   otherButtons:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1077732882}
+  - {fileID: 1014219500}
+  - {fileID: 1899548219}
+  - {fileID: 1593682037}
   - {fileID: 0}
   scrollRect: {fileID: 1588321568}
   saveButton: {fileID: 0}
