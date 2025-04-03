@@ -8,7 +8,11 @@ using System.IO;
 public class CutsceneReplayManager : MonoBehaviour
 {
     public CutsceneManager cutsceneManager;
+    public UnityEngine.UI.Button skipButton;
+
     private Queue<string> cutsceneQueue = new Queue<string>();
+    private string currentCutsceneType = "";
+    private bool cutsceneFinished = false;
 
     private void Start()
     {
@@ -17,6 +21,9 @@ public class CutsceneReplayManager : MonoBehaviour
         {
             cutsceneManager.isReplayMode=true;
             LoadChoicesAndReplay(logFileName);
+
+            if (skipButton != null)
+                skipButton.onClick.AddListener(SkipToNextCutscene);
         }
         else
         {
@@ -59,17 +66,26 @@ public class CutsceneReplayManager : MonoBehaviour
 
         while (cutsceneQueue.Count > 0)
         {
-            string nextCutscene = cutsceneQueue.Dequeue();
-            Debug.Log("Replaying cutscene: " + nextCutscene);
+            currentCutsceneType = cutsceneQueue.Dequeue();
+            Debug.Log("Replaying cutscene: " + currentCutsceneType);
 
-            bool cutsceneFinished = false;
-            cutsceneManager.PlayCutscene(nextCutscene, () => cutsceneFinished = true);
+            cutsceneFinished = false;
+            cutsceneManager.PlayCutscene(currentCutsceneType, () => cutsceneFinished = true);
 
             yield return new WaitUntil(() => cutsceneFinished); // Wait for the cutscene to finish
         }
 
         Debug.Log("Cutscene replay finished.");
         SceneManager.LoadScene("Main Menu");
+    }
+
+    public void SkipToNextCutscene()
+    {
+        if (!cutsceneFinished && cutsceneManager.currentCutscene != null)
+        {
+            Debug.Log("Skipping current cutscene.");
+            cutsceneManager.currentCutscene.Stop(); // This will trigger cutsceneFinished = true
+        }
     }
 
 }
