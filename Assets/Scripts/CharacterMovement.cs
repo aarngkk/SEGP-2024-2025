@@ -61,6 +61,11 @@ public class DragCharacter : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            if (!IsDraggingAllowed())
+            {
+                return;
+            }
+
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             if (!Physics.Raycast(ray, out RaycastHit hit) || hit.transform != transform)
             {
@@ -87,6 +92,8 @@ public class DragCharacter : MonoBehaviour
 
     void OnMouseDrag()
     {
+        if (!IsDraggingAllowed()) return;
+
         if (isDragging && selectedCharacter == this && GetMouseWorldPosition(out Vector3 worldPosition))
         {
             Vector3 targetPosition = worldPosition + offset;
@@ -116,29 +123,26 @@ public class DragCharacter : MonoBehaviour
     {
         Collider[] colliders = Physics.OverlapSphere(parentObject.position, 0.5f);
 
-        // Get references to the Outline components of the Bed and Dresser
-        Outline bedOutline = GameObject.FindWithTag("Bed").GetComponent<Outline>();
-        Outline dresserOutline = GameObject.FindWithTag("Dresser").GetComponent<Outline>();
+        // Get references to the Outline components
+        Outline bedOutline = GameObject.FindWithTag("Bed")?.GetComponent<Outline>();
+        Outline dresserOutline = GameObject.FindWithTag("Dresser")?.GetComponent<Outline>();
         Outline carpetOutline = GameObject.FindWithTag("CarpetZone")?.GetComponent<Outline>();
 
         bool snappedToBed = false;
         bool snappedToDresser = false;
         bool snappedToCarpet = false;
 
+        // Handle snapping logic
         foreach (Collider col in colliders)
         {
             if (col.CompareTag("BedZone"))
             {
                 Debug.Log("Snapped to Bed");
-
-                // Set group to preset Bed position
                 parentObject.position = new Vector3(-4.0f, -1.5f, -4.1f);
                 parentObject.rotation = Quaternion.Euler(0, 0, 0);
-
                 FindObjectOfType<PlaySceneButton>().SetCurrentSnapPoint("Bed");
                 snappedToBed = true;
 
-                CutsceneManager cutsceneManager = FindObjectOfType<CutsceneManager>();
                 if (cutsceneManager != null && cutsceneManager.IsCutscene6Finished() && !cutsceneManager.IsCutscene7Started())
                 {
                     cutsceneManager.ShowScript7ChoicePopup("Bed");
@@ -147,26 +151,19 @@ public class DragCharacter : MonoBehaviour
             else if (col.CompareTag("DresserZone"))
             {
                 Debug.Log("Snapped to Dresser");
-
-                // Set group to preset Dresser position
                 parentObject.position = new Vector3(4.7f, -1.5f, -3.85f);
                 parentObject.rotation = Quaternion.Euler(0, 0, 0);
-
                 FindObjectOfType<PlaySceneButton>().SetCurrentSnapPoint("Dresser");
                 snappedToDresser = true;
             }
             else if (col.CompareTag("CarpetZone"))
             {
                 Debug.Log("Snapped to Carpet");
-
-                // Set group to preset Carpet position
-                parentObject.position = new Vector3(1.1f, -1.5f, -2.5f); // Adjust position as needed
+                parentObject.position = new Vector3(1.1f, -1.5f, -2.5f);
                 parentObject.rotation = Quaternion.Euler(0, 0, 0);
-
                 FindObjectOfType<PlaySceneButton>().SetCurrentSnapPoint("Carpet");
                 snappedToCarpet = true;
 
-                CutsceneManager cutsceneManager = FindObjectOfType<CutsceneManager>();
                 if (cutsceneManager != null && cutsceneManager.IsCutscene6Finished() && !cutsceneManager.IsCutscene7Started())
                 {
                     cutsceneManager.ShowScript7ChoicePopup("Carpet");
@@ -174,109 +171,118 @@ public class DragCharacter : MonoBehaviour
             }
         }
 
-        // If not snapped to Bed or Carpet, hide the Script7PopupPanel
+        // Hide popup if not snapped to valid zones
         if (!snappedToBed && !snappedToCarpet)
         {
-            CutsceneManager cutsceneManager = FindObjectOfType<CutsceneManager>();
             if (cutsceneManager != null)
             {
                 cutsceneManager.HideScript7ChoicePopup();
             }
         }
 
-        // Check if cutscene 1 has started and cutscene 6 has not finished
-        if (cutsceneManager != null && cutsceneManager.IsCutscene1Started() && !cutsceneManager.IsCutscene6Finished())
+        // Skip outline updates if we shouldn't be showing them
+        if (cutsceneManager == null ||
+            cutsceneManager.IsCutscene7Started() ||
+            (cutsceneManager.IsCutscene1Started() && !cutsceneManager.IsCutscene6Finished()))
         {
-            // If cutscene 1 has started and cutscene 6 has not finished, do not enable outlines
+            // Ensure all outlines are disabled in these cases
+            if (bedOutline != null) bedOutline.enabled = false;
+            if (dresserOutline != null) dresserOutline.enabled = false;
+            if (carpetOutline != null) carpetOutline.enabled = false;
             return;
         }
 
-        // Skip outline updates if Cutscene7 has started
-        if (cutsceneManager != null && cutsceneManager.IsCutscene7Started())
+        // Handle outline states based on game state
+        if (cutsceneManager.IsCutscene6Finished())
         {
-            return;
-        }
+            // Post-cutscene6 state - only bed and carpet matter
+            if (dresserOutline != null) dresserOutline.enabled = false;
 
-        if (bedOutline != null && dresserOutline != null)
-        {
-            if (cutsceneManager != null && cutsceneManager.IsCutscene6Finished())
+            if (snappedToBed)
             {
-                // After cutscene 6, disable the dresser outline
-                if (dresserOutline != null)
+                if (bedOutline != null)
                 {
-                    dresserOutline.enabled = false;
-                }
-
-                // Only allow bed and carpet outlines to be active
-                if (snappedToBed)
-                {
-                    // Bed selected: Yellow outline, Carpet disabled
                     bedOutline.enabled = true;
                     bedOutline.OutlineColor = Color.yellow;
-
-                    carpetOutline.enabled = false;
                 }
-                else if (snappedToCarpet)
+                if (carpetOutline != null) carpetOutline.enabled = false;
+            }
+            else if (snappedToCarpet)
+            {
+                if (carpetOutline != null)
                 {
-                    // Carpet selected: Yellow outline, Bed disabled
                     carpetOutline.enabled = true;
                     carpetOutline.OutlineColor = Color.yellow;
-
-                    bedOutline.enabled = false;
                 }
-                else
+                if (bedOutline != null) bedOutline.enabled = false;
+            }
+            else
+            {
+                // Not snapped - show white outlines
+                if (bedOutline != null)
                 {
-                    // Not snapped to anything: Enable white outlines for bed and carpet
                     bedOutline.enabled = true;
                     bedOutline.OutlineColor = Color.white;
-
+                }
+                if (carpetOutline != null)
+                {
                     carpetOutline.enabled = true;
                     carpetOutline.OutlineColor = Color.white;
                 }
             }
-            else
+        }
+        else
+        {
+            // Pre-cutscene6 state - all outlines possible
+            if (snappedToBed)
             {
-                if (snappedToBed)
+                if (bedOutline != null)
                 {
-                    // Bed selected: Yellow outline, Dresser disabled
                     bedOutline.enabled = true;
                     bedOutline.OutlineColor = Color.yellow;
-
-                    dresserOutline.enabled = false;
-                    carpetOutline.enabled = false;
                 }
-                else if (snappedToDresser)
+                if (dresserOutline != null) dresserOutline.enabled = false;
+                if (carpetOutline != null) carpetOutline.enabled = false;
+            }
+            else if (snappedToDresser)
+            {
+                if (dresserOutline != null)
                 {
-                    // Dresser selected: Yellow outline, Bed disabled
                     dresserOutline.enabled = true;
                     dresserOutline.OutlineColor = Color.yellow;
-
-                    bedOutline.enabled = false;
-                    carpetOutline.enabled = false;
                 }
-                else if (snappedToCarpet)
+                if (bedOutline != null) bedOutline.enabled = false;
+                if (carpetOutline != null) carpetOutline.enabled = false;
+            }
+            else if (snappedToCarpet)
+            {
+                if (carpetOutline != null)
                 {
-                    // Carpet selected: Yellow outline, Bed and Dresser disabled
                     carpetOutline.enabled = true;
                     carpetOutline.OutlineColor = Color.yellow;
-
-                    bedOutline.enabled = false;
-                    dresserOutline.enabled = false;
                 }
-                else
+                if (bedOutline != null) bedOutline.enabled = false;
+                if (dresserOutline != null) dresserOutline.enabled = false;
+            }
+            else
+            {
+                // Not snapped - show all white outlines
+                if (bedOutline != null)
                 {
-                    // Not snapped to anything: Enable white outlines for all
                     bedOutline.enabled = true;
                     bedOutline.OutlineColor = Color.white;
-
+                }
+                if (dresserOutline != null)
+                {
                     dresserOutline.enabled = true;
                     dresserOutline.OutlineColor = Color.white;
-
+                }
+                if (carpetOutline != null)
+                {
                     carpetOutline.enabled = true;
                     carpetOutline.OutlineColor = Color.white;
-
-                    FindObjectOfType<PlaySceneButton>().SetCurrentSnapPoint(""); // Disable play button
                 }
+                FindObjectOfType<PlaySceneButton>().SetCurrentSnapPoint("");
             }
         }
     }
@@ -351,5 +357,16 @@ public class DragCharacter : MonoBehaviour
         {
             dresserOutline.enabled = false;
         }
+    }
+    private bool IsDraggingAllowed()
+    {
+        if (cutsceneManager == null)
+            cutsceneManager = FindObjectOfType<CutsceneManager>();
+
+        bool allowDragging = (!cutsceneManager.IsCutscene1Started() ||
+                            (cutsceneManager.IsCutscene6Finished() && !cutsceneManager.IsCutscene7Started()));
+
+        Debug.Log($"Dragging allowed: {allowDragging}");
+        return allowDragging;
     }
 }

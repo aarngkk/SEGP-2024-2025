@@ -223,6 +223,8 @@ public class CutsceneManager : MonoBehaviour
         }
 
         currentCutscene.Play();
+
+        UpdateAllCharactersDraggableState();
     }
     private void RestoreCharacterAnimation()
     {
@@ -293,6 +295,8 @@ public class CutsceneManager : MonoBehaviour
                 bedOutline.OutlineColor = Color.white; // Set the outline color to white
                 Debug.Log("Bed outline enabled after Cutscene6.");
             }
+
+            UpdateAllCharactersDraggableState();
         }
         else if (currentCutscene == bedDesperateCutscene || currentCutscene == bedSorrowfulCutscene ||
                  currentCutscene == carpetDesperateCutscene || currentCutscene == carpetSorrowfulCutscene)
@@ -530,22 +534,33 @@ public class CutsceneManager : MonoBehaviour
             Debug.Log("BedZone GameObject re-enabled.");
         }
 
-        // Reset the Bed and Carpet outlines to white
+        // Get outline references
         Outline bedOutline = GameObject.FindWithTag("Bed")?.GetComponent<Outline>();
         Outline carpetOutline = GameObject.FindWithTag("CarpetZone")?.GetComponent<Outline>();
+        Outline dresserOutline = GameObject.FindWithTag("Dresser")?.GetComponent<Outline>();
+
+        // Only enable outlines if we're returning to a state where they should be visible
+        bool shouldShowOutlines = !IsCutscene1Started(); // Only show at game start or after cutscene 6
 
         if (bedOutline != null)
         {
-            bedOutline.enabled = true;
-            bedOutline.OutlineColor = Color.white; // Reset the outline color to white
-            Debug.Log("Bed outline re-enabled and reset to white.");
+            bedOutline.enabled = shouldShowOutlines;
+            bedOutline.OutlineColor = shouldShowOutlines ? Color.white : Color.clear;
+            Debug.Log($"Bed outline {(shouldShowOutlines ? "enabled" : "disabled")}");
         }
 
         if (carpetOutline != null)
         {
-            carpetOutline.enabled = true;
-            carpetOutline.OutlineColor = Color.white; // Reset the outline color to white
-            Debug.Log("Carpet outline re-enabled and reset to white.");
+            carpetOutline.enabled = shouldShowOutlines;
+            carpetOutline.OutlineColor = shouldShowOutlines ? Color.white : Color.clear;
+            Debug.Log($"Carpet outline {(shouldShowOutlines ? "enabled" : "disabled")}");
+        }
+
+        if (dresserOutline != null)
+        {
+            dresserOutline.enabled = shouldShowOutlines;
+            dresserOutline.OutlineColor = shouldShowOutlines ? Color.white : Color.clear;
+            Debug.Log($"Dresser outline {(shouldShowOutlines ? "enabled" : "disabled")}");
         }
 
         // Reset the characters' positions to their original positions
@@ -567,6 +582,8 @@ public class CutsceneManager : MonoBehaviour
         {
             Debug.LogError("Could not find PlayableDirector for previous choice: " + previousChoice);
         }
+
+        UpdateAllCharactersDraggableState();
     }
 
     public void SkipCutscene()
@@ -597,11 +614,11 @@ public class CutsceneManager : MonoBehaviour
             desperateButton.onClick.AddListener(() => PlayScript7Cutscene(zone, "Desperate"));
             sorrowfulButton.onClick.AddListener(() => PlayScript7Cutscene(zone, "Sorrowful"));
 
-            if (stageCamera != null)
-            {
-                stageCamera.SetActive(true);
-                if (mainCamera != null) mainCamera.SetActive(false);
-            }
+            //if (stageCamera != null)
+            //{
+            //    stageCamera.SetActive(true);
+            //    if (mainCamera != null) mainCamera.SetActive(false);
+            //}
         }
         else
         {
@@ -696,4 +713,9 @@ public class CutsceneManager : MonoBehaviour
         pauseButton.gameObject.SetActive(!isPaused);
     }
 
+    private void UpdateAllCharactersDraggableState()
+    {
+        if (CharacterManager.Instance != null)
+            CharacterManager.Instance.UpdateDraggableState();
+    }
 }
