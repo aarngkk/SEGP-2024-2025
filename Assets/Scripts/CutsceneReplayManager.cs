@@ -84,7 +84,10 @@ public class CutsceneReplayManager : MonoBehaviour
         if (!cutsceneFinished && cutsceneManager.currentCutscene != null)
         {
             Debug.Log("Skipping current cutscene.");
+
+            cutsceneManager.ResumeAndUpdateButtons();
             cutsceneManager.currentCutscene.Stop(); // This will trigger cutsceneFinished = true
+
         }
     }
 

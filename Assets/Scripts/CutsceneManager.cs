@@ -718,4 +718,10 @@ public class CutsceneManager : MonoBehaviour
         if (CharacterManager.Instance != null)
             CharacterManager.Instance.UpdateDraggableState();
     }
+    public void ResumeAndUpdateButtons()
+    {
+        isPaused = false;
+        UpdateButtonVisibility();
+    }
+
 }
