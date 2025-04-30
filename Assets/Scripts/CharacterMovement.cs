@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class DragCharacter : MonoBehaviour
 {
+    // Dragging state and references
     private Vector3 startPosition;
     private Quaternion startRotation;
     private Vector3 offset;
@@ -21,18 +22,21 @@ public class DragCharacter : MonoBehaviour
 
     void Start()
     {
+        // Initialize references and setup
         cutsceneManager = FindObjectOfType<CutsceneManager>();
         cam = Camera.main;
         rb = GetComponent<Rigidbody>();
         groundPlane = new Plane(Vector3.up, Vector3.zero);
         originalPosition = transform.position;
 
+        // Setup outline effect
         outline = GetComponent<Outline>();
         if (outline != null)
         {
             outline.enabled = false;
         }
 
+        // Find and validate stage boundaries
         GameObject stage = GameObject.FindWithTag("Stage");
         if (stage != null)
         {
@@ -51,13 +55,13 @@ public class DragCharacter : MonoBehaviour
             Debug.LogError("No GameObject with the 'Stage' tag found!");
         }
 
-        // Find the parent GameObject (if this character has one)
+        // Cache parent transform for group movement
         parentObject = transform.parent != null ? transform.parent : transform;
     }
 
     void Update()
     {
-
+        // Handle mouse click to potentially deselect character
         if (Input.GetMouseButtonDown(0))
         {
             if (!IsDraggingAllowed())
@@ -73,6 +77,7 @@ public class DragCharacter : MonoBehaviour
         }
     }
 
+    // Called when mouse button is pressed on this object
     void OnMouseDown()
     {
         if (Input.GetMouseButton(0))
@@ -81,6 +86,7 @@ public class DragCharacter : MonoBehaviour
             startPosition = parentObject.position;
             startRotation = parentObject.rotation;
 
+            // Calculate drag offset if valid mouse position
             if (GetMouseWorldPosition(out Vector3 worldPosition))
             {
                 offset = parentObject.position - worldPosition;
@@ -89,15 +95,18 @@ public class DragCharacter : MonoBehaviour
         }
     }
 
+    // Called while mouse is held down and moving
     void OnMouseDrag()
     {
         if (!IsDraggingAllowed()) return;
 
         if (isDragging && selectedCharacter == this && GetMouseWorldPosition(out Vector3 worldPosition))
         {
+            // Calculate target position with bounds clamping
             Vector3 targetPosition = worldPosition + offset;
             targetPosition.y = parentObject.position.y;
 
+            // Restrict movement to stage bounds
             targetPosition.x = Mathf.Clamp(targetPosition.x, stageBounds.min.x, stageBounds.max.x);
             targetPosition.z = Mathf.Clamp(targetPosition.z, stageBounds.min.z, stageBounds.max.z);
 
@@ -105,12 +114,15 @@ public class DragCharacter : MonoBehaviour
         }
     }
 
+    // Called when mouse button is released
     void OnMouseUp()
     {
         isDragging = false;
 
         CheckSnapPoint();
     }
+
+    // Checks for nearby snap zones and handles snapping logic
     void CheckSnapPoint()
     {
         Collider[] colliders = Physics.OverlapSphere(parentObject.position, 0.5f);
@@ -279,6 +291,7 @@ public class DragCharacter : MonoBehaviour
         }
     }
 
+    // Calculates mouse position in world space
     private bool GetMouseWorldPosition(out Vector3 worldPosition)
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -291,6 +304,7 @@ public class DragCharacter : MonoBehaviour
         return false;
     }
 
+    // Selects character
     private void SelectCharacter()
     {
         if (selectedCharacter != null)
@@ -306,6 +320,7 @@ public class DragCharacter : MonoBehaviour
         }
     }
 
+    // Deselects character
     private void DeselectCharacter()
     {
         if (selectedCharacter == this)
@@ -319,11 +334,13 @@ public class DragCharacter : MonoBehaviour
         }
     }
 
+    // Resets character to original position
     public void ResetPosition()
     {
         parentObject.position = originalPosition;
     }
 
+    // Clears all snap point states
     public void ClearSnapPoints()
     {
         // Reset the characters' positions to their original positions
@@ -350,6 +367,8 @@ public class DragCharacter : MonoBehaviour
             dresserOutline.enabled = false;
         }
     }
+
+    // Determines if dragging is allowed based on cutscene state
     private bool IsDraggingAllowed()
     {
         if (cutsceneManager == null)
