@@ -3,12 +3,12 @@ using UnityEngine.UI;
 
 public class PlaySceneButton : MonoBehaviour
 {
-    public Button playButton; // Assign in Inspector
-    public CutsceneManager cutsceneManager; // Assign in Inspector
-    private string currentSnapPoint;
+    public Button playButton; // UI button to start the scene
+    public CutsceneManager cutsceneManager; // Reference to cutscene controller
+    private string currentSnapPoint; // Currently selected snap point
 
-    public Outline bedOutline;      // Assign in Inspector (Bed 3D model)
-    public Outline dresserOutline;  // Assign in Inspector (Dresser 3D model)
+    public Outline bedOutline;      // Visual highlight for bed location
+    public Outline dresserOutline;  // Visual highlight for dresser location
 
     void Start()
     {
@@ -18,6 +18,7 @@ public class PlaySceneButton : MonoBehaviour
         SetOutlineState(true);
     }
 
+    // Updates current snap point and button state
     public void SetCurrentSnapPoint(string snapPoint)
     {
         Debug.Log($"Received snap point: {snapPoint}");
@@ -37,6 +38,7 @@ public class PlaySceneButton : MonoBehaviour
         SetOutlineState(string.IsNullOrEmpty(snapPoint));
     }
 
+    // Toggles outline visibility for bed and dresser
     private void SetOutlineState(bool enable)
     {
         if (bedOutline != null)
@@ -46,6 +48,7 @@ public class PlaySceneButton : MonoBehaviour
             dresserOutline.enabled = enable;
     }
 
+    // Handles play button click event
     public void OnPlayButtonPressed()
     {
         if (!string.IsNullOrEmpty(currentSnapPoint) && cutsceneManager != null)
@@ -88,6 +91,7 @@ public class PlaySceneButton : MonoBehaviour
         }
     }
 
+    // Loads the next scene
     private void LoadNextScene()
     {
         Debug.Log("Loading next scene...");
