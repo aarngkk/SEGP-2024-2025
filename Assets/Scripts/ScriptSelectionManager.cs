@@ -1,18 +1,18 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using TMPro;  // Add this at the top
+using TMPro;
 
 public class ScriptSelectionManager : MonoBehaviour
 {
     // UI Elements assigned via the Inspector:
-    public GameObject scriptPanel;                  // The pop-up panel to show/hide
-    public TextMeshProUGUI scriptDetailText;          // Displays the current script detail
-    public Button nextButton;                         // Button to go to the next script
-    public Button prevButton;                         // Button to go to the previous script
-    public Button backButton;                         // Button to close the panel
-    public List<Button> otherButtons;                 // Other buttons to disable/enable
-    public ScrollRect scrollRect;                     // Scroll area for the script text
+    public GameObject scriptPanel;                 
+    public TextMeshProUGUI scriptDetailText;         
+    public Button nextButton;                        
+    public Button prevButton;                        
+    public Button backButton;                   
+    public List<Button> otherButtons;           
+    public ScrollRect scrollRect;            
     public Button saveButton;
     public Button undoButton;
     public Button redoButton;
@@ -21,7 +21,7 @@ public class ScriptSelectionManager : MonoBehaviour
     public TMP_Text buttonText;
     public TMP_Text titleText;
 
-
+    // Script management variables
     private List<string> scripts = new List<string>();
     private int currentIndex = 0;
     public string SelectedScript { get; private set; }
@@ -33,6 +33,7 @@ public class ScriptSelectionManager : MonoBehaviour
         UpdateScriptDetail();
         backButton.onClick.AddListener(CloseScriptSelection);
 
+        // Initialize button states
         if (saveButton != null) saveButton.interactable = false;
         if (undoButton != null) undoButton.interactable = false;
         if (redoButton != null) redoButton.interactable = false;
@@ -79,11 +80,13 @@ public class ScriptSelectionManager : MonoBehaviour
 
     private void Update()
     {
+        // Only update if CutsceneManager is available and has a current cutscene type
         if (CutsceneManager.Instance == null || CutsceneManager.Instance.currentCutsceneType == null)
             return;
 
         string type = CutsceneManager.Instance.currentCutsceneType;
 
+        // Map cutscene types to script indices
         switch (type)
         {
             case "Bed":
@@ -102,27 +105,27 @@ public class ScriptSelectionManager : MonoBehaviour
                 break;
             case "CapuletEnraged":
             case "CapuletComposed":
-                currentIndex = 3; // Script 1 (index 0)
+                currentIndex = 3; // Script 4
                 break;
             case "JulietKneelsCapuletCalm":
             case "JulietKneelsCapuletAngry":
             case "JulietStandsCapuletCalm":
             case "JulietStandsCapuletAngry":
-                currentIndex = 4; // Script 2
+                currentIndex = 4; // Script 5
                 break;
             case "CapuletCalmsDown":
             case "CapuletRemainsAngry":
-                currentIndex = 5; // Script 3
+                currentIndex = 5; // Script 6
                 break;
             case "BedDesperate":
             case "BedSorrowful":
             case "CarpetDesperate":
             case "CarpetSorrowful":
-                currentIndex = 6; // Script 3
+                currentIndex = 6; // Script 7
                 break;   
             case "JulietSit":
             case "JulietWalk":
-                currentIndex = 7; // Script 3
+                currentIndex = 7; // Script 8
                 break;            
             default:
                 return;
@@ -151,12 +154,14 @@ public class ScriptSelectionManager : MonoBehaviour
         }
     }
 
+    // Updates the script button label with current script number
     private void UpdateScriptButtonLabel(int currentIndex)
     {
         int scriptNumber = currentIndex + 1;
         buttonText.text = "Script " + scriptNumber;
     }
 
+    // Updates the title text based on current script index
     private void UpdateTitle(int currentIndex)
     {
         switch(currentIndex)

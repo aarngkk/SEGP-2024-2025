@@ -2,19 +2,21 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+// Handles smooth scaling animations for button hover and click states
 public class ButtonHoverSmooth : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
-    public Vector3 hoverScale = new Vector3(1.2f, 1.2f, 1f);
-    private Vector3 originalScale;
-    private Vector3 targetScale;
-    
-    public float smoothSpeed = 15f; // Adjust for smoother or faster transitions
+    public Vector3 hoverScale = new Vector3(1.2f, 1.2f, 1f); // Scale when hovered
+    private Vector3 originalScale;                           // Stores the button's original scale
+    private Vector3 targetScale;                             // Current target scale for smooth transition
 
-    private Button btn;
-    private bool isPressed = false;
+    public float smoothSpeed = 15f; // Transition speed for scaling animation
+
+    private Button btn;             // Reference to the Button component
+    private bool isPressed = false; // Tracks if button is currently pressed
 
     private void Start()
     {
+        // Cache initial scale and button reference
         originalScale = transform.localScale;
         targetScale = originalScale;
         btn = GetComponent<Button>();
@@ -22,49 +24,49 @@ public class ButtonHoverSmooth : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void Update()
     {
-        // Smoothly interpolate current scale towards target scale.
+        // Smoothly animate scale towards target
         transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * smoothSpeed);
     }
 
-    // Called when the pointer enters the button area.
+    // Handle mouse enter hover state
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (btn != null && !btn.interactable)
             return;
-        
-        // Only change target scale if not pressed
+
+        // Only scale up if not currently pressed
         if (!isPressed)
             targetScale = hoverScale;
     }
 
-    // Called when the pointer exits the button area.
+    // Handle mouse exit hover state
     public void OnPointerExit(PointerEventData eventData)
     {
         if (btn != null && !btn.interactable)
             return;
-        
-        // Only revert scale if not pressed
+
+        // Only scale down if not currently pressed
         if (!isPressed)
             targetScale = originalScale;
     }
 
-    // Called when the pointer is pressed down on the button.
+    // Handle mouse down click state
     public void OnPointerDown(PointerEventData eventData)
     {
         if (btn != null && !btn.interactable)
             return;
         
         isPressed = true;
-        targetScale = hoverScale; // Keep the button at the hover scale while pressed.
+        targetScale = hoverScale; // Maintain hover scale while pressed
     }
 
-    // Called when the pointer is released.
+    // Handle mouse release state
     public void OnPointerUp(PointerEventData eventData)
     {
         if (btn != null && !btn.interactable)
             return;
         
         isPressed = false;
-        targetScale = originalScale; // Revert back to original scale.
+        targetScale = originalScale; // Return to normal scale
     }
 }

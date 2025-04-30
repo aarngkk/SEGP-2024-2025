@@ -5,54 +5,57 @@ using UnityEngine.SceneManagement;
 public class TutorialManager : MonoBehaviour
 {
     [Header("Tutorial Steps (in order)")]
-    public GameObject[] tutorialSteps;  // Each step is a UI element in the overlay.
-    private int currentStep = 0;
-    public GameObject Script1ChoicePopUp;
+    public GameObject[] tutorialSteps;    // Array of UI panels for each tutorial step
+    private int currentStep = 0;          // Index tracking current tutorial step
+    public GameObject Script1ChoicePopUp; // Popup to show after tutorial completes
 
-    public Button nextButton;  // Button to move to the next step.
-    public Button skipButton;  // Button to skip the tutorial.
+    public Button nextButton;  // Button to progress through tutorial steps
+    public Button skipButton;  // Button to skip entire tutorial
 
-    // Reference to the ScriptSelectionManager that will run after the tutorial.
+    // Reference to script selection UI manager
     public ScriptSelectionManager scriptSelectionManager;
 
-    // This flag indicates if the tutorial is active.
+    // Static flag to track tutorial state globally
     public static bool tutorialActive = true;
 
-    // The parent panel or object for the entire instructions UI.
+    // Parent container for all tutorial UI elements
     public GameObject instructionsOverlay;
 
     void Start()
     {
-        // Initially hide all steps.
+        // Hide all tutorial steps initially
         foreach (GameObject step in tutorialSteps)
             step.SetActive(false);
 
-        // Show the first step, if available.
+        // Activate first step if available
         if (tutorialSteps.Length > 0)
         {
             tutorialSteps[0].SetActive(true);
         }
 
+        // Setup button click listeners
         nextButton.onClick.AddListener(OnNextClicked);
         skipButton.onClick.AddListener(OnSkipClicked);
     }
 
+    // Handles progression to next tutorial step
     void OnNextClicked()
     {
-        // Hide the current step
+        // Deactivate current step
         tutorialSteps[currentStep].SetActive(false);
         currentStep++;
 
-        // If we still have more steps, show the new step
+        // Show next step if available
         if (currentStep < tutorialSteps.Length)
         {
             tutorialSteps[currentStep].SetActive(true);
 
-            // Check if we've just moved onto step #3 (index 2)
+            // Special handling for step 6 (script selection)
             if (currentStep == 6 && scriptSelectionManager != null)
             {
                 scriptSelectionManager.OpenScriptSelection();
             }
+            // Special handling for step 7 (script selection close)
             else if (currentStep == 7 && scriptSelectionManager != null)
             {
                 scriptSelectionManager.CloseScriptSelection();
@@ -60,23 +63,25 @@ public class TutorialManager : MonoBehaviour
         }
         else
         {
-            // If no more steps, end the tutorial
+            // Complete tutorial if no steps remain
             EndTutorial();
         }
     }
 
+    // Handles skip button click
     void OnSkipClicked()
     {
         EndTutorial();
     }
 
+    // Cleans up tutorial UI and marks completion
     void EndTutorial()
     {
         // Hide all tutorial steps
         foreach (GameObject step in tutorialSteps)
             step.SetActive(false);
 
-        // Hide the entire instructions overlay
+        // Hide main tutorial overlay
         if (instructionsOverlay != null)
         {
             instructionsOverlay.SetActive(false);
@@ -86,9 +91,10 @@ public class TutorialManager : MonoBehaviour
             Debug.LogWarning("InstructionsOverlay is not assigned!");
         }
 
-        // Mark the tutorial as inactive
+        // Update global tutorial state
         tutorialActive = false;
 
+        // Show first choice popup
         Script1ChoicePopUp.SetActive(true);
     }
 }

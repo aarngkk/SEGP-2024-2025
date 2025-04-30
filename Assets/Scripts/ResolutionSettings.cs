@@ -5,7 +5,10 @@ using System.Collections.Generic;
 
 public class ResolutionSettings : MonoBehaviour
 {
+    // Reference to the resolution dropdown UI element
     public TMP_Dropdown resolutionDropdown;
+
+    // Predefined list of supported resolutions
     private List<Resolution> predefinedResolutions = new List<Resolution>()
     {
         new Resolution { width = 1920, height = 1080 },
@@ -28,16 +31,19 @@ public class ResolutionSettings : MonoBehaviour
 
     void Start()
     {
+        // Clear existing dropdown options
         resolutionDropdown.ClearOptions();
 
         int currentResolutionIndex = 0;
         List<string> options = new List<string>();
 
+        // Populate dropdown with all predefined resolutions
         for (int i = 0; i < predefinedResolutions.Count; i++)
         {
             string option = predefinedResolutions[i].width + " x " + predefinedResolutions[i].height;
             options.Add(option);
 
+            // Check if this resolution matches the current screen resolution
             if (predefinedResolutions[i].width == Screen.currentResolution.width &&
                 predefinedResolutions[i].height == Screen.currentResolution.height)
             {
@@ -45,13 +51,16 @@ public class ResolutionSettings : MonoBehaviour
             }
         }
 
+        // Add options to dropdown and set default selection
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
 
+        // Add listener for resolution changes
         resolutionDropdown.onValueChanged.AddListener(SetResolution);
     }
 
+    // Applies the selected resolution
     public void SetResolution(int resolutionIndex)
     {
         Resolution resolution = predefinedResolutions[resolutionIndex];
