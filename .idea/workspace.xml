@@ -3,36 +3,14 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
+  <component name="BackendCodeEditorMiscSettings">
+    <option name="/Default/RiderDebugger/RiderRestoreDecompile/RestoreDecompileSetting/@EntryValue" value="false" type="bool" />
+    <option name="/Default/Housekeeping/GlobalSettingsUpgraded/IsUpgraded/@EntryValue" value="true" type="bool" />
+    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
+    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexRemoved" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="8cb7d149-ffe3-42c2-8a59-c18741c25647" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lora-VariableFont_wght SDF.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lora-VariableFont_wght SDF.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lora-VariableFont_wght.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/Lora-VariableFont_wght.ttf.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/PlayfairDisplay-VariableFont_wght SDF.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/PlayfairDisplay-VariableFont_wght SDF.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/PlayfairDisplay-VariableFont_wght.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Fonts/PlayfairDisplay-VariableFont_wght.ttf.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Cutscenes/Cut 3 annoyed.playable" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Cutscenes/Cut 3 annoyed.playable" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Cutscenes/Cut 3 sympath.playable" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Cutscenes/Cut 3 sympath.playable" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Cutscenes/Cut 5a 1.playable" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Cutscenes/Cut 5a 1.playable" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Cutscenes/Cut 5a 2.playable" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Cutscenes/Cut 5a 2.playable" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Cutscenes/Cut 5a 3.playable" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Cutscenes/Cut 5a 3.playable" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Cutscenes/Cut 5a.playable" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Cutscenes/Cut 5a.playable" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Cutscenes/Cut 6A.playable" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Cutscenes/Cut 6A.playable" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Cutscenes/Cut 6B.playable" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Cutscenes/Cut 6B.playable" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Cutscenes/cut 4b.playable" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Cutscenes/cut 4b.playable" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Play All Scenes.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Play All Scenes.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CameraController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CameraController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CharacterMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CharacterMovement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CutsceneManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CutsceneManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TutorialManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TutorialManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Bangers SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Bangers SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Electronic Highway Sign SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Electronic Highway Sign SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Oswald Bold SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Oswald Bold SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Roboto-Bold SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Roboto-Bold SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
-    </list>
+    <list default="true" id="8cb7d149-ffe3-42c2-8a59-c18741c25647" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -67,11 +45,15 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.RadMigrateCodeStyle": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "正在合并 main",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -102,6 +84,7 @@
       <workItem from="1739690222498" duration="563000" />
       <workItem from="1739787109801" duration="462000" />
       <workItem from="1742574238004" duration="17000" />
+      <workItem from="1746003447959" duration="43000" />
     </task>
     <servers />
   </component>
