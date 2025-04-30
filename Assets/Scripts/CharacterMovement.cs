@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class DragCharacter : MonoBehaviour
 {
-    public UndoRedoManager undoRedoManager; // Assign via Inspector or use a singleton pattern
     private Vector3 startPosition;
     private Quaternion startRotation;
     private Vector3 offset;
@@ -109,13 +108,6 @@ public class DragCharacter : MonoBehaviour
     void OnMouseUp()
     {
         isDragging = false;
-
-        if (undoRedoManager != null)
-        {
-            Vector3 endPosition = parentObject.position;
-            Quaternion endRotation = parentObject.rotation;
-            undoRedoManager.RecordMove(this, startPosition, startRotation, endPosition, endRotation);
-        }
 
         CheckSnapPoint();
     }

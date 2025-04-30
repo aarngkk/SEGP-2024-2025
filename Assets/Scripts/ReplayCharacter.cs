@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class ReplayCharacter : MonoBehaviour
 {
-    public UndoRedoManager undoRedoManager; // Assign via Inspector or use a singleton pattern
     private Vector3 startPosition;
     private Quaternion startRotation;
     private Vector3 offset;
