@@ -7,36 +7,45 @@ using TMPro;
 
 public class CutsceneManager : MonoBehaviour
 {
-    private string SavePath => Application.persistentDataPath + "/SavedScenes/";
-    public string logFileName; // Default filename if none is set
-    private bool isPaused = false;
+    private string SavePath => Application.persistentDataPath + "/SavedScenes/"; // Path for saving user scene logs
+    public string logFileName; // Filename used when saving choice logs
+    private bool isPaused = false;// Tracks if the current cutscene is paused
+    
+    // Playback control buttons
     public Button playButton;
     public Button pauseButton;
 
+    // State flags for specific cutscene triggers
     private bool isCutscene1Started = false;
-    public bool IsCutscene1Started() => isCutscene1Started;
-    private bool isCutscene7Started = false; // New flag to track Cutscene7 state
-    public bool IsCutscene7Started() => isCutscene7Started; // Public getter
-    public GameObject Script1ChoicePopUp;
+    public bool IsCutscene1Started() => isCutscene1Started; // Accessor for cutscene 1 state
 
+    private bool isCutscene7Started = false; // New flag to track Cutscene7 state
+    public bool IsCutscene7Started() => isCutscene7Started; // Public getter for Cutscene 7 state
+    
+    public GameObject Script1ChoicePopUp; // UI popup shown after script 1
+
+    // Game objects used for player interaction zones
     [Header("Objects to Disable")]
     public GameObject bedZone;
     public GameObject dresserZone;
     public GameObject carpetObject;
 
+    // Cameras used for scene transitions
     [Header("Cameras")]
     public GameObject mainCamera;
     public GameObject stageCamera;
 
+    // Cutscene Timeline references for script 1
     [Header("Script 1")]
     public PlayableDirector bedCutscene;
     public PlayableDirector dresserCutscene;
 
-    public GameObject choicePopupPanel; // First choice (Bed/Dresser)
+    public GameObject choicePopupPanel; // First choice (Sad/Angry)
 
     public Button sadButton;
     public Button angryButton;
 
+    // Cutscene Timeline references for script 2
     [Header("Script 2")]
     public PlayableDirector bedSadCutscene;
     public PlayableDirector bedAngryCutscene;
@@ -48,6 +57,7 @@ public class CutsceneManager : MonoBehaviour
     public Button sympatheticButton;
     public Button annoyedButton;
 
+    // Cutscene Timeline references for script 3
     [Header("Script 3")]
     public PlayableDirector capuletSympatheticCutscene;
     public PlayableDirector capuletAnnoyedCutscene;
@@ -57,6 +67,7 @@ public class CutsceneManager : MonoBehaviour
     public Button enragedButton;
     public Button composedButton;
 
+    // Cutscene Timeline references for script 4
     [Header("Script 4")]
     public PlayableDirector capuletEnragedCutscene;
     public PlayableDirector capuletComposedCutscene;
@@ -65,32 +76,35 @@ public class CutsceneManager : MonoBehaviour
     [SerializeField] private Button kneelButton;
     [SerializeField] private Button standButton;
 
-    [Header("Script 5")] // NEW: Fields for 4 final cutscenes
+    // Cutscene Timeline references for script 5
+    [Header("Script 5")] 
     public PlayableDirector julietKneelsCapuletCalm;
     public PlayableDirector julietKneelsCapuletAngry;
     public PlayableDirector julietStandsCapuletCalm;
     public PlayableDirector julietStandsCapuletAngry;
 
-    [SerializeField] private GameObject capuletThirdChoicePopupPanel;
+    [SerializeField] private GameObject capuletThirdChoicePopupPanel; //Fifth choice (Calm/Angry)
     [SerializeField] private Button calmDownButton;
     [SerializeField] private Button remainAngryButton;
 
-    [Header("Script 6")] // NEW: Fields for Capulet's reaction after the third choice
+    // Cutscene Timeline references for script 6
+    [Header("Script 6")] 
     public PlayableDirector capuletCalmsDownCutscene;
     public PlayableDirector capuletRemainsAngryCutscene;
 
-    public GameObject script7PositionPanel;
-    public GameObject script7ChoicePopupPanel;
+    public GameObject script7PositionPanel; // Placement prompt UI
+    public GameObject script7ChoicePopupPanel; // 6th choice: Desperate/Sorrowful
     public Button desperateButton;
     public Button sorrowfulButton;
 
+    // Cutscene Timeline references for script 7
     [Header("Script 7")]
     public PlayableDirector bedDesperateCutscene;
     public PlayableDirector bedSorrowfulCutscene;
     public PlayableDirector carpetDesperateCutscene;
     public PlayableDirector carpetSorrowfulCutscene;
 
-    public GameObject JulietSitWalkChoicePopupPanel; // Choice popup for Script 8
+    public GameObject JulietSitWalkChoicePopupPanel; // Final Juliet choice (Sit/Walk)
     public Button sitButton;
     public Button walkButton;
 
@@ -98,23 +112,26 @@ public class CutsceneManager : MonoBehaviour
     public PlayableDirector julietSitCutscene;
     public PlayableDirector julietWalkCutscene;
 
-    public PlayableDirector currentCutscene;
-    private List<string> choicesMade = new List<string>();
+    public PlayableDirector currentCutscene; // Reference to currently playing cutscene
+    private List<string> choicesMade = new List<string>(); // Log of user choices
     private Stack<string> choiceHistory = new Stack<string>(); // Stores past choices
-    public bool isReplayMode = false;
-    private bool isCutscene6Finished = false;
+
+    public bool isReplayMode = false; // Enables replaying cutscenes from logs
+    private bool isCutscene6Finished = false; 
     public bool IsCutscene6Finished() => isCutscene6Finished;
 
-    public GameObject FinishedPopUp;
+    public GameObject FinishedPopUp; // End-of-scene UI popup
 
-    public static CutsceneManager Instance { get; private set; }
-    public string currentCutsceneType { get; private set; }
+    public static CutsceneManager Instance { get; private set; } // Singleton access
+    public string currentCutsceneType { get; private set; } // Identifier for current cutscene
 
     void Start()
     {
-        playButton.gameObject.SetActive(false); // Hide play button initially
-        pauseButton.gameObject.SetActive(true); // Show pause button
+        // Set initial button visibility
+        playButton.gameObject.SetActive(false); 
+        pauseButton.gameObject.SetActive(true); 
 
+        // Attach play/pause events
         playButton.onClick.AddListener(PlayCutscene);
         pauseButton.onClick.AddListener(PauseCutscene);
     }
@@ -123,10 +140,11 @@ public class CutsceneManager : MonoBehaviour
     {
         Debug.Log($"Attempting to play cutscene: {cutsceneType}");
 
+        // Restore animations to active state
         RestoreCharacterAnimation();
         currentCutsceneType = cutsceneType; 
 
-        // Set the flag when cutscene 1 starts
+       // Pre-cutscene setup for Script 1 (Bed/Dresser selection)
         if (cutsceneType == "Bed" || cutsceneType == "Dresser")
         {
             isCutscene1Started = true;
@@ -145,9 +163,11 @@ public class CutsceneManager : MonoBehaviour
                 Debug.Log("DresserZone GameObject disabled.");
             }
 
+            // Hide script 1 popup if active
             if (Script1ChoicePopUp!=null) Script1ChoicePopUp.SetActive(false);
         }
 
+        // Setup for Script 7 emotion choices (Bed/Carpet with Desperate/Sorrowful)
         if (cutsceneType == "BedDesperate" || cutsceneType == "BedSorrowful" ||
             cutsceneType == "CarpetDesperate" || cutsceneType == "CarpetSorrowful" )
         {
@@ -159,7 +179,7 @@ public class CutsceneManager : MonoBehaviour
                 character.ClearSnapPoints();
             }
 
-            // Disable the DresserZone game object
+            // Disable Bed and carpet zone areas
             if (bedZone != null)
             {
                 bedZone.SetActive(false);
@@ -172,6 +192,7 @@ public class CutsceneManager : MonoBehaviour
             }
         }
 
+        // Maps cutscene string to corresponding PlayableDirector
         switch (cutsceneType)
         {
             case "Bed": currentCutscene = bedCutscene; break;
@@ -204,6 +225,8 @@ public class CutsceneManager : MonoBehaviour
         }
 
         Debug.Log($"Playing cutscene: {currentCutscene.name}");
+
+        // Track user choice and attach event handler (unless in replay mode)
         if (!isReplayMode)
         {
             choiceHistory.Push(currentCutscene.name);
@@ -211,6 +234,7 @@ public class CutsceneManager : MonoBehaviour
             currentCutscene.stopped += OnCutsceneFinished;
         }
 
+        // In replay mode, attach temporary handler for callback after cutscene ends
         if (isReplayMode)
         {
             currentCutscene.stopped += (PlayableDirector director) =>
@@ -221,13 +245,18 @@ public class CutsceneManager : MonoBehaviour
                 onCutsceneEnd?.Invoke();
             };
         }
-
+        
+        // Start the cutscene playback
         currentCutscene.Play();
 
+        // Update character interactivity based on state
         UpdateAllCharactersDraggableState();
     }
+
+
     private void RestoreCharacterAnimation()
     {
+        // Re-enables character animations after being previously frozen
         Animator julietAnimator = GameObject.Find("Juliet")?.GetComponent<Animator>();
         Animator ladyCapuletAnimator = GameObject.Find("Lady Capulet")?.GetComponent<Animator>();
 
@@ -238,41 +267,43 @@ public class CutsceneManager : MonoBehaviour
     private void OnCutsceneFinished(PlayableDirector director)
     {
         Debug.Log("Cutscene finished playing.");
-        director.stopped -= OnCutsceneFinished;
+        director.stopped -= OnCutsceneFinished; // Remove listener to avoid duplicate triggers
 
-        FreezeCharacterPose();
+        FreezeCharacterPose(); // Stops character animations to preserve their pose
 
+        // Skip user interactions if in replay mode
         if (isReplayMode)
         {
             Debug.Log("Replay mode active, continuing to next cutscene.");
             return;
         }
 
+        // Determine which popup to show based on the finished cutscene
         if (currentCutscene == bedCutscene || currentCutscene == dresserCutscene)
         {
-            ShowChoicePopup();
+            ShowChoicePopup(); // Sad/Angry choice
         }
         else if (currentCutscene == bedSadCutscene || currentCutscene == bedAngryCutscene ||
                  currentCutscene == dresserSadCutscene || currentCutscene == dresserAngryCutscene)
         {
-            ShowCapuletChoicePopup();
+            ShowCapuletChoicePopup();  // Sympathetic/Annoyed
         }
         else if (currentCutscene == capuletSympatheticCutscene || currentCutscene == capuletAnnoyedCutscene)
         {
-            ShowCapuletFinalChoicePopup();
+            ShowCapuletFinalChoicePopup(); // Enraged/Composed
         }
         else if (currentCutscene == capuletEnragedCutscene || currentCutscene == capuletComposedCutscene)
         {
-            ShowJulietKneelingChoicePopup();
+            ShowJulietKneelingChoicePopup(); // Juliet Kneel/Stand
         }
         else if (currentCutscene == julietKneelsCapuletCalm || currentCutscene == julietKneelsCapuletAngry ||
                  currentCutscene == julietStandsCapuletCalm || currentCutscene == julietStandsCapuletAngry)
         {
-            ShowCapuletThirdChoicePopup();
+            ShowCapuletThirdChoicePopup(); // Capulet Calm/Remain Angry
         }
         else if (currentCutscene == capuletCalmsDownCutscene || currentCutscene == capuletRemainsAngryCutscene)
         {
-            // Cutscene 6 has finished
+             // Prepare for Script 7 interaction after Cutscene 6
             isCutscene6Finished = true;
             Debug.Log("Cutscene 6 finished. Ready for script 7 choices.");
 
@@ -301,14 +332,15 @@ public class CutsceneManager : MonoBehaviour
         else if (currentCutscene == bedDesperateCutscene || currentCutscene == bedSorrowfulCutscene ||
                  currentCutscene == carpetDesperateCutscene || currentCutscene == carpetSorrowfulCutscene)
         {
-            ShowScript8ChoicePopup();
+            ShowScript8ChoicePopup(); // Sit/Walk popup for Juliet
         }
         else if (currentCutscene == julietSitCutscene || currentCutscene == julietWalkCutscene)
         {
-            ShowFinishPopUp();
+            ShowFinishPopUp(); // Final completion popup
         }
     }
 
+     // Disables character animations to preserve their final pose
     private void FreezeCharacterPose()
     {
         Animator julietAnimator = GameObject.Find("Juliet")?.GetComponent<Animator>();
@@ -707,6 +739,7 @@ public class CutsceneManager : MonoBehaviour
         }
     }
 
+    // Toggle visibility of play/pause buttons
     private void UpdateButtonVisibility()
     {
         playButton.gameObject.SetActive(isPaused);
@@ -718,6 +751,8 @@ public class CutsceneManager : MonoBehaviour
         if (CharacterManager.Instance != null)
             CharacterManager.Instance.UpdateDraggableState();
     }
+
+    // Resume cutscene and sync play/pause UI
     public void ResumeAndUpdateButtons()
     {
         isPaused = false;
