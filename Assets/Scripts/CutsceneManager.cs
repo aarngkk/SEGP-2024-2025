@@ -350,6 +350,7 @@ public class CutsceneManager : MonoBehaviour
         if (ladyCapuletAnimator != null) ladyCapuletAnimator.enabled = false;
     }
 
+    // Show script 2 choice popup (Bed/Dresser variations)
     private void ShowChoicePopup()
     {
         if (choicePopupPanel != null)
@@ -378,6 +379,7 @@ public class CutsceneManager : MonoBehaviour
         }
     }
 
+    // Show script 3 choice popup
     private void ShowCapuletChoicePopup()
     {
         if (capuletChoicePopupPanel != null)
@@ -396,6 +398,7 @@ public class CutsceneManager : MonoBehaviour
         }
     }
 
+    // Show script 4 choice popup
     private void ShowCapuletFinalChoicePopup()
     {
         if (capuletFinalChoicePopupPanel != null)
@@ -414,6 +417,7 @@ public class CutsceneManager : MonoBehaviour
         }
     }
 
+    // Show script 5 choice popup
     private void ShowJulietKneelingChoicePopup()
     {
         if (julietKneelingChoicePopupPanel != null)
@@ -444,6 +448,7 @@ public class CutsceneManager : MonoBehaviour
         }
     }
 
+    // Show script 6 choice popup
     private void ShowCapuletThirdChoicePopup()
     {
         if (capuletThirdChoicePopupPanel != null)
@@ -462,6 +467,27 @@ public class CutsceneManager : MonoBehaviour
         }
     }
 
+    // Show script 7 choice popup
+    public void ShowScript7ChoicePopup(string zone)
+    {
+        if (script7PositionPanel != null) script7PositionPanel.SetActive(false);
+        if (script7ChoicePopupPanel != null)
+        {
+            script7ChoicePopupPanel.SetActive(true);
+
+            desperateButton.onClick.RemoveAllListeners();
+            sorrowfulButton.onClick.RemoveAllListeners();
+
+            desperateButton.onClick.AddListener(() => PlayScript7Cutscene(zone, "Desperate"));
+            sorrowfulButton.onClick.AddListener(() => PlayScript7Cutscene(zone, "Sorrowful"));
+        }
+        else
+        {
+            Debug.LogError("Script 7 choice popup panel is not assigned!");
+        }
+    }
+
+    // Show script 8 choice popup
     private void ShowScript8ChoicePopup()
     {
         if (JulietSitWalkChoicePopupPanel != null)
@@ -480,6 +506,7 @@ public class CutsceneManager : MonoBehaviour
         }
     }
 
+    // Show whole scene completed popup
     private void ShowFinishPopUp()
     {
         if (FinishedPopUp != null)
@@ -492,6 +519,7 @@ public class CutsceneManager : MonoBehaviour
         }
     }
 
+    // Play next cutscene and hide all popups
     private void PlayNextCutscene(string nextCutsceneType)
     {
         choicePopupPanel?.SetActive(false);
@@ -504,6 +532,7 @@ public class CutsceneManager : MonoBehaviour
         PlayCutscene(nextCutsceneType);
     }
 
+    // Save player choices to log file
     public void LogChoicesToFile()
     {
         if (choicesMade.Count == 0)
@@ -527,6 +556,7 @@ public class CutsceneManager : MonoBehaviour
         }
     }
 
+    // Undo the last player choice
     public void UndoChoice()
     {
         if (choiceHistory.Count < 2) // Ensure there is a previous choice to revert to
@@ -618,6 +648,7 @@ public class CutsceneManager : MonoBehaviour
         UpdateAllCharactersDraggableState();
     }
 
+    // Skip current cutscene
     public void SkipCutscene()
     {
         if (currentCutscene == null || currentCutscene.state != PlayState.Playing)
@@ -632,31 +663,7 @@ public class CutsceneManager : MonoBehaviour
         OnCutsceneFinished(currentCutscene);
     }
 
-    public void ShowScript7ChoicePopup(string zone)
-
-    {
-        if (script7PositionPanel!=null) script7PositionPanel.SetActive(false);
-        if (script7ChoicePopupPanel != null)
-        {
-            script7ChoicePopupPanel.SetActive(true);
-
-            desperateButton.onClick.RemoveAllListeners();
-            sorrowfulButton.onClick.RemoveAllListeners();
-
-            desperateButton.onClick.AddListener(() => PlayScript7Cutscene(zone, "Desperate"));
-            sorrowfulButton.onClick.AddListener(() => PlayScript7Cutscene(zone, "Sorrowful"));
-
-            //if (stageCamera != null)
-            //{
-            //    stageCamera.SetActive(true);
-            //    if (mainCamera != null) mainCamera.SetActive(false);
-            //}
-        }
-        else
-        {
-            Debug.LogError("Script 7 choice popup panel is not assigned!");
-        }
-    }
+    // Play script 7 cutscene based on zone and emotion
     private void PlayScript7Cutscene(string zone, string emotion)
     {
         // Hide the Script7ChoicePopup panel
@@ -689,11 +696,11 @@ public class CutsceneManager : MonoBehaviour
         Debug.Log("Cutscene7 started. Bed outline and snap points disabled.");
 
         // Play the selected cutscene
-        string cutsceneType = $"{zone}{emotion}"; // e.g., "BedDesperate" or "CarpetSorrowful"
+        string cutsceneType = $"{zone}{emotion}";
         PlayCutscene(cutsceneType);
     }
 
-
+    // Hide script 7 popup
     public void HideScript7ChoicePopup()
     {
         if (script7ChoicePopupPanel != null)
@@ -701,7 +708,9 @@ public class CutsceneManager : MonoBehaviour
             script7ChoicePopupPanel.SetActive(false);
         }
     }
-   public void HideFinishPopup()
+
+    // Hide finished popup
+    public void HideFinishPopup()
     {
         if (FinishedPopUp != null)
         {
@@ -710,15 +719,14 @@ public class CutsceneManager : MonoBehaviour
         }
     }
 
-    
-    
-
+    // Singleton setup
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
 
+    // Play currently paused cutscene
     public void PlayCutscene()
     {
         if (currentCutscene != null && isPaused)
@@ -729,6 +737,7 @@ public class CutsceneManager : MonoBehaviour
         }
     }
 
+    // Pause current cutscene
     public void PauseCutscene()
     {
         if (currentCutscene != null && !isPaused)
@@ -739,24 +748,24 @@ public class CutsceneManager : MonoBehaviour
         }
     }
 
-    // Toggle visibility of play/pause buttons
+    // Update play/pause button visibility
     private void UpdateButtonVisibility()
     {
         playButton.gameObject.SetActive(isPaused);
         pauseButton.gameObject.SetActive(!isPaused);
     }
 
+    // Update draggable state of all characters
     private void UpdateAllCharactersDraggableState()
     {
         if (CharacterManager.Instance != null)
             CharacterManager.Instance.UpdateDraggableState();
     }
 
-    // Resume cutscene and sync play/pause UI
+    // Resume cutscene and update buttons
     public void ResumeAndUpdateButtons()
     {
         isPaused = false;
         UpdateButtonVisibility();
     }
-
 }
